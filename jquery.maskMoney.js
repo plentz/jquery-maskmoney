@@ -1,6 +1,9 @@
 /*
-* @Copyright (c) 2008 Aurélio Saraiva (aureliosaraiva@gmail.com)
-* @Page http://inovaideia.com.br/maskInputMoney
+* @Copyright (c) 2009 Aurélio Saraiva (aureliosaraiva@gmail.com)
+* @Page http://github.com/plentz/jquery-maskmoney
+* try at http://inovaideia.com.br/maskInputMoney/
+
+* Special thanks to Raul Pereira da Silva (contato@raulpereira.com) and Diego Plentz (http://plentz.org)
 
 * Permission is hereby granted, free of charge, to any person
 * obtaining a copy of this software and associated documentation
@@ -24,8 +27,8 @@
 */
 
 /*
-* @Version: 0.1
-* @Release: 2008-02-20
+* @Version: 0.3
+* @Release: 2009-10-29
 */
 (function($) {
 	$.fn.maskMoney = function(settings) {
