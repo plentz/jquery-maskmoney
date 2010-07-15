@@ -1,5 +1,5 @@
 /*
-* @Copyright (c) 2009 Aurélio Saraiva (aureliosaraiva@gmail.com)
+* @Copyright (c) 2010 Aurélio Saraiva (aureliosaraiva@gmail.com)
 * @Page http://github.com/plentz/jquery-maskmoney
 * try at http://inovaideia.com.br/maskInputMoney/
 
@@ -27,8 +27,8 @@
 */
 
 /*
-* @Version: 0.3
-* @Release: 2009-10-29
+* @Version: 0.4
+* @Release: 2010-07-15
 */
 (function($) {
 	$.fn.maskMoney = function(settings) {
@@ -49,6 +49,7 @@
 			function keypressEvent(e) {
 				e = e||window.event;
 				var k = e.charCode||e.keyCode||e.which;
+				if (k == undefined) return; //needed to handle an IE "special" event
 
 				if (k==8) { // tecla backspace
 					preventDefault(e);
