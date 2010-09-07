@@ -38,6 +38,7 @@
 			precision:2,
 			thousands:',',
 			allowZero:false,
+      allowNegative:false,
 			showSymbol:false
 		}, settings);
 
@@ -60,11 +61,21 @@
 					return true;
 				}
 				if (k<48||k>57) {
-					preventDefault(e);
-					return true;
+          if (k==45) { //tecla -
+            input.val(changeSign(input));
+            return false;
+          }
+          if (k==43) { //tecla +
+            input.val(input.val().replace('-',''));
+            return false;
+          } else{
+            preventDefault(e);
+					  return true;
+          }
 				} else if (input.val().length==input.attr('maxlength')) {
 					return false;
 				}
+
 
 				var key = String.fromCharCode(k);  // Valor para o código da Chave
 				preventDefault(e);
@@ -109,7 +120,14 @@
 
 				var strCheck = '0123456789';
 				var len = v.length;
-				var a = '', t = '';
+				var a = '', t = '', neg='';
+
+        if(len!=0 && v.charAt(0)=='-'){
+          v = v.replace('-','');
+          if(settings.allowNegative){
+            neg = '-';
+          }
+        }
 
 				if (len==0) {
 					t = '0.00';
@@ -134,8 +152,8 @@
 				}
 
 				return (settings.precision>0)
-                    ? setSymbol(t+settings.decimal+d+Array((settings.precision+1)-d.length).join(0))
-                    : setSymbol(t);
+                    ? setSymbol(neg+t+settings.decimal+d+Array((settings.precision+1)-d.length).join(0))
+                    : setSymbol(neg+t);
 			}
 
 			function getDefaultMask() {
@@ -149,6 +167,19 @@
 				}
 				return v;
 			}
+
+      function changeSign(i){
+        if (settings.allowNegative) {
+          var vic = i.val();
+          if (i.val()!='' && i.val().charAt(0)=='-'){
+            return i.val().replace('-','');
+          } else{
+            return '-'+i.val();
+          }
+        } else {
+          return i.val();
+        }
+      }
 
 			input.bind('keypress',keypressEvent);
 			input.bind('blur',blurEvent);
