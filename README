@@ -21,6 +21,7 @@ Default options are (but you can always change that):
 	precision:2,
 	thousands:',',
 	allowZero:false,
+	allowNegative:false,
 	showSymbol:false
 
 Copyright (c) 2009 Aurélio Saraiva (aureliosaraiva@gmail.com)
