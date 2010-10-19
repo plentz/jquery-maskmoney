@@ -1,5 +1,6 @@
-Just a simple way to create masks to your currency form fields with (jQuery)[http://jquery.com/].
+Just a simple way to create masks to your currency form fields with [jQuery](http://jquery.com/).
 
+***
 ### Usage:
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script>
@@ -25,6 +26,7 @@ Default options are (but you can always change that):
 	allowNegative:false,
 	showSymbol:false
 
+***
 ### Contributors:
  * [Aurélio Saraiva](aureliosaraiva@gmail.com)
  * [Raul Pereira da Silva](http://raulpereira.com)
@@ -32,6 +34,6 @@ Default options are (but you can always change that):
  * Otávio Ribeiro Medeiros
  * [xtream](http://github.com/xtream)
 
-
-### License
-__jQuery maskMoney__ is released under the MIT license.
+***
+### License:
+__jQuery-maskMoney__ is released under the MIT license.
