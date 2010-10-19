@@ -1,9 +1,7 @@
 /*
-* @Copyright (c) 2010 Aurélio Saraiva (aureliosaraiva@gmail.com)
+* @Copyright (c) 2010 Aurélio Saraiva, Diego Plentz
 * @Page http://github.com/plentz/jquery-maskmoney
-* try at http://inovaideia.com.br/maskInputMoney/
-
-* Special thanks to Raul Pereira da Silva (contato@raulpereira.com) and Diego Plentz (http://plentz.org)
+* try at http://inoveideia.com.br/maskInputMoney/
 
 * Permission is hereby granted, free of charge, to any person
 * obtaining a copy of this software and associated documentation
@@ -27,8 +25,8 @@
 */
 
 /*
-* @Version: 0.4
-* @Release: 2010-07-15
+* @Version: 0.5
+* @Release: 2010-10-19
 */
 (function($) {
 	$.fn.maskMoney = function(settings) {
@@ -38,7 +36,7 @@
 			precision:2,
 			thousands:',',
 			allowZero:false,
-      allowNegative:false,
+			allowNegative:false,
 			showSymbol:false
 		}, settings);
 
@@ -52,32 +50,31 @@
 				var k = e.charCode||e.keyCode||e.which;
 				if (k == undefined) return; //needed to handle an IE "special" event
 
-				if (k==8) { // tecla backspace
+				if (k==8) { // backspace key
 					preventDefault(e);
 					var x = input.val().substring(0,input.val().length-1);
 					input.val(maskValue(x));
 					return false;
-				} else if (k==9) { // tecla tab
+				} else if (k==9) { // tab key
 					return true;
 				}
 				if (k<48||k>57) {
-          if (k==45) { //tecla -
-            input.val(changeSign(input));
-            return false;
-          }
-          if (k==43) { //tecla +
-            input.val(input.val().replace('-',''));
-            return false;
-          } else{
-            preventDefault(e);
-					  return true;
-          }
+					if (k==45) { // -(minus) key
+						input.val(changeSign(input));
+						return false;
+					}
+					if (k==43) { // +(plus) key
+						input.val(input.val().replace('-',''));
+						return false;
+					} else	{
+						preventDefault(e);
+						return true;
+					}
 				} else if (input.val().length==input.attr('maxlength')) {
 					return false;
 				}
 
-
-				var key = String.fromCharCode(k);  // Valor para o código da Chave
+				var key = String.fromCharCode(k);
 				preventDefault(e);
 				input.val(maskValue(input.val()+key));
 			}
@@ -90,7 +87,7 @@
 				}
                 if (this.createTextRange) {
                     var textRange = this.createTextRange();
-                    textRange.collapse(false); // posiciona cursor no final.
+                    textRange.collapse(false); // set the cursor at the end of the input
                     textRange.select();
                 }
 			}
@@ -122,12 +119,12 @@
 				var len = v.length;
 				var a = '', t = '', neg='';
 
-        if(len!=0 && v.charAt(0)=='-'){
-          v = v.replace('-','');
-          if(settings.allowNegative){
-            neg = '-';
-          }
-        }
+				if(len!=0 && v.charAt(0)=='-'){
+					v = v.replace('-','');
+					if(settings.allowNegative){
+						neg = '-';
+					}
+				}
 
 				if (len==0) {
 					t = '0.00';
@@ -168,18 +165,18 @@
 				return v;
 			}
 
-      function changeSign(i){
-        if (settings.allowNegative) {
-          var vic = i.val();
-          if (i.val()!='' && i.val().charAt(0)=='-'){
-            return i.val().replace('-','');
-          } else{
-            return '-'+i.val();
-          }
-        } else {
-          return i.val();
-        }
-      }
+			function changeSign(i){
+				if (settings.allowNegative) {
+					var vic = i.val();
+					if (i.val()!='' && i.val().charAt(0)=='-'){
+						return i.val().replace('-','');
+					} else{
+						return '-'+i.val();
+					}
+				} else {
+					return i.val();
+				}
+			}
 
 			input.bind('keypress',keypressEvent);
 			input.bind('blur',blurEvent);
