@@ -1,3 +1,8 @@
+Adapted original script to allow backpsace & cursor positioning.
+Below lies the original README
+
+*** 
+
 Just a simple way to create masks to your currency form fields with [jQuery](http://jquery.com/).
 
 ***
