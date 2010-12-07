@@ -1,9 +1,10 @@
 Adapted original script to allow backpsace & cursor positioning.
-Below lies the original README
+Below lies the original README, slightly adapted to include changes
 
 *** 
 
 Just a simple way to create masks to your currency form fields with [jQuery](http://jquery.com/).
+Can also be applied to other fields (ex: percentage).
 
 ***
 ### Usage:
@@ -13,8 +14,8 @@ Just a simple way to create masks to your currency form fields with [jQuery](htt
 	<script>
 	$(function(){
 		$("#currency").maskMoney();
-		$("#real").maskMoney({symbol:"R$", decimal:",", thousands:"."});
-		$("#precision").maskMoney({precision:3})
+		$("#euro").maskMoney({symbol:"€ ", decimal:",", thousands:"."});
+		$("#euribor").maskMoney({precision:3, intSize: 2})
 	})
 	function removeMask(){
 		$("#currency").unmaskMoney();
@@ -26,6 +27,7 @@ Default options are (but you can always change that):
 	symbol:'US$',
 	decimal:'.',
 	precision:2,
+        intSize: 20,
 	thousands:',',
 	allowZero:false,
 	allowNegative:false,
