@@ -245,7 +245,8 @@
 					return false;
 				}
 				//intSize reached
-				if(integerPart(input.val()).length >= settings.intSize) {
+				if(integerPart(input.val()).length >= settings.intSize && 
+				  (input.getSelection().start < (input.val()).length - settings.precision)) {
 					return false;
 				}
 
