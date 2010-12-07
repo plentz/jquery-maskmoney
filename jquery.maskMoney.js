@@ -1,5 +1,9 @@
-/* Adapted script to support for caret positioning and plus/minus sign
- * Also including fieldSelection plugin to allow caret position
+/* 
+ * Adapted script to support for other usages.
+ *  - Copy/paste
+ *  - Cursor positioning
+ *  - Integer part limiting
+ *  - dot/comma jump to decimal part
  */
  
 /*
@@ -9,7 +13,7 @@
 
 
 /*
-* @Copyright (c) 2010 AurÃ©lio Saraiva, Diego Plentz
+* @Copyright (c) 2010 Aurélio Saraiva, Diego Plentz
 * @Page http://github.com/plentz/jquery-maskmoney
 * try at http://inoveideia.com.br/maskInputMoney/
 
@@ -128,7 +132,7 @@
 	/**
 	 * main entry point
 	 */
-	$.fn.mask = function(settings) {
+	$.fn.maskMoney= function(settings) {
 		settings = $.extend({
 			symbol: '€ ',
 			decimal: ',',
@@ -453,7 +457,7 @@
 			input.bind('blur', blurEvent);
 			input.bind('focus', focusEvent);
 
-			input.one('unmask',function() {
+			input.one('unmaskMoney',function() {
 				input.unbind('focus', focusEvent);
 				input.unbind('blur', blurEvent);
 				input.unbind('keypress', keypressEvent);
