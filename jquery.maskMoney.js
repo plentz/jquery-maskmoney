@@ -287,6 +287,13 @@
 					preventDefault(e);
 					//handle differences in decimals
 					pasteValue(trimInput(input.val()));
+				} else {
+					//handles selection and then keying something
+					var currVal = input.val();				
+					var caretPos = input.getSelection().start;
+					var initialLength = currVal.length;
+					input.val(maskValue(currVal));
+					input.setCaretPosition(caretPos + (input.val().length - initialLength));
 				}
 			}
 			
