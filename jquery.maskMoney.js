@@ -259,7 +259,7 @@
 				
 				//cents - in this mode we overwrite existing cents value				
 				//at the end of input && replaceCents mode, do nothing
-				if(caretPos == initialLength) {
+				if(caretPos == initialLength && currVal.indexOf(settings.decimal) != -1) {
 					return false;
 				}				
 				// this way the value doesn't grow
