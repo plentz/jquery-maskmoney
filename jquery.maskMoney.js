@@ -275,6 +275,8 @@
 					//set caret at original pos
 					input.setCaretPosition(caretPos + (input.val().length - initialLength));
 				}
+				//trigger new event to force bubbling for other listeners
+				input.change();
 			}
 			
 			//detects paste, reformats input
