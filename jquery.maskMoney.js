@@ -312,6 +312,7 @@
 			
 			//
 			function replaceAll(src, stringToFind, stringToReplace){
+                          if(stringToFind == '' || src == '') return src;
 			  var temp = src;
 			  var index = temp.indexOf(stringToFind);
 			  	while(index != -1){
@@ -353,11 +354,11 @@
 					pasteValue(input.val());
 					//input.val(setSymbol(maskValue(input.val())));
 				}
-                if (this.createTextRange) {
-                    var textRange = this.createTextRange();
-                    textRange.collapse(false); // set the cursor at the end of the input
-                    textRange.select();
-                }                
+                                if (this.createTextRange) {
+                                    var textRange = this.createTextRange();
+                                    textRange.collapse(false); // set the cursor at the end of the input
+                                    textRange.select();
+                                }                
 				//position cursor right after separator
 				input.setCaretPosition(input.val().length - (settings.precision + 1));
 			}
@@ -405,7 +406,7 @@
 
 				for (var i = 0; i<len; i++) {
 					if ((v.charAt(i)!='0') && (v.charAt(i)!=settings.decimal)) break;
-                }
+                                }
 
 				for (; i<len; i++) {
 					if (strCheck.indexOf(v.charAt(i))!=-1) a+= v.charAt(i);
@@ -415,7 +416,7 @@
 				n = isNaN(n) ? 0 : n/Math.pow(10,settings.precision);
 				t = n.toFixed(settings.precision);
 
-                i = settings.precision == 0 ? 0 : 1;
+                                i = settings.precision == 0 ? 0 : 1;
 				var p, d = (t=t.split('.'))[i].substr(0,settings.precision);
 				for (p = (t=t[0]).length; (p-=3)>=1;) {
 					t = t.substr(0,p)+settings.thousands+t.substr(p);
