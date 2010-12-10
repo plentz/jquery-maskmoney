@@ -151,7 +151,7 @@
 			
 			//handles special keys
 			function keydownEvent(e) {			
-				if(!canMask()) {preventDefault(e);return false;}
+				if(!canMask()) {return true;}//pass-through tab,arrows,etc
 				
 				e = e||window.event;
 				var k = e.charCode||e.keyCode||e.which;
@@ -372,9 +372,10 @@
 
 			//handles unmasking
 			function blurEvent(e) {
-                if ($.browser.msie) {
-                    keypressEvent(e);
-                }
+                                if(!canMask()) {return true;}
+                                if ($.browser.msie) {
+                                        keypressEvent(e);
+                                }
 
 				if (input.val()==setSymbol(getDefaultMask())) {
 					if(!settings.allowZero) input.val('');
@@ -430,8 +431,8 @@
 				}
 
 				return (settings.precision>0)
-                    ? setSymbol(neg+t+settings.decimal+d+Array((settings.precision+1)-d.length).join(0))
-                    : setSymbol(neg+t);
+                                    ? setSymbol(neg+t+settings.decimal+d+Array((settings.precision+1)-d.length).join(0))
+                                    : setSymbol(neg+t);
 			}
 
 			function getDefaultMask() {
@@ -475,9 +476,9 @@
 				input.unbind('keydown', keydownEvent);
 
 				if ($.browser.msie) {
-                    this.onpaste= null;
+                                       this.onpaste= null;
 				} else if ($.browser.mozilla) {
-                    this.removeEventListener('input',blurEvent,false);
+                                       this.removeEventListener('input',blurEvent,false);
                 }
 			});
 		});
