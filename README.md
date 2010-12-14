@@ -24,7 +24,8 @@ Default options are (but you can always change that):
 	thousands:',',
 	allowZero:false,
 	allowNegative:false,
-	showSymbol:false
+	showSymbol:false,
+	symbolStay:false
 
 ***
 ### Contributors:

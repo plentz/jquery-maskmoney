@@ -37,7 +37,8 @@
 			thousands:',',
 			allowZero:false,
 			allowNegative:false,
-			showSymbol:false
+			showSymbol:false,
+			symbolStay:false
 		}, settings);
 
 		return this.each(function() {
@@ -98,7 +99,7 @@
 				if (input.val()==setSymbol(getDefaultMask())) {
 					if(!settings.allowZero) input.val('');
 				} else {
-					input.val(input.val().replace(settings.symbol,''));
+					if (!settings.symbolStay) input.val(input.val().replace(settings.symbol,''));
 				}
 			}
 
