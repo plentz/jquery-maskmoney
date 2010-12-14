@@ -72,7 +72,7 @@
 			}
 
 			function focusEvent(e) {
-				if (input.val()=='') {
+				if (input.val()==''&&settings.defaultZero) {
 					input.val(setSymbol(getDefaultMask()));
 				} else {
 					input.val(setSymbol(input.val()));
