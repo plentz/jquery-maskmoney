@@ -58,7 +58,9 @@
 					if (k==43) { // +(plus) key
 						input.val(input.val().replace('-',''));
 						return false;
-					} else	{
+					} else if (k==13) { // enter key
+						return true;
+					} else { // any other key with keycode less than 48 and greater than 57
 						preventDefault(e);
 						return true;
 					}
