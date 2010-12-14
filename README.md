@@ -28,7 +28,7 @@ Default options are (but you can always change that):
 
 ***
 ### Contributors:
- * [Aurélio Saraiva](aureliosaraiva@gmail.com)
+ * [Aurélio Saraiva](mailto:aureliosaraiva@gmail.com)
  * [Raul Pereira da Silva](http://raulpereira.com)
  * [Diego Plentz](http://plentz.org)
  * Otávio Ribeiro Medeiros
