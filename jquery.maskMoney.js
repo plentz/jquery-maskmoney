@@ -50,7 +50,7 @@
 				var k = e.charCode||e.keyCode||e.which;
 				if (k == undefined) return; //needed to handle an IE "special" event
 
-				if (k<48||k>57) {
+				if (k<48||k>57) { // any key except the numbers 0-9
 					if (k==45) { // -(minus) key
 						input.val(changeSign(input));
 						return false;
