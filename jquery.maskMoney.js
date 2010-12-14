@@ -40,8 +40,6 @@
 			showSymbol:false
 		}, settings);
 
-		settings.symbol=settings.symbol+' ';
-
 		return this.each(function() {
 			var input = $(this);
 
