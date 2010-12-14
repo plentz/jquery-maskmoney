@@ -93,6 +93,7 @@
 					if(!settings.allowZero) input.val('');
 				} else {
 					if (!settings.symbolStay) input.val(input.val().replace(settings.symbol,''));
+					else if (settings.symbolStay&&input.val()==settings.symbol) input.val('');
 				}
 			}
 
