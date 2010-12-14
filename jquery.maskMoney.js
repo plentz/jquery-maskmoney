@@ -159,7 +159,7 @@
 
 			function setSymbol(v) {
 				if (settings.showSymbol) {
-					return settings.symbol+v;
+					if (v.substr(0, settings.symbol.length) != settings.symbol) return settings.symbol+v;
 				}
 				return v;
 			}
