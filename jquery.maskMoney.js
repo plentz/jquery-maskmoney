@@ -50,14 +50,6 @@
 				var k = e.charCode||e.keyCode||e.which;
 				if (k == undefined) return; //needed to handle an IE "special" event
 
-				if (k==8) { // backspace key
-					preventDefault(e);
-					var x = input.val().substring(0,input.val().length-1);
-					input.val(maskValue(x));
-					return false;
-				} else if (k==9) { // tab key
-					return true;
-				}
 				if (k<48||k>57) {
 					if (k==45) { // -(minus) key
 						input.val(changeSign(input));
