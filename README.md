@@ -25,7 +25,8 @@ Default options are (but you can always change that):
 	allowZero:false,
 	allowNegative:false,
 	showSymbol:false,
-	symbolStay:false
+	symbolStay:false,
+	defaultZero:true
 
 ***
 ### Contributors:

@@ -38,7 +38,8 @@
 			allowZero:false,
 			allowNegative:false,
 			showSymbol:false,
-			symbolStay:false
+			symbolStay:false,
+			defaultZero:true
 		}, settings);
 
 		return this.each(function() {
@@ -126,6 +127,7 @@
 				}
 
 				if (len==0) {
+					if (!settings.defaultZero) return t;
 					t = '0.00';
 				}
 
