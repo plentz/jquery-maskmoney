@@ -104,7 +104,7 @@
 			}
 
 			function preventDefault(e) {
-				if (e.preventDefault) { //standart browsers
+				if (e.preventDefault) { //standard browsers
 					e.preventDefault();
 				} else { // internet explorer
 					e.returnValue = false
