@@ -98,7 +98,7 @@
 						// Remove single character
 						x.value = x.value.substring(0, startPos - 1) + x.value.substring(endPos, x.value.length);
 						startPos = startPos - 1;
-			}
+					}
 					else
 					{
 						// Remove multiple characters
