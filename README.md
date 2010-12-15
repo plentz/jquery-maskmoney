@@ -35,6 +35,7 @@ Default options are (but you can always change that):
  * [Diego Plentz](http://plentz.org)
  * Otávio Ribeiro Medeiros
  * [xtream](http://github.com/xtream)
+ * [Synapse Studios](http://github.com/synapsestudios)
 
 ***
 ### License:
