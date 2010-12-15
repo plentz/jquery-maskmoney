@@ -66,11 +66,65 @@
 					}
 				} else if (input.val().length==input.attr('maxlength')) {
 					return false;
-				}
+				} else {
+					preventDefault(e);
 
-				var key = String.fromCharCode(k);
+					var key = String.fromCharCode(k);
+					var x = input.get(0);
+					var selection = input.getInputSelection(x);
+					var startPos = selection.start;
+					var endPos = selection.end;
+					x.value = x.value.substring(0, startPos) + key + x.value.substring(endPos, x.value.length);
+					maskAndPosition(x, startPos + 1);
+					return false;
+				}
+			}
+
+			function keydownEvent(e) {
+				e = e||window.event;
+				var k = e.charCode||e.keyCode||e.which;
+				if (k == undefined) return false; //needed to handle an IE "special" event
+
+				var x = input.get(0);
+				var selection = input.getInputSelection(x);
+				var startPos = selection.start;
+				var endPos = selection.end;
+				
+				if (k==8) { // backspace key
 				preventDefault(e);
-				input.val(maskValue(input.val()+key));
+
+					if(startPos == endPos)
+					{
+						// Remove single character
+						x.value = x.value.substring(0, startPos - 1) + x.value.substring(endPos, x.value.length);
+						startPos = startPos - 1;
+			}
+					else
+					{
+						// Remove multiple characters
+						x.value = x.value.substring(0, startPos) + x.value.substring(endPos, x.value.length);
+					}
+					maskAndPosition(x, startPos);
+					return false;
+				} else if (k==9) { // tab key
+					return true;
+				} else if (k==46||k==63272) { // delete key (with special case for safari)
+					preventDefault(e);
+					if(x.selectionStart == x.selectionEnd)
+					{
+						// Remove single character
+						x.value = x.value.substring(0, startPos) + x.value.substring(endPos + 1, x.value.length);
+					}
+					else
+					{
+						//Remove multiple characters
+						x.value = x.value.substring(0, startPos) + x.value.substring(endPos, x.value.length);
+					}
+					maskAndPosition(x, startPos);
+					return false;
+				} else { // any other key
+					return true;
+				}
 			}
 
 			function focusEvent(e) {
