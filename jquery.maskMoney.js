@@ -107,6 +107,14 @@
 				}
 			}
 
+			function maskAndPosition(x, startPos) {
+				var originalLen = input.val().length;
+				input.val(maskValue(x.value));
+				var newLen = input.val().length;
+				startPos = startPos - (originalLen - newLen);
+				input.setCursorPosition(startPos);
+			}
+
 			function maskValue(v) {
 				v = v.replace(settings.symbol,'');
 
