@@ -237,12 +237,14 @@
 			}
 
 			input.bind('keypress',keypressEvent);
+			input.bind('keydown',keydownEvent);
 			input.bind('blur',blurEvent);
 			input.bind('focus',focusEvent);
 
 			input.one('unmaskMoney',function() {
 				input.unbind('focus',focusEvent);
 				input.unbind('blur',blurEvent);
+				input.unbind('keydown',keydownEvent);
 				input.unbind('keypress',keypressEvent);
 
 				if ($.browser.msie) {
