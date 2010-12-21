@@ -386,7 +386,7 @@
                 }*/
 
 				if (input.val() == setSymbol(getDefaultMask())) {
-					if(!settings.allowZero) input.val('');
+					if(!settings.allowZero || !hasChanged) input.val('');
 				} 
 				else if(!hasChanged) {
 					input.val(input.val().replace(settings.symbol,''));
