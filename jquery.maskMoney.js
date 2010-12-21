@@ -5,6 +5,7 @@
  *  - Integer part limiting
  *  - dot/comma jump to decimal part
  */
+
  
 /*
  * jQuery plugin: fieldSelection - v0.1.0 - last change: 2006-12-16
@@ -132,14 +133,14 @@
 	/**
 	 * main entry point
 	 */
-	$.fn.maskMoney= function(settings) {
+	$.fn.maskMoney = function(settings) {
 		settings = $.extend({
 			symbol: '€ ',
 			decimal: ',',
 			thousands:'.',
 			precision: 2,
 			intSize: 20,
-			allowZero: false,
+			allowZero: true,
 			allowNegative: false,
 			showSymbol: false
 		}, settings);
@@ -147,11 +148,12 @@
 		
 		return this.each(function() {
 			var input = $(this);
+			var hasChanged = false;
 			//input size overrides settings
 			
 			//handles special keys
-			function keydownEvent(e) {			
-				if(!canMask()) {return true;}//pass-through tab,arrows,etc
+			function keydownEvent(e) {							
+				if(!canMask()) {return true;}//pass-through tab, arrows, etc}
 				
 				e = e||window.event;
 				var k = e.charCode||e.keyCode||e.which;
@@ -169,20 +171,22 @@
 					preventDefault(e);					
 					
 					//bookeeping
-					var initialLength = input.val().length;
+					var initialVal = input.val();
+					var initialLength = initialVal.length;
 					var caretPos = input.getSelection().start;
 					//detect the char we're trying to remove
 					var targetPos = caretPos + (isBackspace ? -1 : 0);
-					var chr = input.val().charAt(targetPos);
-					if(isNaN(chr)) targetPos = targetPos  + (isBackspace ? -1 : 1);					
+					var chr = initialVal.charAt(targetPos);
+					if(targetPos < initialLength && isNaN(chr)) targetPos = targetPos  + (isBackspace ? -1 : 1);					
 										
 					//delete decimals
 					//we can be either at the RIGHT of the separator 
 					// OR at the immediate LEFT of separater and pressed the DEL key
 					if(caretPos >= (initialLength - settings.precision) || 
-					  (!isBackspace && chr === settings.decimal && caretPos == (initialLength - settings.precision - 1))) {		
-					  
-						input.val(maskValue(input.val().replaceAt(targetPos,'0')));	
+					  (!isBackspace && chr === settings.decimal && caretPos == (initialLength - settings.precision - 1))) {	
+						if(targetPos >= initialLength) return;
+						
+						input.val(maskValue(input.val().replaceAt(targetPos,'0')));
 						//if we DELETE a decimal sign, we move 2 places instead of only one
 						input.setCaretPosition(caretPos + (isBackspace ? -1 : (chr === settings.decimal ? 2 : 1) ));
 					}					
@@ -196,7 +200,7 @@
 			}
 
 			//handles 'visible' keys
-			function keypressEvent(e) {			
+			function keypressEvent(e) {		
 				if(!canMask()) {preventDefault(e);return false;}
 				
 				e = e||window.event;
@@ -276,6 +280,7 @@
 					input.setCaretPosition(caretPos + (input.val().length - initialLength));
 				}
 				//trigger new event to force bubbling for other listeners
+				hasChanged = true;
 				input.change();
 			}
 			
@@ -287,6 +292,7 @@
 					preventDefault(e);
 					//handle differences in decimals
 					pasteValue(trimInput(input.val()));
+					hasChanged = true;
 				} else {
 					//handles selection and then keying something
 					var currVal = input.val();				
@@ -294,6 +300,7 @@
 					var initialLength = currVal.length;
 					input.val(maskValue(currVal));
 					input.setCaretPosition(caretPos + (input.val().length - initialLength));
+					hasChanged = true;
 				}
 			}
 			
@@ -319,7 +326,7 @@
 			
 			//
 			function replaceAll(src, stringToFind, stringToReplace){
-                          if(stringToFind == '' || src == '') return src;
+			  if(stringToFind == '' || src == '') return src;
 			  var temp = src;
 			  var index = temp.indexOf(stringToFind);
 			  	while(index != -1){
@@ -351,37 +358,41 @@
 					}
 				}
 				input.val(maskValue(currVal));
+				hasChanged = true;
 			}
 
 			//handles masking and caret position on focus
 			function focusEvent(e) {
+				if(!canMask()) {return true;}
+				
 				if (input.val()=='') {
 					input.val(setSymbol(getDefaultMask()));
 				} else {
 					pasteValue(input.val());
-					//input.val(setSymbol(maskValue(input.val())));
 				}
-                                if (this.createTextRange) {
-                                    var textRange = this.createTextRange();
-                                    textRange.collapse(false); // set the cursor at the end of the input
-                                    textRange.select();
-                                }                
+                if (this.createTextRange) {
+                    var textRange = this.createTextRange();
+                    textRange.collapse(false); // set the cursor at the end of the input
+                    textRange.select();
+                }                
 				//position cursor right after separator
 				input.setCaretPosition(input.val().length - (settings.precision + 1));
 			}
 
 			//handles unmasking
 			function blurEvent(e) {
-                                if(!canMask()) {return true;}
-                                if ($.browser.msie) {
-                                        keypressEvent(e);
-                                }
+                /*if ($.browser.msie) {
+                    keypressEvent(e);
+                }*/
 
-				if (input.val()==setSymbol(getDefaultMask())) {
+				if (input.val() == setSymbol(getDefaultMask())) {
 					if(!settings.allowZero) input.val('');
-				} else {
+				} 
+				else if(!hasChanged) {
 					input.val(input.val().replace(settings.symbol,''));
 				}
+				//bubble
+				return true;
 			}
 
 			//prevents default evt handling
@@ -414,7 +425,7 @@
 
 				for (var i = 0; i<len; i++) {
 					if ((v.charAt(i)!='0') && (v.charAt(i)!=settings.decimal)) break;
-                                }
+                }
 
 				for (; i<len; i++) {
 					if (strCheck.indexOf(v.charAt(i))!=-1) a+= v.charAt(i);
@@ -424,15 +435,15 @@
 				n = isNaN(n) ? 0 : n/Math.pow(10,settings.precision);
 				t = n.toFixed(settings.precision);
 
-                                i = settings.precision == 0 ? 0 : 1;
+                i = settings.precision == 0 ? 0 : 1;
 				var p, d = (t=t.split('.'))[i].substr(0,settings.precision);
 				for (p = (t=t[0]).length; (p-=3)>=1;) {
 					t = t.substr(0,p)+settings.thousands+t.substr(p);
 				}
 
 				return (settings.precision>0)
-                                    ? setSymbol(neg+t+settings.decimal+d+Array((settings.precision+1)-d.length).join(0))
-                                    : setSymbol(neg+t);
+                    ? setSymbol(neg+t+settings.decimal+d+Array((settings.precision+1)-d.length).join(0))
+                    : setSymbol(neg+t);
 			}
 
 			function getDefaultMask() {
@@ -461,12 +472,14 @@
 			
 			//indicates if the input is 'maskeable'
 			function canMask(){ return !(input.attr('disabled') || input.attr('readonly'));}
-						
+			
+			//unmask old listeners
+			if(typeof(input.unmaskMoney) != 'undefined') input.unmaskMoney();
+			
 			input.bind('keydown', keydownEvent);
 			input.bind('keypress', keypressEvent);			
 			input.bind('keyup', pasteEvent);	
-			
-			input.bind('blur', blurEvent);
+			input.bind('blur', blurEvent); //blur causes problems
 			input.bind('focus', focusEvent);
 
 			input.one('unmaskMoney',function() {
@@ -476,13 +489,13 @@
 				input.unbind('keydown', keydownEvent);
 
 				if ($.browser.msie) {
-                                       this.onpaste= null;
+                    this.onpaste= null;
 				} else if ($.browser.mozilla) {
-                                       this.removeEventListener('input',blurEvent,false);
+                    this.removeEventListener('input',blurEvent,false);
                 }
 			});
 		});
 	}
 
-	$.fn.unmask = function() {return this.trigger('unmask');};
+	$.fn.unmaskMoney = function() {return this.trigger('unmaskMoney');};
 })(jQuery);
