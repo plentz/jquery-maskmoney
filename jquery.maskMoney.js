@@ -6,6 +6,9 @@
  *  - dot/comma jump to decimal part
  */
 
+/* Adapted script to support for caret positioning and plus/minus sign
+ * Also including fieldSelection plugin to allow caret position
+ */
  
 /*
  * jQuery plugin: fieldSelection - v0.1.0 - last change: 2006-12-16
@@ -141,14 +144,15 @@
 			precision: 2,
 			intSize: 20,
 			allowZero: true,
-			allowNegative: false,
+			allowNegative: true,
 			showSymbol: false
 		}, settings);
 
 		
 		return this.each(function() {
 			var input = $(this);
-			var hasChanged = false;
+			
+			input.data('hasChanged', false);
 			//input size overrides settings
 			
 			//handles special keys
@@ -255,6 +259,7 @@
 				}
 
 				preventDefault(e);
+				input.data('hasChanged', true);
 				
 				var key = String.fromCharCode(k);
 				var currVal = input.val();				
@@ -280,7 +285,7 @@
 					input.setCaretPosition(caretPos + (input.val().length - initialLength));
 				}
 				//trigger new event to force bubbling for other listeners
-				hasChanged = true;
+				
 				input.change();
 			}
 			
@@ -292,7 +297,7 @@
 					preventDefault(e);
 					//handle differences in decimals
 					pasteValue(trimInput(input.val()));
-					hasChanged = true;
+					
 				} else {
 					//handles selection and then keying something
 					var currVal = input.val();				
@@ -300,7 +305,7 @@
 					var initialLength = currVal.length;
 					input.val(maskValue(currVal));
 					input.setCaretPosition(caretPos + (input.val().length - initialLength));
-					hasChanged = true;
+					
 				}
 			}
 			
@@ -358,7 +363,7 @@
 					}
 				}
 				input.val(maskValue(currVal));
-				hasChanged = true;
+				
 			}
 
 			//handles masking and caret position on focus
@@ -386,9 +391,9 @@
                 }*/
 
 				if (input.val() == setSymbol(getDefaultMask())) {
-					if(!settings.allowZero || !hasChanged) input.val('');
+					if(!settings.allowZero || !input.data('hasChanged')) input.val('');
 				} 
-				else if(!hasChanged) {
+				else {
 					input.val(input.val().replace(settings.symbol,''));
 				}
 				//bubble
@@ -440,7 +445,7 @@
 				for (p = (t=t[0]).length; (p-=3)>=1;) {
 					t = t.substr(0,p)+settings.thousands+t.substr(p);
 				}
-
+				
 				return (settings.precision>0)
                     ? setSymbol(neg+t+settings.decimal+d+Array((settings.precision+1)-d.length).join(0))
                     : setSymbol(neg+t);
