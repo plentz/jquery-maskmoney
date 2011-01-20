@@ -52,6 +52,24 @@
 	String.prototype.replaceAt=function(index, char) {
 		return this.substr(0, index) + char + this.substr(index + (char.length == 0 ? 1 : char.length) );
 	}
+	
+	// selects all text of an input
+	$.fn.selectAll = function(start, end) {
+	    return this.each(function() {
+	    	var from = start |= 0;
+	    	var to = end |= $(this).val().length
+	        if(this.setSelectionRange) {
+	            this.focus();
+	            this.setSelectionRange(from, to);
+	        } else if(this.createTextRange) {
+	            var range = this.createTextRange();	            
+	            range.collapse(true);
+	            range.moveStart('character', from);
+	            range.moveEnd('character', to);
+	            range.select();
+	        }
+	    });
+	};
 
 	//returns caret position
 	$.fn.getSelection = function() {
@@ -148,31 +166,47 @@
 			showSymbol: false
 		}, settings);
 
-		
+		//main declaration
 		return this.each(function() {
 			var input = $(this);
 			
-			input.data('hasChanged', false);
-			//input size overrides settings
+			input.data('hasChanged', false);		
+			input.data('canMask', true);		
 			
-			//handles special keys
-			function keydownEvent(e) {							
-				if(!canMask()) {return true;}//pass-through tab, arrows, etc}
+			// handles special keys
+			// responsible for delete, dot/comma, backspace, etc
+			function keydownEvent(e) {	
+				//if the field is disabled, we let the event bubble up
+				if(!isEnabled()) {return true;}
+				
+				// reset maskeable attr
+				// if someone set the property to false, 
+				// we reset it because another key was pressed
+				input.data('canMask', true);
 				
 				e = e||window.event;
 				var k = e.charCode||e.keyCode||e.which;
 				if (k == undefined) return; //needed to handle an IE "special" event
-				
-				//let the pasteEvent() handle selections
-				if(input.getSelection().length > 0) return true;
-				
+			
 				//modifiers allowed, do the normal thing
 				if(e.ctrlKey || e.altKey) return true;
 				
 				// backspace|delete key
 				if (k == 8 || k == 46) {
 					var isBackspace = (k == 8);		
-					preventDefault(e);					
+					preventDefault(e);	
+					
+					//if a selection/text range is active
+					if(input.getSelection().length > 0) {
+						// if we selected ALL of the text's value 
+						// remember a backspace/delete key was detected
+						// we need to clear the field and prevent the other keyXXX handlers of firing
+						if(input.getSelection().length == input.val().length) {
+							input.val('');
+							input.data('canMask',false);
+						}
+						return true;
+					}
 					
 					//bookeeping
 					var initialVal = input.val();
@@ -186,8 +220,9 @@
 					//delete decimals
 					//we can be either at the RIGHT of the separator 
 					// OR at the immediate LEFT of separater and pressed the DEL key
-					if(caretPos >= (initialLength - settings.precision) || 
-					  (!isBackspace && chr === settings.decimal && caretPos == (initialLength - settings.precision - 1))) {	
+					if((settings.precision > 0 && caretPos >= (initialLength - settings.precision)) 
+					   || (!isBackspace && chr === settings.decimal && caretPos == (initialLength - settings.precision - 1))) {	
+						
 						if(targetPos >= initialLength) return;
 						
 						input.val(maskValue(input.val().replaceAt(targetPos,'0')));
@@ -203,9 +238,10 @@
 				}
 			}
 
-			//handles 'visible' keys
-			function keypressEvent(e) {		
-				if(!canMask()) {preventDefault(e);return false;}
+			// handles 'visible' keys
+			// numbers and such
+			function keypressEvent(e) {
+				if(!isEnabled() || !input.data('canMask')) {preventDefault(e);return false;}
 				
 				e = e||window.event;
 				var k = e.charCode||e.keyCode||e.which;
@@ -213,8 +249,24 @@
 				//special case...
 				if(k == 0) { preventDefault(e);return false; }
 				
-				//let the pasteEvent() handle selections
-				if(input.getSelection().length > 0) return true;
+				var isNumberOrDecimal = ((k >= 48 && k <=57) || ((e.which == 46 && k == 46) || k == 44));
+				// if we have all text selectioned and pressed either a number or a decimal sep
+				if(input.getSelection().length > 0 && isNumberOrDecimal) {					
+					// ticket #32: if all of the field is selected, clear all and start from decimal sep
+					if(input.getSelection().length == input.val().length) {
+						var isPositionAtDecimals = (settings.decimal == '' || (e.which == 46 && k == 46) || k == 44);
+						var key = String.fromCharCode(k);
+						var val = getDefaultMask();
+						// if it's a number, we write the value directly and prevent the bubbling
+						// so the value change looks smoother
+						if(!isNaN(key)) { val = val.replaceAt(0, key); }
+						
+						input.val(setSymbol(val));
+						input.setCaretPosition(input.val().length - (settings.precision + (isPositionAtDecimals ? 0 : 1)));
+						return false;
+					}
+					return true;
+				}
 				
 				//modifiers allowed, do the normal thing
 				if(e.ctrlKey || e.altKey) return true;
@@ -222,9 +274,9 @@
 				//home || end || delete(46) (delete requires special treatment to differentiate the (.)  )
 				if(k == 35 || k == 36) return true;
 				
-				//dot?(46) || comma (44)
-				//first condition is to fix some IE/FFox issues
-				if((e.which == 46 && k == 46) || k == 44) {					
+				// dot?(46) || comma (44)
+				// first condition is to fix some IE/FFox issues
+				if((e.which == 46 && k == 46) || k == 44) {		
 					input.setCaretPosition(input.val().length - settings.precision);
 					return false;
 				}				
@@ -252,9 +304,11 @@
 				if (input.val().length == input.attr('maxlength')) {
 					return false;
 				}
-				//intSize reached
-				if(integerPart(input.val()).length >= settings.intSize && 
-				  (input.getSelection().start < (input.val()).length - settings.precision)) {
+				
+				// intSize reached 
+				// even if I remove my curr selected text, if it overflows return false
+				var sel = input.getSelection();
+				if(integerPart(input.val()).length >= settings.intSize && ((sel.end - sel.start) < (input.val()).length - settings.precision)) {
 					return false;
 				}
 
@@ -268,12 +322,12 @@
 				
 				//cents - in this mode we overwrite existing cents value				
 				//at the end of input && replaceCents mode, do nothing
-				if(caretPos == initialLength && currVal.indexOf(settings.decimal) != -1) {
+				if(caretPos == initialLength && settings.decimal !=='' && currVal.indexOf(settings.decimal) != -1) {
 					return false;
 				}				
 				// this way the value doesn't grow
 				else if (caretPos >= (initialLength - settings.precision)) {
-					input.val(currVal.replaceAt(caretPos, key));
+					input.val(maskValue(currVal.replaceAt(caretPos, key)));
 					input.setCaretPosition(caretPos + 1);
 				}				
 				//non-cents
@@ -289,17 +343,25 @@
 				input.change();
 			}
 			
-			//detects paste, reformats input
-			function pasteEvent(e) {	
-				if(!canMask()) {preventDefault(e);return false;}
+			// handles keyup events
+			// detects paste (because of the ctrlKey), reformats input
+			function keyupEvent(e) {	
+				if(!isEnabled() || !input.data('canMask')) {preventDefault(e);return false;}
+				//read char
+				var k = e.charCode||e.keyCode||e.which;
+				if (k == undefined) return true;				
+				if (k == 0) { preventDefault(e);return false; }
 				
 				if(e.ctrlKey) {
 					preventDefault(e);
 					//handle differences in decimals
 					pasteValue(trimInput(input.val()));
-					
-				} else {
-					//handles selection and then keying something
+				} 
+				else if(e.shiftKey || k==9 || k==16) { // Tab || shift 
+					return true;
+				}
+				else if(input.val() !== getDefaultMask()) {
+					// handles selection and then keying something
 					var currVal = input.val();				
 					var caretPos = input.getSelection().start;
 					var initialLength = currVal.length;
@@ -319,10 +381,9 @@
 				return v;
 			}
 			
-			//gives the integer part
-			function integerPart() {
-				var v = input.val();
-				if(v.indexOf(settings.decimal) >= 0) {
+			// gives the integer part
+			function integerPart(v) {
+				if(settings.decimal !== '' && v.indexOf(settings.decimal) >= 0) {
 					v = v.substr(0, v.indexOf(settings.decimal));
 				}
 				v = replaceAll(v, settings.thousands, '');
@@ -345,10 +406,18 @@
 			function pasteValue(v) {
 				//handle differences in decimals
 				var currVal = v;
-				var decimalSep = currVal.lastIndexOf(settings.decimal);
+				// #1399 fix decimal sep
+				// "massage" val to make it nicer to process 
+				currVal = v.replace(/,/gi, settings.thousands);
+				currVal = v.replace(/\s/gi, "");
+				if(currVal.lastIndexOf(settings.thousands) > 0) {
+					currVal = currVal.replaceAt(currVal.lastIndexOf(settings.thousands), settings.decimal);
+				}
+				var decimalSep = (settings.decimal === '') ? -1 : currVal.lastIndexOf(settings.decimal);
 				var decimalsLeft = currVal.length - decimalSep - 1;
-				//we may be pasting some text with differences in decimal precision
-				//we will try and preserve the "semantics" of the pasted value
+				// we may be pasting some text with differences in decimal precision
+				// we will try and preserve the "semantics"/"value" of the pasted value
+				// if the field has precision enabled and no decimal separator has been found
 				if( (settings.precision > 0 && decimalSep == -1) || 
 				    (decimalSep > 0 && (decimalsLeft != settings.precision))) {
 											
@@ -368,28 +437,21 @@
 
 			//handles masking and caret position on focus
 			function focusEvent(e) {
-				if(!canMask()) {return true;}
+				if(!isEnabled()) {return true;}
+				
+				//#32 when focus, consider that the field has changed and let the default value stay after blur
+				input.data('hasChanged', true);
 				
 				if (input.val()=='') {
 					input.val(setSymbol(getDefaultMask()));
 				} else {
 					pasteValue(input.val());
 				}
-                if (this.createTextRange) {
-                    var textRange = this.createTextRange();
-                    textRange.collapse(false); // set the cursor at the end of the input
-                    textRange.select();
-                }                
-				//position cursor right after separator
-				input.setCaretPosition(input.val().length - (settings.precision + 1));
+				input.selectAll();
 			}
 
 			//handles unmasking
 			function blurEvent(e) {
-                /*if ($.browser.msie) {
-                    keypressEvent(e);
-                }*/
-
 				if (input.val() == setSymbol(getDefaultMask())) {
 					if(!settings.allowZero || !input.data('hasChanged')) input.val('');
 				} 
@@ -437,7 +499,7 @@
 				}
 
 				var n = parseFloat(a);
-				n = isNaN(n) ? 0 : n/Math.pow(10,settings.precision);
+				n = isNaN(n) ? 0 : n/Math.pow(10,settings.precision); 
 				t = n.toFixed(settings.precision);
 
                 i = settings.precision == 0 ? 0 : 1;
@@ -476,14 +538,14 @@
 			}
 			
 			//indicates if the input is 'maskeable'
-			function canMask(){ return !(input.attr('disabled') || input.attr('readonly'));}
+			function isEnabled(){ return !(input.attr('disabled') || input.attr('readonly')) ;}
 			
 			//unmask old listeners
 			if(typeof(input.unmaskMoney) != 'undefined') input.unmaskMoney();
 			
 			input.bind('keydown', keydownEvent);
 			input.bind('keypress', keypressEvent);			
-			input.bind('keyup', pasteEvent);	
+			input.bind('keyup', keyupEvent);	
 			input.bind('blur', blurEvent); //blur causes problems
 			input.bind('focus', focusEvent);
 
@@ -492,6 +554,9 @@
 				input.unbind('blur', blurEvent);
 				input.unbind('keypress', keypressEvent);
 				input.unbind('keydown', keydownEvent);
+				
+				input.removeAttr('canMask');
+				input.removeAttr('hasChanged');
 
 				if ($.browser.msie) {
                     this.onpaste= null;
