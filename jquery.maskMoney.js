@@ -234,8 +234,9 @@
 						input.val(maskValue(input.val().replaceAt(targetPos,'')));	
 						input.setCaretPosition(caretPos - (initialLength - input.val().length) + (isBackspace ? 0 : 1) );					
 					}
-					return true;
+					
 				}
+                                return true;
 			}
 
 			// handles 'visible' keys
