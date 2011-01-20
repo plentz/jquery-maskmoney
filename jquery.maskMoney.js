@@ -328,6 +328,8 @@
 				}				
 				// this way the value doesn't grow
 				else if (caretPos >= (initialLength - settings.precision)) {
+                                        //fix problem when the field is clear and we start typing
+					if(currVal.trim() === '' ) currVal = getDefaultMask();
 					input.val(maskValue(currVal.replaceAt(caretPos, key)));
 					input.setCaretPosition(caretPos + 1);
 				}				
