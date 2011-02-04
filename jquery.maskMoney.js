@@ -211,6 +211,11 @@
                     : setSymbol(neg+t);
 			}
 
+			function mask() {
+            			var value = input.val();
+            			input.val(maskValue(value));
+        		}
+
 			function getDefaultMask() {
 				var n = parseFloat('0')/Math.pow(10,settings.precision);
 				return (n.toFixed(settings.precision)).replace(new RegExp('\\.','g'),settings.decimal);
@@ -240,6 +245,7 @@
 			input.bind('keydown',keydownEvent);
 			input.bind('blur',blurEvent);
 			input.bind('focus',focusEvent);
+        		input.bind("mask", mask); 
 
 			input.one('unmaskMoney',function() {
 				input.unbind('focus',focusEvent);
