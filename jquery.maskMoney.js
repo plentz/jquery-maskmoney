@@ -49,6 +49,7 @@
 				e = e||window.event;
 				var k = e.charCode||e.keyCode||e.which;
 				if (k == undefined) return false; //needed to handle an IE "special" event
+				if (input.attr('readonly')) return false; // don't allow editing of readonly fields
 
 				if (k<48||k>57) { // any key except the numbers 0-9
 					if (k==45) { // -(minus) key
@@ -84,6 +85,7 @@
 				e = e||window.event;
 				var k = e.charCode||e.keyCode||e.which;
 				if (k == undefined) return false; //needed to handle an IE "special" event
+				if (input.attr('readonly')) return false; // don't allow editing of readonly fields
 
 				var x = input.get(0);
 				var selection = input.getInputSelection(x);
