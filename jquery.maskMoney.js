@@ -58,7 +58,7 @@
 					if (k==43) { // +(plus) key
 						input.val(input.val().replace('-',''));
 						return false;
-					} else if (k==13) { // enter key
+					} else if (k==13||k==9) { // enter and tab keys
 						return true;
 					} else { // any other key with keycode less than 48 and greater than 57
 						preventDefault(e);
@@ -89,7 +89,7 @@
 				var selection = input.getInputSelection(x);
 				var startPos = selection.start;
 				var endPos = selection.end;
-				
+
 				if (k==8) { // backspace key
 				preventDefault(e);
 
@@ -128,22 +128,25 @@
 			}
 
 			function focusEvent(e) {
-				if (input.val()==''&&settings.defaultZero) {
-					input.val(setSymbol(getDefaultMask()));
+				var mask = getDefaultMask();
+				if (input.val()==mask) {
+					input.val('');
+				} else if (input.val()==''&&settings.defaultZero) {
+					input.val(setSymbol(mask));
 				} else {
 					input.val(setSymbol(input.val()));
 				}
-                if (this.createTextRange) {
-                    var textRange = this.createTextRange();
-                    textRange.collapse(false); // set the cursor at the end of the input
-                    textRange.select();
-                }
+				if (this.createTextRange) {
+					var textRange = this.createTextRange();
+					textRange.collapse(false); // set the cursor at the end of the input
+					textRange.select();
+				}
 			}
 
 			function blurEvent(e) {
-                if ($.browser.msie) {
-                    keypressEvent(e);
-                }
+				if ($.browser.msie) {
+					keypressEvent(e);
+				}
 
 				if (input.val()==setSymbol(getDefaultMask())) {
 					if(!settings.allowZero) input.val('');
@@ -190,7 +193,7 @@
 
 				for (var i = 0; i<len; i++) {
 					if ((v.charAt(i)!='0') && (v.charAt(i)!=settings.decimal)) break;
-                }
+				}
 
 				for (; i<len; i++) {
 					if (strCheck.indexOf(v.charAt(i))!=-1) a+= v.charAt(i);
@@ -200,15 +203,15 @@
 				n = isNaN(n) ? 0 : n/Math.pow(10,settings.precision);
 				t = n.toFixed(settings.precision);
 
-                i = settings.precision == 0 ? 0 : 1;
+				i = settings.precision == 0 ? 0 : 1;
 				var p, d = (t=t.split('.'))[i].substr(0,settings.precision);
 				for (p = (t=t[0]).length; (p-=3)>=1;) {
 					t = t.substr(0,p)+settings.thousands+t.substr(p);
 				}
 
 				return (settings.precision>0)
-                    ? setSymbol(neg+t+settings.decimal+d+Array((settings.precision+1)-d.length).join(0))
-                    : setSymbol(neg+t);
+					? setSymbol(neg+t+settings.decimal+d+Array((settings.precision+1)-d.length).join(0))
+					: setSymbol(neg+t);
 			}
 
 			function getDefaultMask() {
@@ -248,10 +251,10 @@
 				input.unbind('keypress',keypressEvent);
 
 				if ($.browser.msie) {
-                    this.onpaste= null;
+					this.onpaste= null;
 				} else if ($.browser.mozilla) {
-                    this.removeEventListener('input',blurEvent,false);
-                }
+					this.removeEventListener('input',blurEvent,false);
+				}
 			});
 		});
 	}
@@ -259,7 +262,7 @@
 	$.fn.unmaskMoney=function() {
 		return this.trigger('unmaskMoney');
 	};
-	
+
 	$.fn.setCursorPosition = function(pos) {
 		this.each(function(index, elem) {
 			if (elem.setSelectionRange) {
@@ -275,7 +278,7 @@
 		});
 		return this;
 	};
-	
+
 	$.fn.getInputSelection = function(el) {
 		var start = 0, end = 0, normalizedValue, range, textInputRange, len, endRange;
 
@@ -320,5 +323,5 @@
 			end: end
 		};
 	}
-	
+
 })(jQuery);
