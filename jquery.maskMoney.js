@@ -89,7 +89,7 @@
 				var selection = input.getInputSelection(x);
 				var startPos = selection.start;
 				var endPos = selection.end;
-				
+
 				if (k==8) { // backspace key
 				preventDefault(e);
 
@@ -259,7 +259,7 @@
 	$.fn.unmaskMoney=function() {
 		return this.trigger('unmaskMoney');
 	};
-	
+
 	$.fn.setCursorPosition = function(pos) {
 		this.each(function(index, elem) {
 			if (elem.setSelectionRange) {
@@ -275,7 +275,7 @@
 		});
 		return this;
 	};
-	
+
 	$.fn.getInputSelection = function(el) {
 		var start = 0, end = 0, normalizedValue, range, textInputRange, len, endRange;
 
@@ -320,5 +320,5 @@
 			end: end
 		};
 	}
-	
+
 })(jQuery);
