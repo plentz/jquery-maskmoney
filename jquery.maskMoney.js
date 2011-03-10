@@ -61,6 +61,8 @@
 						return false;
 					} else if (k==13||k==9) { // enter key or tab key
 						return true;
+					} else if (k==37||k==39) { // left arrow key or right arrow key
+						return true;
 					} else { // any other key with keycode less than 48 and greater than 57
 						preventDefault(e);
 						return true;
