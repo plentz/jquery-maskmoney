@@ -3,7 +3,7 @@ Just a simple way to create masks to your currency form fields with [jQuery](htt
 ***
 ### Usage:
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js" type="text/javascript"></script>
 	<script src="jquery.maskMoney.js" type="text/javascript"></script>
 	<script>
 	$(function(){
