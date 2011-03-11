@@ -132,7 +132,9 @@
 			}
 
 			function focusEvent(e) {
-				if (input.val()==''&&settings.defaultZero) {
+				if (input.val()==''||input.val()==setSymbol(getDefaultMask())) {
+					input.val('');
+				} else if (input.val()==''&&settings.defaultZero) {
 					input.val(setSymbol(getDefaultMask()));
 				} else {
 					input.val(setSymbol(input.val()));
@@ -149,11 +151,13 @@
 					keypressEvent(e);
 				}
 
-				if (input.val()==setSymbol(getDefaultMask())) {
+				if (input.val()==''||input.val()==setSymbol(getDefaultMask())||input.val()==settings.symbol) {
 					if(!settings.allowZero) input.val('');
+					else if (!settings.symbolStay) input.val(getDefaultMask());
+					else input.val(setSymbol(getDefaultMask()));
 				} else {
 					if (!settings.symbolStay) input.val(input.val().replace(settings.symbol,''));
-					else if (settings.symbolStay&&input.val()==settings.symbol) input.val('');
+					else if (settings.symbolStay&&input.val()==settings.symbol) input.val(setSymbol(getDefaultMask()));
 				}
 			}
 
