@@ -25,8 +25,8 @@
 */
 
 /*
-* @Version: 1.0
-* @Release: 2011-04-13
+* @Version: 1.1
+* @Release: 2011-04-14
 */
 (function($) {
 	$.fn.maskMoney = function(settings) {
@@ -49,7 +49,7 @@
 				e = e||window.event;
 				var k = e.charCode||e.keyCode||e.which;
 				if (k == undefined) return false; //needed to handle an IE "special" event
-				if (input.attr('readonly')) return false; // don't allow editing of readonly fields
+				if (input.attr('readonly') && (k!=13&&k!=9)) return false; // don't allow editing of readonly fields but allow tab/enter
 
 				if (k<48||k>57) { // any key except the numbers 0-9
 					if (k==45) { // -(minus) key
@@ -87,7 +87,7 @@
 				e = e||window.event;
 				var k = e.charCode||e.keyCode||e.which;
 				if (k == undefined) return false; //needed to handle an IE "special" event
-				if (input.attr('readonly')) return false; // don't allow editing of readonly fields
+				if (input.attr('readonly') && (k!=13&&k!=9)) return false; // don't allow editing of readonly fields but allow tab/enter
 
 				var x = input.get(0);
 				var selection = input.getInputSelection(x);
@@ -95,16 +95,13 @@
 				var endPos = selection.end;
 
 				if (k==8) { // backspace key
-				preventDefault(e);
+					preventDefault(e);
 
-					if(startPos == endPos)
-					{
+					if(startPos == endPos){
 						// Remove single character
 						x.value = x.value.substring(0, startPos - 1) + x.value.substring(endPos, x.value.length);
 						startPos = startPos - 1;
-					}
-					else
-					{
+					} else {
 						// Remove multiple characters
 						x.value = x.value.substring(0, startPos) + x.value.substring(endPos, x.value.length);
 					}
@@ -114,13 +111,10 @@
 					return true;
 				} else if (k==46||k==63272) { // delete key (with special case for safari)
 					preventDefault(e);
-					if(x.selectionStart == x.selectionEnd)
-					{
+					if(x.selectionStart == x.selectionEnd){
 						// Remove single character
 						x.value = x.value.substring(0, startPos) + x.value.substring(endPos + 1, x.value.length);
-					}
-					else
-					{
+					} else {
 						//Remove multiple characters
 						x.value = x.value.substring(0, startPos) + x.value.substring(endPos, x.value.length);
 					}
