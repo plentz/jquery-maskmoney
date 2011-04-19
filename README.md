@@ -19,6 +19,10 @@ To view a complete demonstration of it's features and usage, access our [demo](h
 	})
 	</script>
 
+
+***
+### Options:
+
 The options that you can set are:
 
  * symbol: the symbol to be used before of the user values. default: 'US$'
