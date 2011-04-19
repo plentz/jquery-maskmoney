@@ -1,41 +1,45 @@
 Just a simple way to create masks to your currency form fields with [jQuery](http://jquery.com/).
 
 ***
+### Show Time!
+
+To view a complete demonstration of it's features and usage, access our [demo](https://github.com/plentz/jquery-maskmoney/raw/master/examples.html)
+
+***
 ### Usage:
 
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js" type="text/javascript"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js" type="text/javascript"></script>
 	<script src="jquery.maskMoney.js" type="text/javascript"></script>
+	<body>
+		<input type="text" id="currency" />
+	</body>
 	<script>
 	$(function(){
 		$("#currency").maskMoney();
-		$("#real").maskMoney({symbol:"R$", decimal:",", thousands:"."});
-		$("#precision").maskMoney({precision:3})
 	})
-	function removeMask(){
-		$("#currency").unmaskMoney();
-	}
 	</script>
 
-Default options are (but you can always change that):
+The options that you can set are:
 
-	symbol:'US$',
-	decimal:'.',
-	precision:2,
-	thousands:',',
-	allowZero:false,
-	allowNegative:false,
-	showSymbol:false,
-	symbolStay:false,
-	defaultZero:true
+ * symbol: the symbol to be used before of the user values. default: 'US$'
+ * showSymbol: set if the symbol must be displayed or not. default: false
+ * symbolStay: set if the symbol will stay in the field after the user exists the field. default: false
+ * thousands: the thousands separator. default: ','
+ * decimal: the decimal separator. default:'.'
+ * precision: how many decimal places are allowed. default: 2
+ * defaultZero: when the user enters the field, it sets a mask using zero. default: true
+ * allowZero: use this setting to prevent users from inputing zero. default: false
+ * allowNegative: use this setting to prevent users from inputing negative values. default: false
 
 ***
 ### Contributors:
  * [Aurélio Saraiva](mailto:aureliosaraiva@gmail.com)
  * [Raul Pereira da Silva](http://raulpereira.com)
  * [Diego Plentz](http://plentz.org)
- * Otávio Ribeiro Medeiros
- * [xtream](http://github.com/xtream)
+ * [Otávio Ribeiro Medeiros](http://github.com/otaviomedeiros)
+ * [Víctor Cruz](http://github.com/xtream)
  * [Synapse Studios](http://github.com/synapsestudios)
+ * [Guilherme Garnier](http://blog.guilhermegarnier.com/)
 
 ***
 ### License:

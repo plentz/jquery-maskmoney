@@ -25,21 +25,21 @@
 */
 
 /*
-* @Version: 1.1
-* @Release: 2011-04-14
+* @Version: 1.2
+* @Release: 2011-04-19
 */
 (function($) {
 	$.fn.maskMoney = function(settings) {
 		settings = $.extend({
-			symbol:'US$',
-			decimal:'.',
-			precision:2,
-			thousands:',',
-			allowZero:false,
-			allowNegative:false,
-			showSymbol:false,
-			symbolStay:false,
-			defaultZero:true
+			symbol: 'US$',
+			showSymbol: false,
+			symbolStay: false,
+			thousands: ',',
+			decimal: '.',
+			precision: 2,
+			defaultZero: true,
+			allowZero: false,
+			allowNegative: false
 		}, settings);
 
 		return this.each(function() {
@@ -126,10 +126,11 @@
 			}
 
 			function focusEvent(e) {
-				if (input.val()==''||input.val()==setSymbol(getDefaultMask())) {
+				var mask = getDefaultMask();
+				if (input.val()==mask) {
 					input.val('');
 				} else if (input.val()==''&&settings.defaultZero) {
-					input.val(setSymbol(getDefaultMask()));
+					input.val(setSymbol(mask));
 				} else {
 					input.val(setSymbol(input.val()));
 				}
