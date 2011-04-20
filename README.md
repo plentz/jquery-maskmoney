@@ -7,9 +7,11 @@ To view a complete demonstration of it's features and usage, access our [demo](h
 
 ***
 ### Usage:
-
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js" type="text/javascript"></script>
-	<script src="jquery.maskMoney.js" type="text/javascript"></script>
+``` html
+	<head>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js" type="text/javascript"></script>
+		<script src="jquery.maskMoney.js" type="text/javascript"></script>
+	</head>
 	<body>
 		<input type="text" id="currency" />
 	</body>
@@ -18,7 +20,7 @@ To view a complete demonstration of it's features and usage, access our [demo](h
 		$("#currency").maskMoney();
 	})
 	</script>
-
+``` 
 
 ***
 ### Options:
@@ -29,7 +31,7 @@ The options that you can set are:
  * showSymbol: set if the symbol must be displayed or not. default: false
  * symbolStay: set if the symbol will stay in the field after the user exists the field. default: false
  * thousands: the thousands separator. default: ','
- * decimal: the decimal separator. default:'.'
+ * decimal: the decimal separator. default: '.'
  * precision: how many decimal places are allowed. default: 2
  * defaultZero: when the user enters the field, it sets a mask using zero. default: true
  * allowZero: use this setting to prevent users from inputing zero. default: false
@@ -37,6 +39,7 @@ The options that you can set are:
 
 ***
 ### Contributors:
+
  * [Aurélio Saraiva](mailto:aureliosaraiva@gmail.com)
  * [Raul Pereira da Silva](http://raulpereira.com)
  * [Diego Plentz](http://plentz.org)
@@ -47,4 +50,5 @@ The options that you can set are:
 
 ***
 ### License:
+
 __jQuery-maskMoney__ is released under the MIT license.
