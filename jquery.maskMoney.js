@@ -25,8 +25,8 @@
 */
 
 /*
-* @Version: 1.2
-* @Release: 2011-04-19
+* @Version: 1.3
+* @Release: 2011-04-20
 */
 (function($) {
 	$.fn.maskMoney = function(settings) {
@@ -248,7 +248,7 @@
 			input.bind('keydown',keydownEvent);
 			input.bind('blur',blurEvent);
 			input.bind('focus',focusEvent);
-			input.bind("mask", mask); 
+			input.bind('mask', mask); 
 
 			input.one('unmaskMoney',function() {
 				input.unbind('focus',focusEvent);

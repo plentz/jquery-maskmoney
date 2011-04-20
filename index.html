@@ -32,6 +32,15 @@
 		<input type="text" id="demo4" />
 		<script>$("#demo4").maskMoney({symbol:'R$ ', showSymbol:true, thousands:'.', decimal:',', symbolStay: true});</script>
 		<pre class="brush: js">$("#demo4").maskMoney({symbol:'R$ ', showSymbol:true, thousands:'.', decimal:',', symbolStay: true});</pre>
+
+		<input type="text" id="demo5" value="12345"/>
+		<input type="button" onclick="$('#demo5').mask()" value="apply mask to demo5"/>
+		<pre class="brush: js">$("#demo5").mask();</pre>
+
+		<input type="text" id="demo6"/>
+		<script>$("#demo6").maskMoney();</script>
+		<input type="button" onclick="$('#demo6').unmaskMoney()" value="remove maskmoney from demo6"/>
+		<pre class="brush: js">$("#demo6").unmaskMoney();</pre>
 	</body>
 	<script type="text/javascript">
 	     SyntaxHighlighter.all()
