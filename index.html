@@ -33,8 +33,9 @@
 		<script>$("#demo4").maskMoney({symbol:'R$ ', showSymbol:true, thousands:'.', decimal:',', symbolStay: true});</script>
 		<pre class="brush: js">$("#demo4").maskMoney({symbol:'R$ ', showSymbol:true, thousands:'.', decimal:',', symbolStay: true});</pre>
 
-		<input type="text" id="demo5" value="12345"/>
-		<input type="button" onclick="$('#demo5').mask()" value="apply mask to demo5"/>
+		<input type="text" id="demo5" value="1234567"/>
+		<script>$("#demo5").maskMoney({symbol:'R$ ', showSymbol:true, thousands:'.', decimal:',', symbolStay: true});</script>
+		<input type="button" onclick="$('#demo5').mask()" value="trigger mask event at demo5"/>
 		<pre class="brush: js">$("#demo5").mask();</pre>
 
 		<input type="text" id="demo6"/>
