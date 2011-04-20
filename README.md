@@ -38,6 +38,14 @@ The options that you can set are:
  * allowNegative: use this setting to prevent users from inputing negative values. default: false
 
 ***
+### Bonus!
+
+We have 2 bonus methods that can be useful to you:
+
+ * .unmaskMoney() which removes maskMoney from an element.
+ * .mask() which causes maskMoney to actually apply the mask to your input.
+
+***
 ### Contributors:
 
  * [Aurélio Saraiva](mailto:aureliosaraiva@gmail.com)
