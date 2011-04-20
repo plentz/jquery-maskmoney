@@ -1,7 +1,7 @@
 /*
-* @Copyright (c) 2010 Aurélio Saraiva, Diego Plentz
+* @Copyright (c) 2011 Aurélio Saraiva, Diego Plentz
 * @Page http://github.com/plentz/jquery-maskmoney
-* try at http://inoveideia.com.br/maskInputMoney/
+* try at http://plentz.org/maskmoney
 
 * Permission is hereby granted, free of charge, to any person
 * obtaining a copy of this software and associated documentation
