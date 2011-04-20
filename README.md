@@ -3,7 +3,7 @@ Just a simple way to create masks to your currency form fields with [jQuery](htt
 ***
 ### Show Time!
 
-To view a complete demonstration of it's features and usage, access our [demo](http://plentz.org/unsorted/examples.html)!
+To view a complete demonstration of it's features and usage, access our [examples page](http://plentz.org/maskmoney)!
 
 ***
 ### Usage:
