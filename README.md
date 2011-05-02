@@ -36,6 +36,7 @@ The options that you can set are:
  * defaultZero: when the user enters the field, it sets a default mask using zero. default: true
  * allowZero: use this setting to prevent users from inputing zero. default: false
  * allowNegative: use this setting to prevent users from inputing negative values. default: false
+ * selectOnClick: use this setting when you want to select the entire text when the input is clicked. default: false
 
 ***
 ### Bonus!

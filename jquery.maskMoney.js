@@ -39,7 +39,8 @@
 			precision: 2,
 			defaultZero: true,
 			allowZero: false,
-			allowNegative: false
+			allowNegative: false,
+                        selectOnClick: false
 		}, settings);
 
 		return this.each(function() {
@@ -138,6 +139,12 @@
 					var textRange = this.createTextRange();
 					textRange.collapse(false); // set the cursor at the end of the input
 					textRange.select();
+				}
+			}
+
+			function clickEvent(e){
+				if (settings.selectOnClick) {
+                                        input.select();
 				}
 			}
 
@@ -248,6 +255,7 @@
 			input.bind('keydown',keydownEvent);
 			input.bind('blur',blurEvent);
 			input.bind('focus',focusEvent);
+                        input.bind('click', clickEvent);
 			input.bind('mask', mask);
 
 			input.one('unmaskMoney',function() {
