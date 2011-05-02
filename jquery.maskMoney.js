@@ -39,7 +39,8 @@
 			precision: 2,
 			defaultZero: true,
 			allowZero: false,
-			allowNegative: false
+			allowNegative: false,
+                        selectOnClick: false
 		}, settings);
 
 		return this.each(function() {
