@@ -142,6 +142,12 @@
 				}
 			}
 
+			function clickEvent(e){
+				if (settings.selectOnClick) {
+                                        input.select();
+				}
+			}
+
 			function blurEvent(e) {
 				if ($.browser.msie) {
 					keypressEvent(e);
@@ -249,6 +255,7 @@
 			input.bind('keydown',keydownEvent);
 			input.bind('blur',blurEvent);
 			input.bind('focus',focusEvent);
+                        input.bind('click', clickEvent);
 			input.bind('mask', mask);
 
 			input.one('unmaskMoney',function() {
