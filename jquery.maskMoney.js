@@ -251,10 +251,7 @@
 			input.bind('mask', mask);
 
 			input.one('unmaskMoney',function() {
-				input.unbind('focus.maskMoney',focusEvent);
-				input.unbind('blur.maskMoney',blurEvent);
-				input.unbind('keydown.maskMoney',keydownEvent);
-				input.unbind('keypress.maskMoney',keypressEvent);
+				input.unbind('.maskMoney');
 
 				if ($.browser.msie) {
 					this.onpaste= null;
