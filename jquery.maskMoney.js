@@ -269,7 +269,7 @@
 		return this.trigger('unmaskMoney');
 	};
 
-	$.fn.mask=function() {
+	$.fn.maskM=function() {
 		return this.trigger('mask');
 	};
 
