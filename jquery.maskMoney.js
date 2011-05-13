@@ -23,7 +23,7 @@
 * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 * OTHER DEALINGS IN THE SOFTWARE.
 */
-/* something to commit*/
+
 /*
 * @Version: 1.3
 * @Release: 2011-04-20
