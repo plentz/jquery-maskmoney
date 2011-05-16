@@ -244,17 +244,14 @@
 				}
 			}
 
-			input.bind('keypress',keypressEvent);
-			input.bind('keydown',keydownEvent);
-			input.bind('blur',blurEvent);
-			input.bind('focus',focusEvent);
+			input.bind('keypress.maskMoney',keypressEvent);
+			input.bind('keydown.maskMoney',keydownEvent);
+			input.bind('blur.maskMoney',blurEvent);
+			input.bind('focus.maskMoney',focusEvent);
 			input.bind('mask', mask);
 
 			input.one('unmaskMoney',function() {
-				input.unbind('focus',focusEvent);
-				input.unbind('blur',blurEvent);
-				input.unbind('keydown',keydownEvent);
-				input.unbind('keypress',keypressEvent);
+				input.unbind('.maskMoney');
 
 				if ($.browser.msie) {
 					this.onpaste= null;
