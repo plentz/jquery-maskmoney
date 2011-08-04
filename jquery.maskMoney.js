@@ -47,16 +47,10 @@
 			var dirty = false;
 
 			function markAsDirty() {
-				if(!dirty) {
-					console.log('gross...');
-				}
 				dirty = true;
 			}
 
 			function clearDirt(){
-				if(dirty){
-					console.log('aaahhh...');
-				}
 				dirty = false;
 			}
 
@@ -66,7 +60,6 @@
 				if (k == undefined) return false; //needed to handle an IE "special" event
 				if (input.attr('readonly') && (k!=13&&k!=9)) return false; // don't allow editing of readonly fields but allow tab/enter
 
-				console.log('key', k);
 				if (k<48||k>57) { // any key except the numbers 0-9
 					if (k==45) { // -(minus) key
 						markAsDirty();
@@ -131,7 +124,6 @@
 					maskAsDirty();
 					return false;
 				} else if (k==9) { // tab key
-					console.log('so...', dirty);
 					if(dirty) {
 						$(this).change();
 						clearDirt();
