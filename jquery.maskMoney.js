@@ -67,7 +67,7 @@
 						preventDefault(e);
 						return true;
 					}
-				} else if (input.val().length==input.attr('maxlength')) {
+				} else if (input.val().length>=input.attr('maxlength')) {
 					return false;
 				} else {
 					preventDefault(e);
