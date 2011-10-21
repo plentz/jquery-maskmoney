@@ -9,7 +9,7 @@ To view a complete demonstration of it's features and usage, access our [example
 ### Usage:
 ``` html
 	<head>
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
 		<script src="jquery.maskMoney.js" type="text/javascript"></script>
 	</head>
 	<body>
@@ -55,7 +55,7 @@ We have 2 bonus methods that can be useful to you:
  * [Víctor Cruz](http://github.com/xtream)
  * [Synapse Studios](http://github.com/synapsestudios)
  * [Guilherme Garnier](http://blog.guilhermegarnier.com/)
- * [Plínio Balduino] (http://github.com/pbalduino)
+ * [Plínio Balduino](http://github.com/pbalduino)
 
 ***
 ### License:
