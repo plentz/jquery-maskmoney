@@ -121,7 +121,7 @@
 						x.value = x.value.substring(0, startPos) + x.value.substring(endPos, x.value.length);
 					}
 					maskAndPosition(x, startPos);
-					maskAsDirty();
+          markAsDirty();
 					return false;
 				} else if (k==9) { // tab key
 					if(dirty) {
