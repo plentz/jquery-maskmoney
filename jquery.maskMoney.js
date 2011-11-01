@@ -25,8 +25,8 @@
 */
 
 /*
-* @Version: 1.4
-* @Release: 2011-10-21
+* @Version: 1.4.1
+* @Release: 2011-11-01
 */
 (function($) {
 	$.fn.maskMoney = function(settings) {
