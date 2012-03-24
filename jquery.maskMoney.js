@@ -28,7 +28,7 @@
 * @Version: 1.4.1
 * @Release: 2011-11-01
 */
-(function($) {
+;(function($) {
 	$.fn.maskMoney = function(settings) {
 		settings = $.extend({
 			symbol: 'US$',
