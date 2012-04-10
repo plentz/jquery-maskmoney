@@ -90,7 +90,7 @@
 
                         var key = String.fromCharCode(k);
                         var x = input.get(0);
-                        var selection = input.getInputSelection(x);
+                        var selection = input.maskMoney('getInputSelection',x);
                         var startPos = selection.start;
                         var endPos = selection.end;
                         x.value = x.value.substring(0, startPos) + key + x.value.substring(endPos, x.value.length);
@@ -107,7 +107,7 @@
                     if (input.attr('readonly') && (k!=13&&k!=9)) return false; // don't allow editing of readonly fields but allow tab/enter
 
                     var x = input.get(0);
-                    var selection = input.getInputSelection(x);
+                    var selection = input.maskMoney('getInputSelection',x);
                     var startPos = selection.start;
                     var endPos = selection.end;
 
@@ -192,7 +192,7 @@
                     input.val(maskValue(x.value));
                     var newLen = input.val().length;
                     startPos = startPos - (originalLen - newLen);
-                    input.setCursorPosition(startPos);
+                    input.maskMoney('setCursorPosition',startPos);
                 }
 
                 function maskValue(v) {
