@@ -39,7 +39,8 @@
 			precision: 2,
 			defaultZero: true,
 			allowZero: false,
-			allowNegative: false
+			allowNegative: false,
+			autoLoad: false
 		}, settings);
 
 		return this.each(function() {
@@ -235,7 +236,7 @@
 					: setSymbol(neg+t);
 			}
 
-			function mask() {
+			function maskIt() {
 				var value = input.val();
 				input.val(maskValue(value));
 			}
@@ -265,11 +266,12 @@
 				}
 			}
 
+			input.unbind('.maskMoney');
 			input.bind('keypress.maskMoney',keypressEvent);
 			input.bind('keydown.maskMoney',keydownEvent);
 			input.bind('blur.maskMoney',blurEvent);
 			input.bind('focus.maskMoney',focusEvent);
-			input.bind('mask', mask);
+			input.unbind('maskIt').bind('maskIt', maskIt);
 
 			input.one('unmaskMoney',function() {
 				input.unbind('.maskMoney');
@@ -280,6 +282,10 @@
 					this.removeEventListener('input',blurEvent,false);
 				}
 			});
+			
+			if (settings.autoLoad) {
+				input.maskIt();
+			}
 		});
 	}
 
@@ -287,8 +293,8 @@
 		return this.trigger('unmaskMoney');
 	};
 
-	$.fn.mask=function() {
-		return this.trigger('mask');
+	$.fn.maskIt=function() {
+		return this.trigger('maskIt');
 	};
 
 	$.fn.setCursorPosition = function(pos) {
