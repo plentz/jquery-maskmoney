@@ -269,7 +269,7 @@
 			input.bind('keydown.maskMoney',keydownEvent);
 			input.bind('blur.maskMoney',blurEvent);
 			input.bind('focus.maskMoney',focusEvent);
-			input.bind('mask', mask);
+			input.bind('maskIt', mask);
 
 			input.one('unmaskMoney',function() {
 				input.unbind('.maskMoney');
@@ -287,8 +287,8 @@
 		return this.trigger('unmaskMoney');
 	};
 
-	$.fn.mask=function() {
-		return this.trigger('mask');
+	$.fn.maskIt=function() {
+		return this.trigger('maskIt');
 	};
 
 	$.fn.setCursorPosition = function(pos) {
