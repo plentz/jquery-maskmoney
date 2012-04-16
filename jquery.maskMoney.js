@@ -31,6 +31,7 @@
 ;(function($) {
 	$.fn.maskMoney = function(settings) {
 		settings = $.extend({
+                        selectOnClick: false,
 			symbol: 'US$',
 			showSymbol: false,
 			symbolStay: false,
@@ -145,6 +146,12 @@
 					return true;
 				}
 			}
+
+                        function clickEvent(e) {
+                          if (settings.selectOnClick) {
+                            input.select();
+                          }
+                        }
 
 			function focusEvent(e) {
 				var mask = getDefaultMask();
@@ -265,6 +272,7 @@
 				}
 			}
 
+                        input.bind('click.maskMoney', clickEvent);
 			input.bind('keypress.maskMoney',keypressEvent);
 			input.bind('keydown.maskMoney',keydownEvent);
 			input.bind('blur.maskMoney',blurEvent);
