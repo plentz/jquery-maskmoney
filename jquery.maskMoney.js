@@ -25,8 +25,8 @@
 */
 
 /*
-* @Version: 1.4.1
-* @Release: 2011-11-01
+* @Version: 1.4.1.1
+* @Release: 2012-09-05
 */
 ;(function($) {
 	$.fn.maskMoney = function(settings) {
@@ -168,7 +168,10 @@
 				}
 
 				if (input.val()==''||input.val()==setSymbol(getDefaultMask())||input.val()==settings.symbol) {
-					if(!settings.allowZero) input.val('');
+					if(!settings.allowZero) {
+						if(!settings.defaultZero&&input.val()!='') input.val(setSymbol(input.val()));
+						else input.val('');
+					}
 					else if (!settings.symbolStay) input.val(getDefaultMask());
 					else input.val(setSymbol(getDefaultMask()));
 				} else {
