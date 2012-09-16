@@ -291,6 +291,10 @@
 		return this.trigger('mask');
 	};
 
+    $.fn.unmaskMoney_val=function() {
+        return this.val().replace(/[^0-9\.,\-]/,"");
+    };
+
 	$.fn.setCursorPosition = function(pos) {
 		this.each(function(index, elem) {
 			if (elem.setSelectionRange) {
