@@ -39,7 +39,8 @@
 			precision: 2,
 			defaultZero: true,
 			allowZero: false,
-			allowNegative: false
+			allowNegative: false,
+			keepZeroOnFocus: false
 		}, settings);
 
 		return this.each(function() {
@@ -148,7 +149,7 @@
 
 			function focusEvent(e) {
 				var mask = getDefaultMask();
-				if (input.val()==mask) {
+				if (input.val()==mask && !settings.keepZeroOnFocus) {
 					input.val('');
 				} else if (input.val()==''&&settings.defaultZero) {
 					input.val(setSymbol(mask));
