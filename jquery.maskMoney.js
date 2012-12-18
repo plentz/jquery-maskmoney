@@ -1,5 +1,5 @@
 /*
-* @Copyright (c) 2011 AurÃ©lio Saraiva, Diego Plentz
+* @Copyright (c) 2011 Aurélio Saraiva, Diego Plentz
 * @Page http://github.com/plentz/jquery-maskmoney
 * try at http://plentz.org/maskmoney
 
@@ -28,6 +28,11 @@
 * @Version: 1.4.1
 * @Release: 2011-11-01
 */
+
+/**
+* This software was changed by Cor & Fja to add the symbolLocation
+* configuration property
+*/
 ;(function($) {
 	$.fn.maskMoney = function(settings) {
 		settings = $.extend({
@@ -39,7 +44,8 @@
 			precision: 2,
 			defaultZero: true,
 			allowZero: false,
-			allowNegative: false
+			allowNegative: false,
+			symbolLocation: 'right'
 		}, settings);
 
 		return this.each(function() {
@@ -247,7 +253,13 @@
 
 			function setSymbol(v) {
 				if (settings.showSymbol) {
-					if (v.substr(0, settings.symbol.length) != settings.symbol) return settings.symbol+v;
+					if (v.substr(0, settings.symbol.length) != settings.symbol && v.substr(v.length-settings.symbol.length, v.length) != settings.symbol){
+						if(settings.symbolLocation == "left"){
+							return settings.symbol+v;
+						} else {
+							return v+settings.symbol;
+						}
+					}
 				}
 				return v;
 			}

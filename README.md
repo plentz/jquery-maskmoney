@@ -36,6 +36,7 @@ The options that you can set are:
  * defaultZero: when the user enters the field, it sets a default mask using zero. default: true
  * allowZero: use this setting to prevent users from inputing zero. default: false
  * allowNegative: use this setting to prevent users from inputing negative values. default: false
+ * symbolLocation: use this setting to position the symbol at the left or right hand side of the value ('left'/'right')
 
 ***
 ### Bonus!
@@ -56,6 +57,7 @@ We have 2 bonus methods that can be useful to you:
  * [Synapse Studios](http://github.com/synapsestudios)
  * [Guilherme Garnier](http://blog.guilhermegarnier.com/)
  * [Plínio Balduino](http://github.com/pbalduino)
+ * [André Silva] (http://github.com/cattox)
 
 ***
 ### License:
