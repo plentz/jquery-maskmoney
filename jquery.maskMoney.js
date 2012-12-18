@@ -29,10 +29,6 @@
 * @Release: 2011-11-01
 */
 
-/**
-* This software was changed by Cor & Fja to add the symbolLocation
-* configuration property
-*/
 ;(function($) {
 	$.fn.maskMoney = function(settings) {
 		settings = $.extend({
