@@ -1,11 +1,15 @@
 /*
 * maskMoney plugin for jQuery
-* Licensed under the MIT license
 * http://plentz.github.com/jquery-maskmoney/
-* @Version: 2.0.0 beta
+* version: 2.0.0 beta
+* Licensed under the MIT license
 */
 ;(function($) {
 	$.fn.maskMoney = function(settings) {
+		if(typeof settings == "string"){
+			var operation = settings;
+		}
+
 		settings = $.extend({
 			symbol: 'US$',
 			showSymbol: false,
@@ -21,6 +25,22 @@
 		return this.each(function() {
 			var input = $(this);
 			var dirty = false;
+			switch(operation) {
+				case 'remove':
+					input.unbind('.maskMoney');
+
+					if ($.browser.msie) {
+						this.onpaste = null;
+					} else if ($.browser.mozilla) {
+						this.removeEventListener('input', blurEvent, false);
+					}
+					return true;
+
+				case 'mask':
+					var value = input.val();
+					input.val(maskValue(value));
+					return true;
+			}
 
 			function markAsDirty() {
 				dirty = true;
@@ -31,27 +51,27 @@
 			}
 
 			function keypressEvent(e) {
-				e = e||window.event;
-				var k = e.charCode||e.keyCode||e.which;
+				e = e || window.event;
+				var k = e.charCode || e.keyCode || e.which;
 				if (k == undefined) return false; //needed to handle an IE "special" event
-				if (input.attr('readonly') && (k!=13&&k!=9)) return false; // don't allow editing of readonly fields but allow tab/enter
+				if (input.attr('readonly') && (k != 13 && k != 9)) return false; // don't allow editing of readonly fields but allow tab/enter
 
-				if (k<48||k>57) { // any key except the numbers 0-9
+				if (k < 48 || k > 57) { // any key except the numbers 0-9
 					if (k==45) { // -(minus) key
 						markAsDirty();
 						input.val(changeSign(input));
 						return false;
-					} else if (k==43) { // +(plus) key
+					} else if (k == 43) { // +(plus) key
 						markAsDirty();
 						input.val(input.val().replace('-',''));
 						return false;
-					} else if (k==13||k==9) { // enter key or tab key
+					} else if (k == 13 || k == 9) { // enter key or tab key
 						if(dirty){
 							clearDirt();
 							$(this).change();
 						}
 						return true;
-					} else if (k==37||k==39) { // left arrow key or right arrow key
+					} else if (k == 37 || k == 39) { // left arrow key or right arrow key
 						return true;
 					} else { // any other key with keycode less than 48 and greater than 57
 						preventDefault(e);
@@ -64,7 +84,7 @@
 
 					var key = String.fromCharCode(k);
 					var x = input.get(0);
-					var selection = input.getInputSelection(x);
+					var selection = getInputSelection(x);
 					var startPos = selection.start;
 					var endPos = selection.end;
 					x.value = x.value.substring(0, startPos) + key + x.value.substring(endPos, x.value.length);
@@ -81,7 +101,7 @@
 				if (input.attr('readonly') && (k!=13&&k!=9)) return false; // don't allow editing of readonly fields but allow tab/enter
 
 				var x = input.get(0);
-				var selection = input.getInputSelection(x);
+				var selection = getInputSelection(x);
 				var startPos = selection.start;
 				var endPos = selection.end;
 
@@ -97,7 +117,7 @@
 						x.value = x.value.substring(0, startPos) + x.value.substring(endPos, x.value.length);
 					}
 					maskAndPosition(x, startPos);
-          markAsDirty();
+					markAsDirty();
 					return false;
 				} else if (k==9) { // tab key
 					if(dirty) {
@@ -124,9 +144,9 @@
 
 			function focusEvent(e) {
 				var mask = getDefaultMask();
-				if (input.val()==mask) {
+				if (input.val() == mask) {
 					input.val('');
-				} else if (input.val()==''&&settings.defaultZero) {
+				} else if (input.val()=='' && settings.defaultZero) {
 					input.val(setSymbol(mask));
 				} else {
 					input.val(setSymbol(input.val()));
@@ -143,7 +163,7 @@
 					keypressEvent(e);
 				}
 
-				if (input.val()==''||input.val()==setSymbol(getDefaultMask())||input.val()==settings.symbol) {
+				if (input.val() == '' || input.val() == setSymbol(getDefaultMask()) || input.val() == settings.symbol) {
 					if(!settings.allowZero) input.val('');
 					else if (!settings.symbolStay) input.val(getDefaultMask());
 					else input.val(setSymbol(getDefaultMask()));
@@ -166,7 +186,7 @@
 				input.val(maskValue(x.value));
 				var newLen = input.val().length;
 				startPos = startPos - (originalLen - newLen);
-				input.setCursorPosition(startPos);
+				setCursorPosition(input, startPos);
 			}
 
 			function maskValue(v) {
@@ -207,13 +227,8 @@
 				}
 
 				return (settings.precision>0)
-					? setSymbol(neg+t+settings.decimal+d+Array((settings.precision+1)-d.length).join(0))
-					: setSymbol(neg+t);
-			}
-
-			function mask() {
-				var value = input.val();
-				input.val(maskValue(value));
+				? setSymbol(neg+t+settings.decimal+d+Array((settings.precision+1)-d.length).join(0))
+				: setSymbol(neg+t);
 			}
 
 			function getDefaultMask() {
@@ -241,90 +256,72 @@
 				}
 			}
 
+			function setCursorPosition(input, pos) {
+				// I'm not sure if we need to jqueryfy input
+				$(input).each(function(index, elem) {
+					if (elem.setSelectionRange) {
+						elem.focus();
+						elem.setSelectionRange(pos, pos);
+					} else if (elem.createTextRange) {
+						var range = elem.createTextRange();
+						range.collapse(true);
+						range.moveEnd('character', pos);
+						range.moveStart('character', pos);
+						range.select();
+					}
+				});
+				return this;
+			};
+
+			function getInputSelection(el) {
+				var start = 0, end = 0, normalizedValue, range, textInputRange, len, endRange;
+
+				if (typeof el.selectionStart == "number" && typeof el.selectionEnd == "number") {
+					start = el.selectionStart;
+					end = el.selectionEnd;
+				} else {
+					range = document.selection.createRange();
+
+					if (range && range.parentElement() == el) {
+						len = el.value.length;
+						normalizedValue = el.value.replace(/\r\n/g, "\n");
+
+						// Create a working TextRange that lives only in the input
+						textInputRange = el.createTextRange();
+						textInputRange.moveToBookmark(range.getBookmark());
+
+						// Check if the start and end of the selection are at the very end
+						// of the input, since moveStart/moveEnd doesn't return what we want
+						// in those cases
+						endRange = el.createTextRange();
+						endRange.collapse(false);
+
+						if (textInputRange.compareEndPoints("StartToEnd", endRange) > -1) {
+							start = end = len;
+						} else {
+							start = -textInputRange.moveStart("character", -len);
+							start += normalizedValue.slice(0, start).split("\n").length - 1;
+
+							if (textInputRange.compareEndPoints("EndToEnd", endRange) > -1) {
+								end = len;
+							} else {
+								end = -textInputRange.moveEnd("character", -len);
+								end += normalizedValue.slice(0, end).split("\n").length - 1;
+							}
+						}
+					}
+				}
+
+				return {
+					start: start,
+					end: end
+				};
+			} // getInputSelection
+
 			input.bind('keypress.maskMoney', keypressEvent);
 			input.bind('keydown.maskMoney', keydownEvent);
 			input.bind('blur.maskMoney', blurEvent);
 			input.bind('focus.maskMoney', focusEvent);
-			input.bind('mask', mask);
-
-			input.one('unmaskMoney',function() {
-				input.unbind('.maskMoney');
-
-				if ($.browser.msie) {
-					this.onpaste= null;
-				} else if ($.browser.mozilla) {
-					this.removeEventListener('input',blurEvent,false);
-				}
-			});
 		});
-	}
-
-	$.fn.unmaskMoney=function() {
-		return this.trigger('unmaskMoney');
-	};
-
-	$.fn.mask=function() {
-		return this.trigger('mask');
-	};
-
-	$.fn.setCursorPosition = function(pos) {
-		this.each(function(index, elem) {
-			if (elem.setSelectionRange) {
-				elem.focus();
-				elem.setSelectionRange(pos, pos);
-			} else if (elem.createTextRange) {
-				var range = elem.createTextRange();
-				range.collapse(true);
-				range.moveEnd('character', pos);
-				range.moveStart('character', pos);
-				range.select();
-			}
-		});
-		return this;
-	};
-
-	$.fn.getInputSelection = function(el) {
-		var start = 0, end = 0, normalizedValue, range, textInputRange, len, endRange;
-
-		if (typeof el.selectionStart == "number" && typeof el.selectionEnd == "number") {
-			start = el.selectionStart;
-			end = el.selectionEnd;
-		} else {
-			range = document.selection.createRange();
-
-			if (range && range.parentElement() == el) {
-				len = el.value.length;
-				normalizedValue = el.value.replace(/\r\n/g, "\n");
-
-				// Create a working TextRange that lives only in the input
-				textInputRange = el.createTextRange();
-				textInputRange.moveToBookmark(range.getBookmark());
-
-				// Check if the start and end of the selection are at the very end
-				// of the input, since moveStart/moveEnd doesn't return what we want
-				// in those cases
-				endRange = el.createTextRange();
-				endRange.collapse(false);
-
-				if (textInputRange.compareEndPoints("StartToEnd", endRange) > -1) {
-					start = end = len;
-				} else {
-					start = -textInputRange.moveStart("character", -len);
-					start += normalizedValue.slice(0, start).split("\n").length - 1;
-
-					if (textInputRange.compareEndPoints("EndToEnd", endRange) > -1) {
-						end = len;
-					} else {
-						end = -textInputRange.moveEnd("character", -len);
-						end += normalizedValue.slice(0, end).split("\n").length - 1;
-					}
-				}
-			}
-		}
-
-		return {
-			start: start,
-			end: end
-		};
 	}
 })(jQuery);

@@ -15,12 +15,12 @@ To view a complete demonstration of it's features and usage, access our [example
 	<body>
 		<input type="text" id="currency" />
 	</body>
-	<script>
+	<script type="text/javascript">
 	$(function(){
 		$("#currency").maskMoney();
 	})
 	</script>
-``` 
+```
 
 ***
 ### Options:
@@ -42,8 +42,8 @@ The options that you can set are:
 
 We have 2 bonus methods that can be useful to you:
 
- * .unmaskMoney() which removes maskMoney from an element.
- * .mask() which causes maskMoney to actually apply the mask to your input.
+ * .maskMoney('remove') which removes maskMoney from an element.
+ * .maskMoney('mask') which causes maskMoney to actually apply the mask to your input.
 
 ***
 ### Contributors:
