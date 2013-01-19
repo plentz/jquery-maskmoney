@@ -1,32 +1,8 @@
 /*
-* @Copyright (c) 2011 Aurélio Saraiva, Diego Plentz
-* @Page http://github.com/plentz/jquery-maskmoney
-* try at http://plentz.org/maskmoney
-
-* Permission is hereby granted, free of charge, to any person
-* obtaining a copy of this software and associated documentation
-* files (the "Software"), to deal in the Software without
-* restriction, including without limitation the rights to use,
-* copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the
-* Software is furnished to do so, subject to the following
-* conditions:
-* The above copyright notice and this permission notice shall be
-* included in all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-* OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-* NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-* HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-* WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-* FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-* OTHER DEALINGS IN THE SOFTWARE.
-*/
-
-/*
-* @Version: 1.4.1
-* @Release: 2011-11-01
+* maskMoney plugin for jQuery
+* Licensed under the MIT license
+* http://plentz.github.com/jquery-maskmoney/
+* @Version: 2.0.0 beta
 */
 ;(function($) {
 	$.fn.maskMoney = function(settings) {
@@ -265,10 +241,10 @@
 				}
 			}
 
-			input.bind('keypress.maskMoney',keypressEvent);
-			input.bind('keydown.maskMoney',keydownEvent);
-			input.bind('blur.maskMoney',blurEvent);
-			input.bind('focus.maskMoney',focusEvent);
+			input.bind('keypress.maskMoney', keypressEvent);
+			input.bind('keydown.maskMoney', keydownEvent);
+			input.bind('blur.maskMoney', blurEvent);
+			input.bind('focus.maskMoney', focusEvent);
 			input.bind('mask', mask);
 
 			input.one('unmaskMoney',function() {
