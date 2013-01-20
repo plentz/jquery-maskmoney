@@ -56,6 +56,7 @@ We have 2 bonus methods that can be useful to you:
  * [Synapse Studios](http://github.com/synapsestudios)
  * [Guilherme Garnier](http://blog.guilhermegarnier.com/)
  * [Plínio Balduino](http://github.com/pbalduino)
+ * [Luis Fernando Gomes](https://github.com/luiscoms)
 
 ***
 ### License:

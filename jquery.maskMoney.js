@@ -328,6 +328,7 @@
 					};
 				} // getInputSelection
 
+				input.unbind('.maskMoney');
 				input.bind('keypress.maskMoney', keypressEvent);
 				input.bind('keydown.maskMoney', keydownEvent);
 				input.bind('blur.maskMoney', blurEvent);
