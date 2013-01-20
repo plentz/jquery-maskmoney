@@ -178,7 +178,12 @@
 				} else {
 					if (!settings.symbolStay) input.val(input.val().replace(settings.symbol,''));
 					else if (settings.symbolStay&&input.val()==settings.symbol) input.val(setSymbol(getDefaultMask()));
+
 				}
+		                if (dirty) {
+		                    clearDirt();
+		                    $(this).change();
+		                }
 			}
 
 			function preventDefault(e) {
