@@ -34,6 +34,24 @@
       <section>
         <p>Just a simple way to create masks to your currency form fields with <a href="http://jquery.com/">jQuery</a>.</p>
 
+
+<hr><h3>Usage:</h3>
+
+<div class="highlight"><pre>    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"</span> <span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;&lt;/script&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"jquery.maskMoney.js"</span> <span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"currency"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+    <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s2">"#currency"</span><span class="p">).</span><span class="nx">maskMoney</span><span class="p">();</span>
+    <span class="p">})</span>
+    <span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+
 <hr><h3>Show Time!</h3>
 
   	<input type="text" id="demo1" /><pre class="brush: js">$("#demo1").maskMoney();</pre>
@@ -61,22 +79,6 @@
 		<script type="text/javascript">$("#demo6").maskMoney();</script>
 		<input type="button" onclick="$('input').maskMoney('destroy')" value="remove maskmoney from demo6"/>
 		<pre class="brush: js">$("#demo6").maskMoney('destroy');</pre>
-
-<hr><h3>Usage:</h3>
-
-<div class="highlight"><pre>    <span class="nt">&lt;head&gt;</span>
-        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"</span> <span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;&lt;/script&gt;</span>
-        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"jquery.maskMoney.js"</span> <span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;&lt;/script&gt;</span>
-    <span class="nt">&lt;/head&gt;</span>
-    <span class="nt">&lt;body&gt;</span>
-        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"currency"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/body&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
-    <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-        <span class="nx">$</span><span class="p">(</span><span class="s2">"#currency"</span><span class="p">).</span><span class="nx">maskMoney</span><span class="p">();</span>
-    <span class="p">})</span>
-    <span class="nt">&lt;/script&gt;</span>
-</pre></div>
 
 <hr><h3>Options:</h3>
 
