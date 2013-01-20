@@ -57,9 +57,8 @@
 
 				function keypressEvent(e) {
 					e = e || window.event;
-					var k = e.charCode || e.keyCode || e.which;
+					var k = e.which || e.charCode || e.keyCode;
 					if (k == undefined) return false; //needed to handle an IE "special" event
-
 					if (k < 48 || k > 57) { // any key except the numbers 0-9
 						if (k == 45) { // -(minus) key
 							markAsDirty();
@@ -75,13 +74,11 @@
 								$(this).change();
 							}
 							return true;
-						} else if (k == 37 || k == 39) { // left arrow key or right arrow key
-							return true;
 						} else { // any other key with keycode less than 48 and greater than 57
 							preventDefault(e);
 							return true;
 						}
-					} else if (input.val().length>=input.attr('maxlength')) {
+					} else if (input.val().length >= input.attr('maxlength')) {
 						return false;
 					} else {
 						preventDefault(e);
@@ -100,7 +97,7 @@
 
 				function keydownEvent(e) {
 					e = e||window.event;
-					var k = e.charCode||e.keyCode||e.which;
+					var k = e.which || e.charCode || e.keyCode;
 					if (k == undefined) return false; //needed to handle an IE "special" event
 
 					var x = input.get(0);
