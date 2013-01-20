@@ -11,7 +11,16 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-  </head>
+    	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
+		<script src="https://raw.github.com/plentz/jquery-maskmoney/master/jquery.maskMoney.js" type="text/javascript"></script>
+
+    	<link href='http://alexgorbatchev.com/pub/sh/current/styles/shCore.css' rel='stylesheet' type='text/css' /> 
+		<link href='http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css' rel='stylesheet' type='text/css' /> 
+		<script src='http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js' type='text/javascript'></script> 
+		<script src='http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJScript.js' type='text/javascript'></script>
+		
+  
+</head>
   <body>
     <div class="wrapper">
       <header>
@@ -32,7 +41,34 @@
 
 <hr><h3>Show Time!</h3>
 
-<p>To view a complete demonstration of it's features and usage, access our <a href="http://plentz.github.com/jquery-maskmoney">examples page</a>!</p>
+  	<input type="text" id="demo1" />
+		<script type="text/javascript">$("#demo1").maskMoney();</script>
+		<pre class="brush: js">$("#demo1").maskMoney();</pre>
+
+		<input type="text" id="demo2" />
+		<script type="text/javascript">$("#demo2").maskMoney({thousands:'', decimal:'.'});</script>
+		<pre class="brush: js">$("#demo2").maskMoney({{thousands:'', decimal:'.'}});</pre>
+
+		<input type="text" id="demo3" />
+		<script type="text/javascript">$("#demo3").maskMoney({symbol:'R$ ', showSymbol:true, allowZero:false, allowNegative:true, defaultZero:false});</script>
+		<pre class="brush: js">$("#demo3").maskMoney({allowZero:false, allowNegative:true, defaultZero:false});</pre>
+
+		<input type="text" id="demo4" />
+		<script type="text/javascript">$("#demo4").maskMoney({symbol:'R$ ', showSymbol:true, thousands:'.', decimal:',', symbolStay: true});</script>
+		<pre class="brush: js">$("#demo4").maskMoney({symbol:'R$ ', showSymbol:true, thousands:'.', decimal:',', symbolStay: true});</pre>
+
+		<input type="text" id="demo5" value="1234567.89"/>
+		<script type="text/javascript">$("#demo5").maskMoney({symbol:'R$ ', showSymbol:true, thousands:'.', decimal:',', symbolStay: true});</script>
+		<input type="button" onclick="$('#demo5').maskMoney('mask')" value="trigger mask event at demo5"/>
+		<pre class="brush: js">$("#demo5").maskMoney('mask');</pre>
+
+		<input type="text" id="demo6"/>
+		<script type="text/javascript">$("#demo6").maskMoney();</script>
+		<input type="button" onclick="$('input').maskMoney('destroy')" value="remove maskmoney from demo6"/>
+		<pre class="brush: js">$("#demo6").maskMoney('destroy');</pre>
+<script type="text/javascript">
+  	SyntaxHighlighter.all()
+	</script>
 
 <hr><h3>Usage:</h3>
 
