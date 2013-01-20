@@ -1,11 +1,6 @@
 Just a simple way to create masks to your currency form fields with [jQuery](http://jquery.com/).
 
 ***
-### Show Time!
-
-To view a complete demonstration of it's features and usage, access our [examples page](http://plentz.org/maskmoney)!
-
-***
 ### Usage:
 ```html
 	<head>
@@ -21,21 +16,26 @@ To view a complete demonstration of it's features and usage, access our [example
 	})
 	</script>
 ```
+<input type="text" id="currency" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
+<script src="jquery.maskMoney.js" type="text/javascript"></script>
+<script type="text/javascript">$(function(){ $("#currency").maskMoney();}) </script>
+
 
 ***
 ### Options:
 
 The options that you can set are:
 
- * symbol: the symbol to be used before of the user values. default: 'US$'
- * showSymbol: set if the symbol must be displayed or not. default: false
- * symbolStay: set if the symbol will stay in the field after the user exists the field. default: false
- * thousands: the thousands separator. default: ','
- * decimal: the decimal separator. default: '.'
- * precision: how many decimal places are allowed. default: 2
- * defaultZero: when the user enters the field, it sets a default mask using zero. default: true
- * allowZero: use this setting to prevent users from inputing zero. default: false
- * allowNegative: use this setting to prevent users from inputing negative values. default: false
+ * ```symbol```: the symbol to be used before of the user values. default: 'US$'
+ * ```showSymbol```: set if the symbol must be displayed or not. default: false
+ * ```symbolStay```: set if the symbol will stay in the field after the user exists the field. default: false
+ * ```thousands```: the thousands separator. default: ','
+ * ```decimal```: the decimal separator. default: '.'
+ * ```precision```: how many decimal places are allowed. default: 2
+ * ```defaultZero```: when the user enters the field, it sets a default mask using zero. default: true
+ * ```allowZero```: use this setting to prevent users from inputing zero. default: false
+ * ```allowNegative```: use this setting to prevent users from inputing negative values. default: false
 
 ***
 ### Bonus!
