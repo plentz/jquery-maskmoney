@@ -14,7 +14,7 @@
 	}
 
 	var methods = {
-		remove : function(){
+		destroy : function(){
 			var input = $(this);
 			input.unbind('.maskMoney');
 

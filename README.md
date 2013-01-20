@@ -42,7 +42,7 @@ The options that you can set are:
 
 We have 2 bonus methods that can be useful to you:
 
- * .maskMoney('remove') which removes maskMoney from an element.
+ * .maskMoney('destroy') which removes maskMoney from an element.
  * .maskMoney('mask') which causes maskMoney to actually apply the mask to your input.
 
 ***
