@@ -243,13 +243,19 @@
 					return (n.toFixed(settings.precision)).replace(new RegExp('\\.','g'),settings.decimal);
 				}
 
-				function setSymbol(v) {
-					if (settings.showSymbol) {
-						if (v.substr(0, settings.symbol.length) != settings.symbol){
-							return settings.symbol + v;
+				function setSymbol(value){
+					if (settings.showSymbol){
+						var operator = '';
+						if(value.length != 0 && value.charAt(0) == '-'){
+							value = value.replace('-', '');
+							operator = '-';
+						}
+
+						if(value.substr(0, settings.symbol.length) != settings.symbol){
+							value = operator + settings.symbol + value;
 						}
 					}
-					return v;
+					return value;
 				}
 
 				function changeSign(i){
