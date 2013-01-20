@@ -74,6 +74,8 @@
 								$(this).change();
 							}
 							return true;
+						} else if ($.browser.mozilla && (k == 37 || k == 39)) { // needed for left arrow key or right arrow key with firefox
+							return true;
 						} else { // any other key with keycode less than 48 and greater than 57
 							preventDefault(e);
 							return true;
