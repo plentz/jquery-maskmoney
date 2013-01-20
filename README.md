@@ -9,7 +9,7 @@ To view a complete demonstration of it's features and usage, access our [example
 ### Usage:
 ``` html
 	<head>
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
 		<script src="jquery.maskMoney.js" type="text/javascript"></script>
 	</head>
 	<body>
