@@ -7,7 +7,7 @@ To view a complete demonstration of it's features and usage, access our [example
 
 ***
 ### Usage:
-``` html
+```html
 	<head>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
 		<script src="jquery.maskMoney.js" type="text/javascript"></script>
@@ -42,8 +42,8 @@ The options that you can set are:
 
 We have 2 bonus methods that can be useful to you:
 
- * .maskMoney('destroy') which removes maskMoney from an element.
- * .maskMoney('mask') which causes maskMoney to actually apply the mask to your input.
+ * ```.maskMoney('destroy')``` which removes maskMoney from an element.
+ * ```.maskMoney('mask')``` which causes maskMoney to actually apply the mask to your input.
 
 ***
 ### Contributors:
