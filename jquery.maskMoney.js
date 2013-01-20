@@ -62,7 +62,7 @@
 					if (input.attr('readonly') && (k != 13 && k != 9)) return false; // don't allow editing of readonly fields but allow tab/enter
 
 					if (k < 48 || k > 57) { // any key except the numbers 0-9
-						if (k==45) { // -(minus) key
+						if (k == 45) { // -(minus) key
 							markAsDirty();
 							input.val(changeSign(input));
 							return false;
@@ -130,7 +130,7 @@
 							clearDirt();
 						}
 						return true;
-					} else if (k==46||k==63272) { // delete key (with special case for safari)
+					} else if ( k==46 || k==63272 ) { // delete key (with special case for safari)
 						preventDefault(e);
 						if(x.selectionStart == x.selectionEnd){
 							// Remove single character
@@ -200,13 +200,13 @@
 				}
 
 				function maskValue(v) {
-					v = v.replace(settings.symbol,'');
+					v = v.replace(settings.symbol, '');
 
 					var strCheck = '0123456789';
 					var len = v.length;
 					var a = '', t = '', neg='';
 
-					if(len!=0 && v.charAt(0)=='-'){
+					if(len != 0 && v.charAt(0)=='-'){
 						v = v.replace('-','');
 						if(settings.allowNegative){
 							neg = '-';
@@ -222,11 +222,11 @@
 						if ((v.charAt(i)!='0') && (v.charAt(i)!=settings.decimal)) break;
 					}
 
-					for (; i<len; i++) {
+					for (; i < len; i++) {
 						if (strCheck.indexOf(v.charAt(i))!=-1) a+= v.charAt(i);
 					}
-
 					var n = parseFloat(a);
+
 					n = isNaN(n) ? 0 : n/Math.pow(10,settings.precision);
 					t = n.toFixed(settings.precision);
 
@@ -328,12 +328,14 @@
 					};
 				} // getInputSelection
 
-				input.unbind('.maskMoney');
-				input.bind('keypress.maskMoney', keypressEvent);
-				input.bind('keydown.maskMoney', keydownEvent);
-				input.bind('blur.maskMoney', blurEvent);
-				input.bind('focus.maskMoney', focusEvent);
-				input.bind('mask.maskMoney', mask);
+				if (!input.attr("readonly")){
+					input.unbind('.maskMoney');
+					input.bind('keypress.maskMoney', keypressEvent);
+					input.bind('keydown.maskMoney', keydownEvent);
+					input.bind('blur.maskMoney', blurEvent);
+					input.bind('focus.maskMoney', focusEvent);
+					input.bind('mask.maskMoney', mask);
+				}
 			})
 		}
 	}
