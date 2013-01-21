@@ -1,7 +1,7 @@
 /*
 * maskMoney plugin for jQuery
 * http://plentz.github.com/jquery-maskmoney/
-* version: 2.0.0
+* version: 2.0.1
 * Licensed under the MIT license
 */
 ;(function($) {
@@ -74,7 +74,9 @@
 								$(this).change();
 							}
 							return true;
-						} else if ($.browser.mozilla && (k == 37 || k == 39)) { // needed for left arrow key or right arrow key with firefox
+						} else if ($.browser.mozilla && (k == 37 || k == 39) && e.charCode == 0) {
+							// needed for left arrow key or right arrow key with firefox
+							// the charCode part is to avoid allowing '%'(e.charCode 0, e.keyCode 37)
 							return true;
 						} else { // any other key with keycode less than 48 and greater than 57
 							preventDefault(e);
