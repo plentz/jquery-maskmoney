@@ -57,7 +57,7 @@
 
 				function keypressEvent(e) {
 					e = e || window.event;
-					var k = e.which;
+					var k = e.which || e.charCode || e.keyCode;
 					if (k == undefined) return false; //needed to handle an IE "special" event
 					if (k < 48 || k > 57) { // any key except the numbers 0-9
 						if (k == 45) { // -(minus) key
@@ -99,7 +99,7 @@
 
 				function keydownEvent(e) {
 					e = e||window.event;
-					var k = e.which;
+					var k = e.which || e.charCode || e.keyCode;
 					if (k == undefined) return false; //needed to handle an IE "special" event
 
 					var x = input.get(0);
