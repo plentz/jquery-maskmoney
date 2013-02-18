@@ -27,7 +27,7 @@ To view a complete demonstration of it's features and usage, access our [example
 
 The options that you can set are:
 
- * ```symbol```: the symbol to be used before of the user values(example: "US$"). default: ''
+ * ```symbol```: the symbol to be displayed before the value entered by the user(example: "US$"). default: ''
  * ```symbolStay```: set if the symbol will stay in the field after the user exists the field. default: false
  * ```thousands```: the thousands separator. default: ','
  * ```decimal```: the decimal separator. default: '.'
