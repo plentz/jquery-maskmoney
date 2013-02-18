@@ -1,7 +1,7 @@
 /*
 * maskMoney plugin for jQuery
 * http://plentz.github.com/jquery-maskmoney/
-* version: 2.0.1
+* version: 2.1.0
 * Licensed under the MIT license
 */
 ;(function($) {
@@ -32,8 +32,7 @@
 		
 		init : function(settings) {
 			settings = $.extend({
-				symbol: 'US$',
-				showSymbol: false,
+				symbol: '',
 				symbolStay: false,
 				thousands: ',',
 				decimal: '.',
@@ -246,7 +245,7 @@
 				}
 
 				function setSymbol(value){
-					if (settings.showSymbol){
+					if (settings.symbol != ''){
 						var operator = '';
 						if(value.length != 0 && value.charAt(0) == '-'){
 							value = value.replace('-', '');
