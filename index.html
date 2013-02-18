@@ -69,14 +69,14 @@
 	<script type="text/javascript">$("#demo3").maskMoney({allowZero:false, allowNegative:true, defaultZero:false});</script>
 	<br/><br/>
 
-	<hr><pre>$("#demo4").maskMoney({symbol:'R$ ', showSymbol:true, thousands:'.', decimal:',', symbolStay: true});</pre>
+	<hr><pre>$("#demo4").maskMoney({symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});</pre>
 	<input type="text" id="demo4" />
-	<script type="text/javascript">$("#demo4").maskMoney({symbol:'R$ ', showSymbol:true, thousands:'.', decimal:',', symbolStay: true});</script>
+	<script type="text/javascript">$("#demo4").maskMoney({symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});</script>
 	<br/><br/>
 
 	<hr><pre>$("#demo5").maskMoney('mask');</pre>
 	<input type="text" id="demo5" value="1234567.89"/>
-	<script type="text/javascript">$("#demo5").maskMoney({symbol:'R$ ', showSymbol:true, thousands:'.', decimal:',', symbolStay: true});</script>
+	<script type="text/javascript">$("#demo5").maskMoney({symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});</script>
 	<input type="button" onclick="$('#demo5').maskMoney('mask')" value="trigger mask event at demo5"/>
 	<br/><br/>
 
@@ -92,9 +92,7 @@
 
 <ul>
 <li>
-<code>symbol</code>: the symbol to be used before of the user values. default: 'US$'</li>
-<li>
-<code>showSymbol</code>: set if the symbol must be displayed or not. default: false</li>
+<code>symbol</code>: the symbol to be used before of the user values(example: "US$"). default: ''</li>
 <li>
 <code>symbolStay</code>: set if the symbol will stay in the field after the user exists the field. default: false</li>
 <li>
