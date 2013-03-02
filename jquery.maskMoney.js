@@ -1,7 +1,7 @@
 /*
 * maskMoney plugin for jQuery
 * http://plentz.github.com/jquery-maskmoney/
-* version: 2.1.0
+* version: 2.1.1
 * Licensed under the MIT license
 */
 ;(function($) {
@@ -20,8 +20,6 @@
 
 			if ($.browser.msie) {
 				this.onpaste = null;
-			} else if ($.browser.mozilla) {
-				this.removeEventListener('input', blurEvent, false);
 			}
 			return this;
 		},
