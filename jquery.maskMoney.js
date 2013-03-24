@@ -264,16 +264,16 @@
 					return value;
 				}
 
-				function changeSign(i){
-					if (settings.allowNegative) {
-						var vic = i.val();
-						if (i.val()!='' && i.val().charAt(0)=='-'){
-							return i.val().replace('-','');
-						} else{
-							return '-'+i.val();
+				function changeSign(input){
+					var inputValue = input.val();
+					if (settings.allowNegative){
+						if (inputValue != '' && inputValue.charAt(0) == '-'){
+							return inputValue.replace('-','');
+						} else {
+							return '-' + inputValue;
 						}
 					} else {
-						return i.val();
+						return inputValue;
 					}
 				}
 
