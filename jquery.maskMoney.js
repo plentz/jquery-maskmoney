@@ -79,7 +79,7 @@
 							preventDefault(e);
 							return true;
 						}
-					} else if (input.val().length >= input.attr('maxlength') && input.attr('maxlength') >= 0) {
+					} else if (canInputMoreNumbers(input)) {
 						return false;
 					} else {
 						preventDefault(e);
@@ -94,6 +94,15 @@
 						markAsDirty();
 						return false;
 					}
+				}
+
+				function canInputMoreNumbers(element){
+					var reachedMaxLenght = (element.val().length >= element.attr('maxlength') && element.attr('maxlength') >= 0);
+					var selection = getInputSelection(element.get(0));
+					var start = selection.start;
+					var end = selection.end;
+					var hasNumberSelected = (selection.start != selection.end && element.val().substring(start,end).match(/\d/))? true : false;
+					return reachedMaxLenght && !hasNumberSelected;
 				}
 
 				function keydownEvent(e) {
