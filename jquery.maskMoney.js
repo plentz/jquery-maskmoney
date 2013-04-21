@@ -79,7 +79,7 @@
 							preventDefault(e);
 							return true;
 						}
-					} else if (input.val().length >= input.attr('maxlength') && input.attr('maxlength') != -1) {
+					} else if (input.val().length >= input.attr('maxlength') && input.attr('maxlength') >= 0) {
 						return false;
 					} else {
 						preventDefault(e);
