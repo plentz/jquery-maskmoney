@@ -58,6 +58,7 @@ We have 2 bonus methods that can be useful to you:
  * [Guilherme Garnier](http://blog.guilhermegarnier.com/)
  * [Plínio Balduino](http://github.com/pbalduino)
  * [Luis Fernando Gomes](https://github.com/luiscoms)
+ * [Gary Moore](http://www.gmoore.net/)
 
 ***
 ### License:
