@@ -46,6 +46,12 @@ We have 2 bonus methods that can be useful to you:
  * ```.maskMoney('destroy')``` which removes maskMoney from an element.
  * ```.maskMoney('mask')``` which causes maskMoney to actually apply the mask to your input.
 
+You can also apply maskMoney using the data-* api, without writing any JavaScript!  To enable, use the ```data-toggle="maskMoney"``` attribute, and optionally set any of the options as well:
+
+```html
+	<input type="text" data-toggle="maskMoney" data-symbol="R$" data-thousands="." data-decimal="," data-symbol-stay="true" />
+```
+
 ***
 ### Contributors:
 
@@ -59,6 +65,7 @@ We have 2 bonus methods that can be useful to you:
  * [Plínio Balduino](http://github.com/pbalduino)
  * [Luis Fernando Gomes](https://github.com/luiscoms)
  * [Gary Moore](http://www.gmoore.net/)
+ * [Thiago Silva](http://twitter.com/tafs7/)
 
 ***
 ### License:
