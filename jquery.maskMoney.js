@@ -28,21 +28,11 @@
 			return this.trigger('mask');
 		},
 		
-		init : function(settings) {
-			settings = $.extend({
-				symbol: '',
-				symbolStay: false,
-				thousands: ',',
-				decimal: '.',
-				precision: 2,
-				defaultZero: true,
-				allowZero: false,
-				allowNegative: false
-			}, settings);
-
+		init : function(options) {
 			return this.each(function() {
-				var input = $(this);
-				var dirty = false;
+				var input = $(this),
+					dirty = false,
+					settings = $.extend({}, $.fn.maskMoney.defaultSettings, options, input.data());
 
 				function markAsDirty() {
 					dirty = true;
@@ -360,6 +350,8 @@
 		}
 	}
 
+	var old = $.fn.maskMoney;
+
 	$.fn.maskMoney = function(method) {
 		if ( methods[method] ) {
 			return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
@@ -369,4 +361,27 @@
 			$.error( 'Method ' +  method + ' does not exist on jQuery.maskMoney' );
 		}
 	};
+
+	$.fn.maskMoney.defaultSettings = {
+		symbol: '',
+		symbolStay: false,
+		thousands: ',',
+		decimal: '.',
+		precision: 2,
+		defaultZero: true,
+		allowZero: false,
+		allowNegative: false
+	};
+
+	/* MASKMONEY NO CONFLICT */
+	$.fn.maskMoney.noConflict = function () {
+	    $.fn.maskMoney = old;
+	    return this;
+	}
+
+	/* DATA-API */
+	$(document).ready(function() {
+		$('[data-toggle="maskMoney"]').maskMoney();
+	});
+
 })(jQuery);
