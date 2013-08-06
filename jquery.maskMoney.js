@@ -37,12 +37,14 @@
 				precision: 2,
 				defaultZero: true,
 				allowZero: false,
-				allowNegative: false
+				allowNegative: false,
+				lockDecimal: false
 			}, settings);
 
 			return this.each(function() {
 				var input = $(this);
 				var dirty = false;
+				var backspacy = false;
 
 				function markAsDirty() {
 					dirty = true;
@@ -50,6 +52,14 @@
 
 				function clearDirt(){
 					dirty = false;
+				}
+
+				function markAsBackspacy() {
+					backspacy = true;
+				}
+
+				function clearBackspacy(){
+					backspacy = false;
 				}
 
 				function keypressEvent(e) {
@@ -114,10 +124,10 @@
 					var selection = getInputSelection(x);
 					var startPos = selection.start;
 					var endPos = selection.end;
-
+					clearBackspacy();
 					if (k==8) { // backspace key
 						preventDefault(e);
-
+						markAsBackspacy();
 						if(startPos == endPos){
 							// Remove single character
 							x.value = x.value.substring(0, startPos - 1) + x.value.substring(endPos, x.value.length);
@@ -137,6 +147,7 @@
 						return true;
 					} else if ( k==46 || k==63272 ) { // delete key (with special case for safari)
 						preventDefault(e);
+						markAsBackspacy();
 						if(x.selectionStart == x.selectionEnd){
 							// Remove single character
 							x.value = x.value.substring(0, startPos) + x.value.substring(endPos + 1, x.value.length);
@@ -205,10 +216,17 @@
 					startPos = startPos - (originalLen - newLen);
 					setCursorPosition(input, startPos);
 				}
-				
+
 				function mask(){
 					var value = input.val();
 					input.val(maskValue(value));
+				}
+
+				function fillWithPrecision(v) {
+					for (var i = 0; i<settings.precision; i++) {
+						v += '0';
+					}
+					return v;
 				}
 
 				function maskValue(v) {
@@ -216,7 +234,7 @@
 
 					var strCheck = '0123456789';
 					var len = v.length;
-					var a = '', t = '', neg='';
+					var a = '', t = '', neg='', decimal = Math.pow(10,settings.precision);
 
 					if(len != 0 && v.charAt(0)=='-'){
 						v = v.replace('-','');
@@ -237,9 +255,31 @@
 					for (; i < len; i++) {
 						if (strCheck.indexOf(v.charAt(i))!=-1) a+= v.charAt(i);
 					}
+
+					if(settings.lockDecimal) {
+						if(a.length<=settings.precision) {
+							if(backspacy) {
+								a = 0;
+							} else {
+								a = fillWithPrecision(a);
+							}
+						} else {
+							if(!backspacy) {
+								var b = a.charAt(a.length-1), position = a.length-(settings.precision+1);
+								a = [a.slice(0, position), b, a.slice(position)].join('').substr(0, a.length);
+							} else {
+								var b = a.slice(a.length-(settings.precision));
+								if(b!=='00') {
+									a = [a.slice(0, a.length-settings.precision)];
+									a = fillWithPrecision(a);
+								}
+							}
+						}
+					}
+
 					var n = parseFloat(a);
 
-					n = isNaN(n) ? 0 : n/Math.pow(10,settings.precision);
+					n = isNaN(n) ? 0 : n/decimal;
 					t = n.toFixed(settings.precision);
 
 					i = settings.precision == 0 ? 0 : 1;
