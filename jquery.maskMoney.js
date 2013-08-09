@@ -1,7 +1,7 @@
 /*
 * maskMoney plugin for jQuery
 * http://plentz.github.com/jquery-maskmoney/
-* version: 2.1.2
+* version: 2.1.3
 * Licensed under the MIT license
 */
 ;(function($) {
@@ -25,12 +25,13 @@
 		},
 
 		mask : function(){
-			return this.trigger('mask');
+			return this.trigger('mask').trigger('blur');
 		},
 		
 		init : function(settings) {
 			settings = $.extend({
 				symbol: '',
+				symbolPosition: 'before',
 				symbolStay: false,
 				thousands: ',',
 				decimal: '.',
@@ -266,8 +267,14 @@
 							operator = '-';
 						}
 
-						if(value.substr(0, settings.symbol.length) != settings.symbol){
-							value = operator + settings.symbol + value;
+						if( settings.symbolPosition=='after' ){
+							if(value.substr(value.length-settings.symbol.length, settings.symbol.length) != settings.symbol){
+								value = operator + value + settings.symbol;
+							}
+						}else{
+							if(value.substr(0, settings.symbol.length) != settings.symbol){
+								value = operator + settings.symbol + value;
+							}	
 						}
 					}
 					return value;
