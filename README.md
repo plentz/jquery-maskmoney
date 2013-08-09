@@ -29,6 +29,7 @@ The options that you can set are:
 
  * ```symbol```: the symbol to be displayed before the value entered by the user(example: "US$"). default: ''
  * ```symbolStay```: set if the symbol will stay in the field after the user exists the field. default: false
+ * ```symbolPosition```: set if the symbol will be appended or prepended to the value ['before', 'after']. default: 'before'
  * ```thousands```: the thousands separator. default: ','
  * ```decimal```: the decimal separator. default: '.'
  * ```precision```: how many decimal places are allowed. default: 2
@@ -59,6 +60,7 @@ We have 2 bonus methods that can be useful to you:
  * [Plínio Balduino](http://github.com/pbalduino)
  * [Luis Fernando Gomes](https://github.com/luiscoms)
  * [Gary Moore](http://www.gmoore.net/)
+ * [Pawel Waleczek](http://www.waleczek.info/)
 
 ***
 ### License:
