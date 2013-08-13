@@ -216,7 +216,7 @@
 					startPos = startPos - (originalLen - newLen);
 					setCursorPosition(input, startPos);
 				}
-
+				
 				function mask(){
 					var value = input.val();
 					input.val(maskValue(value));
@@ -234,7 +234,7 @@
 
 					var strCheck = '0123456789';
 					var len = v.length;
-					var a = '', t = '', neg='', decimal = Math.pow(10,settings.precision);
+					var a = '', t = '', neg='';
 
 					if(len != 0 && v.charAt(0)=='-'){
 						v = v.replace('-','');
@@ -279,7 +279,7 @@
 
 					var n = parseFloat(a);
 
-					n = isNaN(n) ? 0 : n/decimal;
+					n = isNaN(n) ? 0 : n/Math.pow(10,settings.precision);
 					t = n.toFixed(settings.precision);
 
 					i = settings.precision == 0 ? 0 : 1;
