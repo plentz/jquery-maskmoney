@@ -348,7 +348,7 @@
 					};
 				} // getInputSelection
 
-				if (!input.attr("readonly")){
+				if (!input.attr("disabled")){
 					input.unbind('.maskMoney');
 					input.bind('keypress.maskMoney', keypressEvent);
 					input.bind('keydown.maskMoney', keydownEvent);
