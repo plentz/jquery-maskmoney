@@ -27,7 +27,7 @@
 		mask : function(){
 			return this.trigger('mask');
 		},
-		
+
 		init : function(settings) {
 			settings = $.extend({
 				symbol: '',
@@ -97,12 +97,12 @@
 				}
 
 				function canInputMoreNumbers(element){
-					var reachedMaxLenght = (element.val().length >= element.attr('maxlength') && element.attr('maxlength') >= 0);
+					var reachedMaxLength = (element.val().length >= element.attr('maxlength') && element.attr('maxlength') >= 0);
 					var selection = getInputSelection(element.get(0));
 					var start = selection.start;
 					var end = selection.end;
 					var hasNumberSelected = (selection.start != selection.end && element.val().substring(start,end).match(/\d/))? true : false;
-					return reachedMaxLenght && !hasNumberSelected;
+					return reachedMaxLength && !hasNumberSelected;
 				}
 
 				function keydownEvent(e) {
@@ -205,7 +205,7 @@
 					startPos = startPos - (originalLen - newLen);
 					setCursorPosition(input, startPos);
 				}
-				
+
 				function mask(){
 					var value = input.val();
 					input.val(maskValue(value));
