@@ -61,6 +61,8 @@ We have 2 bonus methods that can be useful to you:
  * [Luis Fernando Gomes](https://github.com/luiscoms)
  * [Gary Moore](http://www.gmoore.net/)
  * [Ben Wise](mailto:moneymask.wiseowl@recursor.net)
+
+ 
 ***
 ### License:
 
