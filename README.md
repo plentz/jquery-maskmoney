@@ -35,6 +35,7 @@ The options that you can set are:
  * ```defaultZero```: when the user enters the field, it sets a default mask using zero. default: true
  * ```allowZero```: use this setting to prevent users from inputing zero. default: false
  * ```allowNegative```: use this setting to prevent users from inputing negative values. default: false
+ * ```keepMask```: use this setting if your text areas have 0.00 already populated to keep this value on click. default: false
  
 __IMPORTANT__: if you try to bind maskMoney to a read only field, nothing will happen, since we ignore completely read only fields. So, if you have a read only field, try to bind maskMoney to it, it will not work. Even if you change the field removing the readonly property, you will need to re-bind maskMoney to make it work.
 
@@ -59,7 +60,9 @@ We have 2 bonus methods that can be useful to you:
  * [Plínio Balduino](http://github.com/pbalduino)
  * [Luis Fernando Gomes](https://github.com/luiscoms)
  * [Gary Moore](http://www.gmoore.net/)
+ * [Ben Wise](mailto:moneymask.wiseowl@recursor.net)
 
+ 
 ***
 ### License:
 
