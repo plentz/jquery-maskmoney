@@ -348,14 +348,12 @@
 					};
 				} // getInputSelection
 
-				if (!input.attr("readonly")){
-					input.unbind('.maskMoney');
-					input.bind('keypress.maskMoney', keypressEvent);
-					input.bind('keydown.maskMoney', keydownEvent);
-					input.bind('blur.maskMoney', blurEvent);
-					input.bind('focus.maskMoney', focusEvent);
-					input.bind('mask.maskMoney', mask);
-				}
+				input.unbind('.maskMoney');
+				input.bind('keypress.maskMoney', keypressEvent);
+				input.bind('keydown.maskMoney', keydownEvent);
+				input.bind('blur.maskMoney', blurEvent);
+				input.bind('focus.maskMoney', focusEvent);
+				input.bind('mask.maskMoney', mask);
 			})
 		}
 	}
