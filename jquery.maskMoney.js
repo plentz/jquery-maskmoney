@@ -183,7 +183,7 @@
 						}
 					} else {
 						if (!settings.symbolStay){
-							input.val(input.val().replace(settings.symbol,''));
+							input.val(input.val().replace(settings.symbol,'').trim());
 						} else if (settings.symbolStay && input.val() == settings.symbol){
 							input.val(setSymbol(getDefaultMask()));
 						}
