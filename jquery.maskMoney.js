@@ -56,6 +56,13 @@
 					e = e || window.event;
 					var k = e.which || e.charCode || e.keyCode;
 					if (k == undefined) return false; //needed to handle an IE "special" event
+		                    	if( k && input.attr('data-maxlength')) {      // if data-maxlength is defined prevent that user input more than value of characters
+                        			var ival = input.val().replace(/\D/g,''); // defined in data-maxlength attribute - olny consider digits
+                        			if(false == (ival.length < input.attr('data-maxlength'))) {
+                            				preventDefault(e);
+                            				return true;
+                        			}
+                    			}
 					if (k < 48 || k > 57) { // any key except the numbers 0-9
 						if (k == 45) { // -(minus) key
 							markAsDirty();
