@@ -30,11 +30,7 @@
 		},
 
 		unmasked : function() {
-			var raw = this.val() || '',
-			  parts = raw.split( settings.decimal, 2 ),
-			  i_part = parts[0] || '0',
-			  f_part = parts[1] || '0',
-			  unmaskedStr = i_part.replace( settings.thousands, '' ) + '.' + f_part;
+			var unmaskedStr = (this.val() || '0').replace(settings.thousands, '').replace(settings.decimal, '.');
 			return parseFloat( unmaskedStr );
 		},
 
