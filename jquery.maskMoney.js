@@ -71,12 +71,6 @@
 							markAsDirty();
 							input.val(input.val().replace('-',''));
 							return false;
-						} else if (k == 13 || k == 9) { // enter key or tab key
-							if(dirty){
-								clearDirt();
-								$(this).change();
-							}
-							return true;
 						} else if ($.browser.mozilla && (k == 37 || k == 39) && e.charCode == 0) {
 							// needed for left arrow key or right arrow key with firefox
 							// the charCode part is to avoid allowing '%'(e.charCode 0, e.keyCode 37)
@@ -135,12 +129,6 @@
 						maskAndPosition(x, startPos);
 						markAsDirty();
 						return false;
-					} else if (k==9) { // tab key
-						if(dirty) {
-							$(this).change();
-							clearDirt();
-						}
-						return true;
 					} else if ( k==46 || k==63272 ) { // delete key (with special case for safari)
 						preventDefault(e);
 						if(x.selectionStart == x.selectionEnd){
@@ -172,6 +160,7 @@
 						textRange.collapse(false); // set the cursor at the end of the input
 						textRange.select();
 					}
+					this.initialValue = input.val()
 				}
 
 				function blurEvent(e) {
@@ -194,6 +183,12 @@
 							input.val(setSymbol(getDefaultMask()));
 						}
 					}
+
+					if(dirty && this.initialValue !== input.val()) {
+						$(this).change();
+						clearDirt();
+					}
+
 				}
 
 				function preventDefault(e) {
