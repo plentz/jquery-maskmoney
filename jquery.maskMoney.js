@@ -13,7 +13,6 @@
 		$.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
 	}
 
-	settings = {};
 	var methods = {
 		destroy : function(){
 			var input = $(this);
@@ -34,7 +33,7 @@
 			return parseFloat( unmaskedStr );
 		},
 
-		init : function(userSettings) {
+		init : function(settings) {
 			settings = $.extend({
 				symbol: '',
 				symbolStay: false,
@@ -44,7 +43,7 @@
 				defaultZero: true,
 				allowZero: false,
 				allowNegative: false
-			}, userSettings);
+			}, settings);
 
 			return this.each(function() {
 				var input = $(this);
