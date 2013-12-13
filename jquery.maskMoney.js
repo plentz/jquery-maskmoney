@@ -34,7 +34,7 @@
 			return parseFloat( unmaskedStr );
 		},
 
-		init : function(user_settings) {
+		init : function(userSettings) {
 			settings = $.extend({
 				symbol: '',
 				symbolStay: false,
@@ -44,7 +44,7 @@
 				defaultZero: true,
 				allowZero: false,
 				allowNegative: false
-			}, user_settings);
+			}, userSettings);
 
 			return this.each(function() {
 				var input = $(this);
