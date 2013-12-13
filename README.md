@@ -41,10 +41,11 @@ __IMPORTANT__: if you try to bind maskMoney to a read only field, nothing will h
 ***
 ### Bonus!
 
-We have 2 bonus methods that can be useful to you:
+We have 3 bonus methods that can be useful to you:
 
  * `.maskMoney('destroy')` which removes maskMoney from an element.
  * `.maskMoney('mask')` which causes maskMoney to actually apply the mask to your input.
+ * `.maskMoney('unmasked')` which causes maskMoney to return a float value (ex.: 'Number' => '1234.56').
 
 ***
 ### Contributors:
@@ -59,6 +60,7 @@ We have 2 bonus methods that can be useful to you:
  * [Plínio Balduino](http://github.com/pbalduino)
  * [Luis Fernando Gomes](https://github.com/luiscoms)
  * [Gary Moore](http://www.gmoore.net/)
+ * [Daniel Loureiro](https://github.com/loureirorg)
 
 ***
 ### License:

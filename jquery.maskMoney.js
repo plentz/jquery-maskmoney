@@ -13,6 +13,7 @@
 		$.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
 	}
 
+	settings = {};
 	var methods = {
 		destroy : function(){
 			var input = $(this);
@@ -28,7 +29,12 @@
 			return this.trigger('mask');
 		},
 
-		init : function(settings) {
+		unmasked : function() {
+			var unmaskedStr = (this.val() || '0').replace(settings.thousands, '').replace(settings.decimal, '.');
+			return parseFloat( unmaskedStr );
+		},
+
+		init : function(user_settings) {
 			settings = $.extend({
 				symbol: '',
 				symbolStay: false,
@@ -38,7 +44,7 @@
 				defaultZero: true,
 				allowZero: false,
 				allowNegative: false
-			}, settings);
+			}, user_settings);
 
 			return this.each(function() {
 				var input = $(this);
