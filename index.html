@@ -39,15 +39,20 @@
 		<pre class="brush: js">$("#demo5").maskMoney('mask');</pre>
 
 		<input type="text" id="demo6"/>
-		<script type="text/javascript">$("#demo6").maskMoney();</script>
-		<input type="button" onclick="$('#demo6').maskMoney('destroy')" value="remove maskmoney from demo6"/>
+		<script type="text/javascript">$("#demo6").maskMoney({symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});</script>
+		<input type="button" onclick="$('#demo6').maskMoney('mask', 1999.99)" value="trigger mask event at demo6, passing a float value as parameter"/>
+		<pre class="brush: js">$("#demo6").maskMoney('mask', 1999.99);</pre>
+
+		<input type="text" id="demo7"/>
+		<script type="text/javascript">$("#demo7").maskMoney();</script>
+		<input type="button" onclick="$('#demo7').maskMoney('destroy')" value="remove maskmoney from demo7"/>
 		<pre class="brush: js">$("#demo6").maskMoney('destroy');</pre>
 
-		<input type="text" id="demo7" value="R$ 1.231.231,23"/>
-		<script type="text/javascript">$("#demo7").maskMoney();</script>
-		<input type="button" onclick="var num = $('#demo7').maskMoney('unmasked')[0];alert('type:'+typeof(num) + ', value: ' + num)" value="alert unmasked value and type from demo7"/>
+		<input type="text" id="demo8" value="R$ 1.231.231,23"/>
+		<script type="text/javascript">$("#demo8").maskMoney();</script>
+		<input type="button" onclick="var num = $('#demo8').maskMoney('unmasked')[0];alert('type:'+typeof(num) + ', value: ' + num)" value="alert unmasked value and type from demo8"/>
 		<pre class="brush: js">
-			var num = $('#demo7').maskMoney('unmasked')[0];
+			var num = $('#demo8').maskMoney('unmasked')[0];
 			alert('type: '+ typeof(num) + ', value: ' + num)
 		</pre>
 	</body>

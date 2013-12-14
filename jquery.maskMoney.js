@@ -1,7 +1,7 @@
 /*
 * maskMoney plugin for jQuery
 * http://plentz.github.com/jquery-maskmoney/
-* version: 2.2.0
+* version: 2.3.0
 * Licensed under the MIT license
 */
 ;(function($) {
@@ -24,8 +24,17 @@
 			return this;
 		},
 
-		mask : function(){
-			return this.trigger('mask');
+		mask : function(value){
+			return this.each(function() {
+				var $this = $(this);
+				if(typeof(value) == 'number'){
+					$this.trigger('mask');
+					var decimalSize = $($this.val().split(/\D/)).last()[0].length;
+					value = value.toFixed(decimalSize)
+					$this.val(value);
+				}
+				return $this.trigger('mask');
+			});
 		},
 
 		unmasked : function() {
