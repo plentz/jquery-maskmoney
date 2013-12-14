@@ -1,7 +1,7 @@
 /*
 * maskMoney plugin for jQuery
 * http://plentz.github.com/jquery-maskmoney/
-* version: 2.1.2
+* version: 2.2.0
 * Licensed under the MIT license
 */
 ;(function($) {
@@ -29,8 +29,14 @@
 		},
 
 		unmasked : function() {
-			var unmaskedStr = (this.val() || '0').replace(settings.thousands, '').replace(settings.decimal, '.');
-			return parseFloat( unmaskedStr );
+			return this.map(function() {
+				var input = $(this);
+				var unmaskedStr = (input.val() || '0');
+				var decimalPart = $(unmaskedStr.split(/\D/)).last()[0];
+				unmaskedStr = unmaskedStr.replace(/\D/g, '');
+				unmaskedStr = unmaskedStr.replace(new RegExp(decimalPart + '$'), '.' + decimalPart);
+				return parseFloat(unmaskedStr);
+			})
 		},
 
 		init : function(settings) {
@@ -259,7 +265,7 @@
 				}
 
 				function getDefaultMask() {
-					var n = parseFloat('0')/Math.pow(10,settings.precision);
+					var n = parseFloat('0') / Math.pow(10, settings.precision);
 					return (n.toFixed(settings.precision)).replace(new RegExp('\\.','g'),settings.decimal);
 				}
 

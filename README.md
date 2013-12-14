@@ -43,9 +43,9 @@ __IMPORTANT__: if you try to bind maskMoney to a read only field, nothing will h
 
 We have 3 bonus methods that can be useful to you:
 
- * `.maskMoney('destroy')` which removes maskMoney from an element.
- * `.maskMoney('mask')` which causes maskMoney to actually apply the mask to your input.
- * `.maskMoney('unmasked')` which causes maskMoney to return a float value (ex.: 'Number' => '1234.56').
+ * `.maskMoney('destroy')` removes maskMoney from an element.
+ * `.maskMoney('mask')` apply the mask to your input.
+ * `.maskMoney('unmasked')` return a float value (ex.: 'R$ 1.234,56' => 1234.56). PS: If you only have one input field, you should use this way `.maskMoney('unmasked')[0]`, since it will always return an array.
 
 ***
 ### Contributors:
