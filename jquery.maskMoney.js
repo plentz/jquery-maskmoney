@@ -32,9 +32,13 @@
 			return this.map(function() {
 				var input = $(this);
 				var unmaskedStr = (input.val() || '0');
+				var isNegative = unmaskedStr.indexOf("-") != -1;
 				var decimalPart = $(unmaskedStr.split(/\D/)).last()[0];
 				unmaskedStr = unmaskedStr.replace(/\D/g, '');
 				unmaskedStr = unmaskedStr.replace(new RegExp(decimalPart + '$'), '.' + decimalPart);
+				if(isNegative){
+					unmaskedStr = "-" + unmaskedStr;
+				}
 				return parseFloat(unmaskedStr);
 			})
 		},
