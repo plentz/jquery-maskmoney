@@ -45,7 +45,7 @@ We have 3 bonus methods that can be useful to you:
 
  * `.maskMoney('destroy')` removes maskMoney from an element.
  * `.maskMoney('mask')` apply the mask to your input.
- * `.maskMoney('unmasked')` return a float value (ex.: 'R$ 1.234,56' => 1234.56). PS: If you only have one input field, you should use this way `.maskMoney('unmasked')[0]`, since it will always return an array.
+ * `.maskMoney('unmasked')` return a float value (ex.: 'R$ 1.234,56' => 1234.56). PS: If you have only one input field, you should use this way `.maskMoney('unmasked')[0]`, since it will always return an array.
 
 ***
 ### Contributors:
