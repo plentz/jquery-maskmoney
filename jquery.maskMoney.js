@@ -5,7 +5,7 @@
 * Licensed under the MIT license
 */
 ;(function($) {
-	if(!$.browser){
+	if (!$.browser) {
 		$.browser = {};
 		$.browser.mozilla = /mozilla/.test(navigator.userAgent.toLowerCase()) && !/webkit/.test(navigator.userAgent.toLowerCase());
 		$.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
@@ -14,7 +14,7 @@
 	}
 
 	var methods = {
-		destroy : function(){
+		destroy : function() {
 			var input = $(this);
 			input.unbind('.maskMoney');
 
@@ -24,10 +24,10 @@
 			return this;
 		},
 
-		mask : function(value){
+		mask : function(value) {
 			return this.each(function() {
 				var $this = $(this);
-				if(typeof(value) == 'number'){
+				if (typeof(value) == 'number') {
 					$this.trigger('mask');
 					var decimalSize = $($this.val().split(/\D/)).last()[0].length;
 					value = value.toFixed(decimalSize)
@@ -45,7 +45,7 @@
 				var decimalPart = $(unmaskedStr.split(/\D/)).last()[0];
 				unmaskedStr = unmaskedStr.replace(/\D/g, '');
 				unmaskedStr = unmaskedStr.replace(new RegExp(decimalPart + '$'), '.' + decimalPart);
-				if(isNegative){
+				if (isNegative) {
 					unmaskedStr = "-" + unmaskedStr;
 				}
 				return parseFloat(unmaskedStr);
@@ -72,7 +72,7 @@
 					dirty = true;
 				}
 
-				function clearDirt(){
+				function clearDirt() {
 					dirty = false;
 				}
 
@@ -90,7 +90,7 @@
 							input.val(input.val().replace('-',''));
 							return false;
 						} else if (k == 13 || k == 9) { // enter key or tab key
-							if(dirty){
+							if (dirty) {
 								clearDirt();
 								$(this).change();
 							}
@@ -120,7 +120,7 @@
 					}
 				}
 
-				function canInputMoreNumbers(element){
+				function canInputMoreNumbers(element) {
 					var reachedMaxLength = (element.val().length >= element.attr('maxlength') && element.attr('maxlength') >= 0);
 					var selection = getInputSelection(element.get(0));
 					var start = selection.start;
@@ -142,7 +142,7 @@
 					if (k==8) { // backspace key
 						preventDefault(e);
 
-						if(startPos == endPos){
+						if (startPos == endPos) {
 							// Remove single character
 							x.value = x.value.substring(0, startPos - 1) + x.value.substring(endPos, x.value.length);
 							startPos = startPos - 1;
@@ -154,14 +154,14 @@
 						markAsDirty();
 						return false;
 					} else if (k==9) { // tab key
-						if(dirty) {
+						if (dirty) {
 							$(this).change();
 							clearDirt();
 						}
 						return true;
-					} else if ( k==46 || k==63272 ) { // delete key (with special case for safari)
+					} else if (k==46 || k==63272) { // delete key (with special case for safari)
 						preventDefault(e);
-						if(x.selectionStart == x.selectionEnd){
+						if (x.selectionStart == x.selectionEnd) {
 							// Remove single character
 							x.value = x.value.substring(0, startPos) + x.value.substring(endPos + 1, x.value.length);
 						} else {
@@ -179,11 +179,11 @@
 				function focusEvent(e) {
 					var mask = getDefaultMask();
 					if (input.val() == mask) {
-						input.val('');
+					        input.val('');
 					} else if (input.val()=='' && settings.defaultZero) {
-						input.val(setSymbol(mask));
+					        input.val(setSymbol(mask));
 					} else {
-						input.val(setSymbol(input.val()));
+					        input.val(setSymbol(input.val()));
 					}
 					if (this.createTextRange) {
 						var textRange = this.createTextRange();
@@ -198,17 +198,17 @@
 					}
 
 					if (input.val() == '' || input.val() == setSymbol(getDefaultMask()) || input.val() == settings.symbol) {
-						if(!settings.allowZero){
+						if (!settings.allowZero) {
 							input.val('');
-						} else if (!settings.symbolStay){
+						} else if (!settings.symbolStay) {
 							input.val(getDefaultMask());
 						} else {
 							input.val(setSymbol(getDefaultMask()));
 						}
 					} else {
-						if (!settings.symbolStay){
+						if (!settings.symbolStay) {
 							input.val(input.val().replace(settings.symbol,''));
-						} else if (settings.symbolStay && input.val() == settings.symbol){
+						} else if (settings.symbolStay && input.val() == settings.symbol) {
 							input.val(setSymbol(getDefaultMask()));
 						}
 					}
@@ -230,7 +230,7 @@
 					setCursorPosition(input, startPos);
 				}
 
-				function mask(){
+				function mask() {
 					var value = input.val();
 					input.val(maskValue(value));
 				}
@@ -240,16 +240,17 @@
 
 					var strCheck = '0123456789';
 					var len = v.length;
-					var a = '', t = '', neg='';
+					var a = '', t = '';
+					var negative = '';
 
-					if(len != 0 && v.charAt(0)=='-'){
+					if (len != 0 && v.charAt(0)=='-') {
 						v = v.replace('-','');
-						if(settings.allowNegative){
-							neg = '-';
+						if (settings.allowNegative) {
+							negative = '-';
 						}
 					}
 
-					if (len==0) {
+					if (len == 0) {
 						if (!settings.defaultZero) return t;
 						t = '0.00';
 					}
@@ -267,14 +268,14 @@
 					t = n.toFixed(settings.precision);
 
 					i = settings.precision == 0 ? 0 : 1;
-					var p, d = (t=t.split('.'))[i].substr(0,settings.precision);
+					var p, d = (t=t.split('.'))[i].substr(0, settings.precision);
 					for (p = (t=t[0]).length; (p-=3)>=1;) {
 						t = t.substr(0,p)+settings.thousands+t.substr(p);
 					}
 
-					return (settings.precision>0)
-					? setSymbol(neg+t+settings.decimal+d+Array((settings.precision+1)-d.length).join(0))
-					: setSymbol(neg+t);
+					return (settings.precision > 0)
+						? setSymbol(negative + t + settings.decimal+d+Array((settings.precision+1)-d.length).join(0))
+						: setSymbol(negative + t);
 				}
 
 				function getDefaultMask() {
@@ -282,25 +283,25 @@
 					return (n.toFixed(settings.precision)).replace(new RegExp('\\.','g'),settings.decimal);
 				}
 
-				function setSymbol(value){
-					if (settings.symbol != ''){
+				function setSymbol(value) {
+					if (settings.symbol != '') {
 						var operator = '';
-						if(value.length != 0 && value.charAt(0) == '-'){
+						if (value.length != 0 && value.charAt(0) == '-') {
 							value = value.replace('-', '');
 							operator = '-';
 						}
 
-						if(value.substr(0, settings.symbol.length) != settings.symbol){
+						if (value.substr(0, settings.symbol.length) != settings.symbol) {
 							value = operator + settings.symbol + value;
 						}
 					}
 					return value;
 				}
 
-				function changeSign(input){
+				function changeSign(input) {
 					var inputValue = input.val();
-					if (settings.allowNegative){
-						if (inputValue != '' && inputValue.charAt(0) == '-'){
+					if (settings.allowNegative) {
+						if (inputValue != '' && inputValue.charAt(0) == '-') {
 							return inputValue.replace('-','');
 						} else {
 							return '-' + inputValue;
@@ -383,12 +384,12 @@
 	}
 
 	$.fn.maskMoney = function(method) {
-		if ( methods[method] ) {
-			return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
-		} else if ( typeof method === 'object' || ! method ) {
-			return methods.init.apply( this, arguments );
+		if (methods[method]) {
+			return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+		} else if (typeof method === 'object' || ! method) {
+			return methods.init.apply(this, arguments);
 		} else {
-			$.error( 'Method ' +  method + ' does not exist on jQuery.maskMoney' );
+			$.error('Method ' +  method + ' does not exist on jQuery.maskMoney');
 		}
 	};
 })(window.jQuery || window.Zepto);
