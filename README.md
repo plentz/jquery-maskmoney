@@ -32,7 +32,6 @@ The options that you can set are:
  * `thousands`: the thousands separator. default: ','
  * `decimal`: the decimal separator. default: '.'
  * `precision`: how many decimal places are allowed. default: 2
- * `defaultZero`: when the user enters the field, it sets a default mask using zero. default: true
  * `allowZero`: use this setting to prevent users from inputing zero. default: false
  * `allowNegative`: use this setting to prevent users from inputing negative values. default: false
 

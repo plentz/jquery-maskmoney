@@ -1,7 +1,7 @@
 /*
 * maskMoney plugin for jQuery
 * http://plentz.github.com/jquery-maskmoney/
-* version: 2.3.0
+* version: 2.4.0
 * Licensed under the MIT license
 */
 ;(function($) {
@@ -59,11 +59,14 @@
 				thousands: ',',
 				decimal: '.',
 				precision: 2,
-				defaultZero: true,
 				allowZero: false,
 				allowNegative: false
 			}, settings);
-
+			if (settings.defaultZero != null) {
+				if (window.console) {
+					console.log("settings.defaultZero is deprecated - more info here https://github.com/plentz/jquery-maskmoney/issues/55");
+				}
+			}
 			return this.each(function() {
 				var input = $(this);
 				var dirty = false;
@@ -177,14 +180,7 @@
 				}
 
 				function focusEvent(e) {
-					var mask = getDefaultMask();
-					if (input.val() == mask) {
-					        input.val('');
-					} else if (input.val()=='' && settings.defaultZero) {
-					        input.val(setSymbol(mask));
-					} else {
-					        input.val(setSymbol(input.val()));
-					}
+					mask();
 					if (this.createTextRange) {
 						var textRange = this.createTextRange();
 						textRange.collapse(false); // set the cursor at the end of the input
@@ -251,7 +247,6 @@
 					}
 
 					if (len == 0) {
-						if (!settings.defaultZero) return t;
 						t = '0.00';
 					}
 
