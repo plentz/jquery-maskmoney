@@ -79,24 +79,31 @@
 
 				function keypressEvent(e) {
 					e = e || window.event;
-					var k = e.which || e.charCode || e.keyCode;
-					if (k == undefined) return false; //needed to handle an IE "special" event
-					if (k < 48 || k > 57) { // any key except the numbers 0-9
-						if (k == 45) { // -(minus) key
+					var key = e.which || e.charCode || e.keyCode;
+					//needed to handle an IE "special" event
+					if (key == undefined) {
+						return false;
+					}
+					// any key except the numbers 0-9
+					if (key < 48 || key > 57) {
+						// -(minus) key
+						if (key == 45) {
 							markAsDirty();
 							input.val(changeSign(input));
 							return false;
-						} else if (k == 43) { // +(plus) key
+						// +(plus) key
+						} else if (key == 43) {
 							markAsDirty();
 							input.val(input.val().replace('-',''));
 							return false;
-						} else if (k == 13 || k == 9) { // enter key or tab key
+						// enter key or tab key
+						} else if (key == 13 || key == 9) {
 							if (dirty) {
 								clearDirt();
 								$(this).change();
 							}
 							return true;
-						} else if ($.browser.mozilla && (k == 37 || k == 39) && e.charCode == 0) {
+						} else if ($.browser.mozilla && (key == 37 || key == 39) && e.charCode == 0) {
 							// needed for left arrow key or right arrow key with firefox
 							// the charCode part is to avoid allowing '%'(e.charCode 0, e.keyCode 37)
 							return true;
@@ -109,12 +116,12 @@
 					} else {
 						preventDefault(e);
 
-						var key = String.fromCharCode(k);
+						var keyPressedChar = String.fromCharCode(key);
 						var x = input.get(0);
 						var selection = getInputSelection(x);
 						var startPos = selection.start;
 						var endPos = selection.end;
-						x.value = x.value.substring(0, startPos) + key + x.value.substring(endPos, x.value.length);
+						x.value = x.value.substring(0, startPos) + keyPressedChar + x.value.substring(endPos, x.value.length);
 						maskAndPosition(x, startPos + 1);
 						markAsDirty();
 						return false;
