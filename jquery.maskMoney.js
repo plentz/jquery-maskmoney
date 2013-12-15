@@ -222,7 +222,7 @@
 					if (e.preventDefault) { //standard browsers
 						e.preventDefault();
 					} else { // old internet explorer
-						e.returnValue = false
+						e.returnValue = false;
 					}
 				}
 
