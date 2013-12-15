@@ -239,16 +239,16 @@
 					input.val(maskValue(value));
 				}
 
-				function maskValue(v) {
-					v = v.replace(settings.symbol, '');
+				function maskValue(value) {
+					value = value.replace(settings.symbol, '');
 
 					var strCheck = '0123456789';
-					var len = v.length;
+					var len = value.length;
 					var a = '', t = '';
 					var negative = '';
 
-					if (len != 0 && v.charAt(0)=='-') {
-						v = v.replace('-','');
+					if (len != 0 && value.charAt(0)=='-') {
+						value = value.replace('-','');
 						if (settings.allowNegative) {
 							negative = '-';
 						}
@@ -259,21 +259,23 @@
 					}
 
 					for (var i = 0; i < len; i++) {
-						if ((v.charAt(i) != '0') && (v.charAt(i) != settings.decimal)) break;
+						if (value.charAt(i) != '0' && value.charAt(i) != settings.decimal) {
+							break;
+						}
 					}
 
 					for (; i < len; i++) {
-						if (strCheck.indexOf(v.charAt(i)) != -1) a += v.charAt(i);
+						if (strCheck.indexOf(value.charAt(i)) != -1) a += value.charAt(i);
 					}
 					var n = parseFloat(a);
 
-					n = isNaN(n) ? 0 : n / Math.pow(10,settings.precision);
+					n = isNaN(n) ? 0 : n / Math.pow(10, settings.precision);
 					t = n.toFixed(settings.precision);
 
 					i = settings.precision == 0 ? 0 : 1;
 					var p, d = (t = t.split('.'))[i].substr(0, settings.precision);
 					for (p = (t = t[0]).length; (p -= 3) >= 1;) {
-						t = t.substr(0, p)+settings.thousands+t.substr(p);
+						t = t.substr(0, p) + settings.thousands + t.substr(p);
 					}
 
 					return (settings.precision > 0)
