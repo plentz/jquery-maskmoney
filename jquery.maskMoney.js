@@ -62,10 +62,8 @@
 				allowZero: false,
 				allowNegative: false
 			}, settings);
-			if (settings.defaultZero != null) {
-				if (window.console) {
-					console.log("settings.defaultZero is deprecated - more info here https://github.com/plentz/jquery-maskmoney/issues/55");
-				}
+			if (settings.defaultZero != null && window.console) {
+				console.log("settings.defaultZero is deprecated - more info here https://github.com/plentz/jquery-maskmoney/issues/55");
 			}
 			return this.each(function() {
 				var input = $(this);
