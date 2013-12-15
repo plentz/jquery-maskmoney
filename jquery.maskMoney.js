@@ -138,16 +138,19 @@
 				}
 
 				function keydownEvent(e) {
-					e = e||window.event;
-					var k = e.which || e.charCode || e.keyCode;
-					if (k == undefined) return false; //needed to handle an IE "special" event
+					e = e || window.event;
+					var key = e.which || e.charCode || e.keyCode;
+					//needed to handle an IE "special" event
+					if (key == undefined) {
+						return false;
+					}
 
 					var x = input.get(0);
 					var selection = getInputSelection(x);
 					var startPos = selection.start;
 					var endPos = selection.end;
 
-					if (k == 8) { // backspace key
+					if (key == 8) { // backspace key
 						preventDefault(e);
 
 						if (startPos == endPos) {
@@ -161,13 +164,13 @@
 						maskAndPosition(x, startPos);
 						markAsDirty();
 						return false;
-					} else if (k==9) { // tab key
+					} else if (key == 9) { // tab key
 						if (dirty) {
 							$(this).change();
 							clearDirt();
 						}
 						return true;
-					} else if (k == 46 || k == 63272) { // delete key (with special case for safari)
+					} else if (key == 46 || key == 63272) { // delete key (with special case for safari)
 						preventDefault(e);
 						if (x.selectionStart == x.selectionEnd) {
 							// Remove single character
