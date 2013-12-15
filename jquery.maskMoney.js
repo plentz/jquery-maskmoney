@@ -1,7 +1,7 @@
 /*
 * maskMoney plugin for jQuery
 * http://plentz.github.com/jquery-maskmoney/
-* version: 2.4.0
+* version: 2.5.0
 * Licensed under the MIT license
 */
 ;(function($) {
@@ -140,7 +140,7 @@
 					var startPos = selection.start;
 					var endPos = selection.end;
 
-					if (k==8) { // backspace key
+					if (k == 8) { // backspace key
 						preventDefault(e);
 
 						if (startPos == endPos) {
@@ -160,7 +160,7 @@
 							clearDirt();
 						}
 						return true;
-					} else if (k==46 || k==63272) { // delete key (with special case for safari)
+					} else if (k == 46 || k == 63272) { // delete key (with special case for safari)
 						preventDefault(e);
 						if (x.selectionStart == x.selectionEnd) {
 							// Remove single character
@@ -248,26 +248,26 @@
 						t = '0.00';
 					}
 
-					for (var i = 0; i<len; i++) {
-						if ((v.charAt(i)!='0') && (v.charAt(i)!=settings.decimal)) break;
+					for (var i = 0; i < len; i++) {
+						if ((v.charAt(i) != '0') && (v.charAt(i) != settings.decimal)) break;
 					}
 
 					for (; i < len; i++) {
-						if (strCheck.indexOf(v.charAt(i))!=-1) a+= v.charAt(i);
+						if (strCheck.indexOf(v.charAt(i)) != -1) a += v.charAt(i);
 					}
 					var n = parseFloat(a);
 
-					n = isNaN(n) ? 0 : n/Math.pow(10,settings.precision);
+					n = isNaN(n) ? 0 : n / Math.pow(10,settings.precision);
 					t = n.toFixed(settings.precision);
 
 					i = settings.precision == 0 ? 0 : 1;
-					var p, d = (t=t.split('.'))[i].substr(0, settings.precision);
-					for (p = (t=t[0]).length; (p-=3)>=1;) {
-						t = t.substr(0,p)+settings.thousands+t.substr(p);
+					var p, d = (t = t.split('.'))[i].substr(0, settings.precision);
+					for (p = (t = t[0]).length; (p -= 3) >= 1;) {
+						t = t.substr(0, p)+settings.thousands+t.substr(p);
 					}
 
 					return (settings.precision > 0)
-						? setSymbol(negative + t + settings.decimal+d+Array((settings.precision+1)-d.length).join(0))
+						? setSymbol(negative + t + settings.decimal + d + Array((settings.precision + 1) - d.length).join(0))
 						: setSymbol(negative + t);
 				}
 
@@ -347,13 +347,13 @@
 							if (textInputRange.compareEndPoints("StartToEnd", endRange) > -1) {
 								start = end = len;
 							} else {
-								start = -textInputRange.moveStart("character", -len);
+								start = -textInputRange.moveStart("character", - len);
 								start += normalizedValue.slice(0, start).split("\n").length - 1;
 
 								if (textInputRange.compareEndPoints("EndToEnd", endRange) > -1) {
 									end = len;
 								} else {
-									end = -textInputRange.moveEnd("character", -len);
+									end = -textInputRange.moveEnd("character", - len);
 									end += normalizedValue.slice(0, end).split("\n").length - 1;
 								}
 							}
