@@ -155,12 +155,10 @@
 
 						if (startPos == endPos) {
 							// Remove single character
-							x.value = x.value.substring(0, startPos - 1) + x.value.substring(endPos, x.value.length);
 							startPos = startPos - 1;
-						} else {
-							// Remove multiple characters
-							x.value = x.value.substring(0, startPos) + x.value.substring(endPos, x.value.length);
 						}
+						x.value = x.value.substring(0, startPos) + x.value.substring(endPos, x.value.length);
+
 						maskAndPosition(x, startPos);
 						markAsDirty();
 						return false;
@@ -173,12 +171,11 @@
 					} else if (key == 46 || key == 63272) { // delete key (with special case for safari)
 						preventDefault(e);
 						if (x.selectionStart == x.selectionEnd) {
-							// Remove single character
-							x.value = x.value.substring(0, startPos) + x.value.substring(endPos + 1, x.value.length);
-						} else {
-							//Remove multiple characters
-							x.value = x.value.substring(0, startPos) + x.value.substring(endPos, x.value.length);
+							// single character
+							endPos = endPos + 1
 						}
+						x.value = x.value.substring(0, startPos) + x.value.substring(endPos, x.value.length);
+
 						maskAndPosition(x, startPos);
 						markAsDirty();
 						return false;
