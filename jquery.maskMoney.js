@@ -150,13 +150,19 @@
 					var startPos = selection.start;
 					var endPos = selection.end;
 
-					if (key == 8) { // backspace key
+					if (key == 8 || key == 46 || key == 63272) { // backspace or delete key (with special case for safari)
 						preventDefault(e);
 
 						if (startPos == endPos) {
-							// Remove single character
-							startPos = startPos - 1;
+							// backspace
+							if(key == 8) {
+								startPos = startPos - 1;
+							//delete
+							} else {
+								endPos = endPos + 1
+							}
 						}
+
 						x.value = x.value.substring(0, startPos) + x.value.substring(endPos, x.value.length);
 
 						maskAndPosition(x, startPos);
@@ -168,17 +174,6 @@
 							clearDirt();
 						}
 						return true;
-					} else if (key == 46 || key == 63272) { // delete key (with special case for safari)
-						preventDefault(e);
-						if (x.selectionStart == x.selectionEnd) {
-							// single character
-							endPos = endPos + 1
-						}
-						x.value = x.value.substring(0, startPos) + x.value.substring(endPos, x.value.length);
-
-						maskAndPosition(x, startPos);
-						markAsDirty();
-						return false;
 					} else { // any other key
 						return true;
 					}
