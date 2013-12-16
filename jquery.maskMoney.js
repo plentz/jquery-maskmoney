@@ -128,15 +128,6 @@
 					}
 				}
 
-				function canInputMoreNumbers() {
-					var reachedMaxLength = ($input.val().length >= $input.attr('maxlength') && $input.attr('maxlength') >= 0);
-					var selection = getInputSelection($input.get(0));
-					var start = selection.start;
-					var end = selection.end;
-					var hasNumberSelected = (selection.start != selection.end && $input.val().substring(start,end).match(/\d/))? true : false;
-					return reachedMaxLength && !hasNumberSelected;
-				}
-
 				function keydownEvent(e) {
 					e = e || window.event;
 					var key = e.which || e.charCode || e.keyCode;
@@ -153,13 +144,14 @@
 					if (key == 8 || key == 46 || key == 63272) { // backspace or delete key (with special case for safari)
 						preventDefault(e);
 
+						// not a selection
 						if (startPos == endPos) {
 							// backspace
 							if(key == 8) {
-								startPos = startPos - 1;
+								startPos -= 1;
 							//delete
 							} else {
-								endPos = endPos + 1
+								endPos += 1;
 							}
 						}
 
@@ -208,6 +200,15 @@
 							$input.val(setSymbol(getDefaultMask()));
 						}
 					}
+				}
+
+				function canInputMoreNumbers() {
+					var reachedMaxLength = ($input.val().length >= $input.attr('maxlength') && $input.attr('maxlength') >= 0);
+					var selection = getInputSelection($input.get(0));
+					var start = selection.start;
+					var end = selection.end;
+					var hasNumberSelected = (selection.start != selection.end && $input.val().substring(start,end).match(/\d/))? true : false;
+					return reachedMaxLength && !hasNumberSelected;
 				}
 
 				function preventDefault(e) {
