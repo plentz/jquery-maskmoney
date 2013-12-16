@@ -89,7 +89,7 @@
 						// -(minus) key
 						if (key == 45) {
 							markAsDirty();
-							input.val(changeSign(input));
+							input.val(changeSign());
 							return false;
 						// +(plus) key
 						} else if (key == 43) {
@@ -265,7 +265,9 @@
 					}
 
 					for (; i < len; i++) {
-						if (strCheck.indexOf(value.charAt(i)) != -1) a += value.charAt(i);
+						if (strCheck.indexOf(value.charAt(i)) != -1) {
+							a += value.charAt(i);
+						}
 					}
 					var n = parseFloat(a);
 
@@ -303,7 +305,7 @@
 					return value;
 				}
 
-				function changeSign(input) {
+				function changeSign() {
 					var inputValue = input.val();
 					if (settings.allowNegative) {
 						if (inputValue != '' && inputValue.charAt(0) == '-') {
