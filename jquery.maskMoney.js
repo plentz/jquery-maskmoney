@@ -231,7 +231,7 @@
 					input.val(maskValue(x.value));
 					var newLen = input.val().length;
 					startPos = startPos - (originalLen - newLen);
-					setCursorPosition(input, startPos);
+					setCursorPosition(startPos);
 				}
 
 				function mask() {
@@ -318,9 +318,8 @@
 					}
 				}
 
-				function setCursorPosition(input, pos) {
-					// I'm not sure if we need to jqueryfy input
-					$(input).each(function(index, elem) {
+				function setCursorPosition(pos) {
+					input.each(function(index, elem) {
 						if (elem.setSelectionRange) {
 							elem.focus();
 							elem.setSelectionRange(pos, pos);
