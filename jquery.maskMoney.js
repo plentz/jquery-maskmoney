@@ -213,6 +213,12 @@
 						} else if (settings.symbolStay && $input.val() == settings.symbol) {
 							$input.val(setSymbol(getDefaultMask()));
 						}
+						// We need to trigger change. 
+						// This is the case that user clicks outside of the field and there is a value change
+						if(dirty) {
+							$(this).change();
+							clearDirt();
+						}
 					}
 				}
 
