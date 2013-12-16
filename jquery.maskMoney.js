@@ -111,7 +111,7 @@
 							preventDefault(e);
 							return true;
 						}
-					} else if (canInputMoreNumbers(input)) {
+					} else if (canInputMoreNumbers()) {
 						return false;
 					} else {
 						preventDefault(e);
@@ -128,12 +128,12 @@
 					}
 				}
 
-				function canInputMoreNumbers(element) {
-					var reachedMaxLength = (element.val().length >= element.attr('maxlength') && element.attr('maxlength') >= 0);
-					var selection = getInputSelection(element.get(0));
+				function canInputMoreNumbers() {
+					var reachedMaxLength = ($input.val().length >= $input.attr('maxlength') && $input.attr('maxlength') >= 0);
+					var selection = getInputSelection($input.get(0));
 					var start = selection.start;
 					var end = selection.end;
-					var hasNumberSelected = (selection.start != selection.end && element.val().substring(start,end).match(/\d/))? true : false;
+					var hasNumberSelected = (selection.start != selection.end && $input.val().substring(start,end).match(/\d/))? true : false;
 					return reachedMaxLength && !hasNumberSelected;
 				}
 
