@@ -15,8 +15,7 @@
 
 	var methods = {
 		destroy : function() {
-			var input = $(this);
-			input.unbind('.maskMoney');
+			$(this).unbind('.maskMoney');
 
 			if ($.browser.msie) {
 				this.onpaste = null;
