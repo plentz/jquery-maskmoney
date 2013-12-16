@@ -38,8 +38,7 @@
 
 		unmasked : function() {
 			return this.map(function() {
-				var input = $(this);
-				var unmaskedStr = (input.val() || '0');
+				var unmaskedStr = ($(this).val() || '0');
 				var isNegative = unmaskedStr.indexOf("-") != -1;
 				var decimalPart = $(unmaskedStr.split(/\D/)).last()[0];
 				unmaskedStr = unmaskedStr.replace(/\D/g, '');
@@ -65,7 +64,7 @@
 				console.log("settings.defaultZero is deprecated - more info here https://github.com/plentz/jquery-maskmoney/issues/55");
 			}
 			return this.each(function() {
-				var input = $(this);
+				var $input = $(this);
 				var dirty = false;
 
 				function markAsDirty() {
@@ -88,12 +87,12 @@
 						// -(minus) key
 						if (key == 45) {
 							markAsDirty();
-							input.val(changeSign());
+							$input.val(changeSign());
 							return false;
 						// +(plus) key
 						} else if (key == 43) {
 							markAsDirty();
-							input.val(input.val().replace('-',''));
+							$input.val($input.val().replace('-',''));
 							return false;
 						// enter key or tab key
 						} else if (key == 13 || key == 9) {
@@ -116,7 +115,7 @@
 						preventDefault(e);
 
 						var keyPressedChar = String.fromCharCode(key);
-						var x = input.get(0);
+						var x = $input.get(0);
 						var selection = getInputSelection(x);
 						var startPos = selection.start;
 						var endPos = selection.end;
@@ -144,7 +143,7 @@
 						return false;
 					}
 
-					var x = input.get(0);
+					var x = $input.get(0);
 					var selection = getInputSelection(x);
 					var startPos = selection.start;
 					var endPos = selection.end;
@@ -200,19 +199,19 @@
 						keypressEvent(e);
 					}
 
-					if (input.val() == '' || input.val() == setSymbol(getDefaultMask()) || input.val() == settings.symbol) {
+					if ($input.val() == '' || $input.val() == setSymbol(getDefaultMask()) || $input.val() == settings.symbol) {
 						if (!settings.allowZero) {
-							input.val('');
+							$input.val('');
 						} else if (!settings.symbolStay) {
-							input.val(getDefaultMask());
+							$input.val(getDefaultMask());
 						} else {
-							input.val(setSymbol(getDefaultMask()));
+							$input.val(setSymbol(getDefaultMask()));
 						}
 					} else {
 						if (!settings.symbolStay) {
-							input.val(input.val().replace(settings.symbol,''));
-						} else if (settings.symbolStay && input.val() == settings.symbol) {
-							input.val(setSymbol(getDefaultMask()));
+							$input.val($input.val().replace(settings.symbol,''));
+						} else if (settings.symbolStay && $input.val() == settings.symbol) {
+							$input.val(setSymbol(getDefaultMask()));
 						}
 					}
 				}
@@ -226,16 +225,16 @@
 				}
 
 				function maskAndPosition(x, startPos) {
-					var originalLen = input.val().length;
-					input.val(maskValue(x.value));
-					var newLen = input.val().length;
+					var originalLen = $input.val().length;
+					$input.val(maskValue(x.value));
+					var newLen = $input.val().length;
 					startPos = startPos - (originalLen - newLen);
 					setCursorPosition(startPos);
 				}
 
 				function mask() {
-					var value = input.val();
-					input.val(maskValue(value));
+					var value = $input.val();
+					$input.val(maskValue(value));
 				}
 
 				function maskValue(value) {
@@ -305,7 +304,7 @@
 				}
 
 				function changeSign() {
-					var inputValue = input.val();
+					var inputValue = $input.val();
 					if (settings.allowNegative) {
 						if (inputValue != '' && inputValue.charAt(0) == '-') {
 							return inputValue.replace('-','');
@@ -318,7 +317,7 @@
 				}
 
 				function setCursorPosition(pos) {
-					input.each(function(index, elem) {
+					$input.each(function(index, elem) {
 						if (elem.setSelectionRange) {
 							elem.focus();
 							elem.setSelectionRange(pos, pos);
@@ -378,12 +377,12 @@
 					};
 				} // getInputSelection
 
-				input.unbind('.maskMoney');
-				input.bind('keypress.maskMoney', keypressEvent);
-				input.bind('keydown.maskMoney', keydownEvent);
-				input.bind('blur.maskMoney', blurEvent);
-				input.bind('focus.maskMoney', focusEvent);
-				input.bind('mask.maskMoney', mask);
+				$input.unbind('.maskMoney');
+				$input.bind('keypress.maskMoney', keypressEvent);
+				$input.bind('keydown.maskMoney', keydownEvent);
+				$input.bind('blur.maskMoney', blurEvent);
+				$input.bind('focus.maskMoney', focusEvent);
+				$input.bind('mask.maskMoney', mask);
 			})
 		}
 	}
