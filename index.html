@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<meta charset="utf-8">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
 		<script src="jquery.maskMoney.js" type="text/javascript"></script>
 
@@ -22,12 +23,12 @@
 		<pre class="brush: js">$("#demo1").maskMoney();</pre>
 
 		<input type="text" id="demo2" />
-		<script type="text/javascript">$("#demo2").maskMoney({thousands:'', decimal:'.', allowZero:true, allowNegative:true});</script>
-		<pre class="brush: js">$("#demo2").maskMoney({thousands:'', decimal:'.', allowZero:true, allowNegative:true});</pre>
+		<script type="text/javascript">$("#demo2").maskMoney({thousands:',', decimal:'.', allowZero: true, symbol: ' €', symbolPosition: 'right', symbolStay: true});</script>
+		<pre class="brush: js">$("#demo2").maskMoney({thousands:'', decimal:'.', allowZero:true, symbol: ' €', symbolPosition: 'right', symbolStay: true});</pre>
 
 		<input type="text" id="demo3" />
-		<script type="text/javascript">$("#demo3").maskMoney({symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});</script>
-		<pre class="brush: js">$("#demo3").maskMoney({symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});</pre>
+		<script type="text/javascript">$("#demo3").maskMoney({symbol:'R$ ', allowNegative: true, thousands:'.', decimal:',', symbolStay: true});</script>
+		<pre class="brush: js">$("#demo3").maskMoney({symbol:'R$ ', allowNegative: true, thousands:'.', decimal:',', symbolStay: true});</pre>
 
 		<input type="text" id="demo4" value="1234567.89"/>
 		<script type="text/javascript">$("#demo4").maskMoney({symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});</script>

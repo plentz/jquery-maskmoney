@@ -29,6 +29,7 @@ The options that you can set are:
 
  * `symbol`: the symbol to be displayed before the value entered by the user(example: "US$"). default: ''
  * `symbolStay`: set if the symbol will stay in the field after the user exits the field. default: false
+ * `symbolPosition`: use this setting to position the symbol at the left or right side of the value. default 'left'
  * `thousands`: the thousands separator. default: ','
  * `decimal`: the decimal separator. default: '.'
  * `precision`: how many decimal places are allowed. default: 2

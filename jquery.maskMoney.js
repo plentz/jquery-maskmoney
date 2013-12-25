@@ -1,7 +1,7 @@
 /*
 * maskMoney plugin for jQuery
 * http://plentz.github.com/jquery-maskmoney/
-* version: 2.5.2
+* version: 2.6.0
 * Licensed under the MIT license
 */
 ;(function($) {
@@ -54,6 +54,7 @@
 			settings = $.extend({
 				symbol: '',
 				symbolStay: false,
+				symbolPosition: 'left',
 				thousands: ',',
 				decimal: '.',
 				precision: 2,
@@ -147,8 +148,14 @@
 						// not a selection
 						if (startPos == endPos) {
 							// backspace
-							if(key == 8) {
-								startPos -= 1;
+							if (key == 8) {
+								if (settings.symbolPosition == 'left') {
+									startPos -= 1;
+								} else {
+									// needed to find the position of the last number to be erased
+									var lastNumber = x.value.split("").reverse().join("").search(/\d/);
+									startPos = x.value.length - lastNumber - 1;
+								}
 							//delete
 							} else {
 								endPos += 1;
@@ -269,9 +276,12 @@
 							operator = '-';
 						}
 
-						if (value.substr(0, settings.symbol.length) != settings.symbol) {
-							value = operator + settings.symbol + value;
+						if (settings.symbolPosition == 'left') {
+							value = settings.symbol + value;
+						} else if (settings.symbolPosition != 'left'){
+							value = value + settings.symbol;
 						}
+						value = operator + value;
 					}
 					return value;
 				}
