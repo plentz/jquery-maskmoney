@@ -1,7 +1,7 @@
 /*
 * maskMoney plugin for jQuery
 * http://plentz.github.com/jquery-maskmoney/
-* version: 2.5.0
+* version: 2.5.1
 * Licensed under the MIT license
 */
 ;(function($) {
@@ -233,49 +233,26 @@
 				}
 
 				function maskValue(value) {
-					value = value.replace(settings.symbol, '');
+					var negative = (value.indexOf('-') > -1) ? '-' : '';
 
-					var strCheck = '0123456789';
-					var len = value.length;
-					var a = '', t = '';
-					var negative = '';
+					var onlyNumbers = value.replace(/[^0-9]/g, "");
 
-					if (len != 0 && value.charAt(0)=='-') {
-						value = value.replace('-','');
-						if (settings.allowNegative) {
-							negative = '-';
-						}
+					var integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision);
+					// remove initial zeros
+					integerPart = integerPart.replace(/^0/g, "");
+					// put settings.thousands every 3 chars
+					integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, settings.thousands);
+					if(integerPart == ''){
+						integerPart = '0';
 					}
+					var newValue = negative + integerPart;
 
-					if (len == 0) {
-						t = '0.00';
+					if (settings.precision > 0) {
+						var decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
+						var leadingZeros = Array((settings.precision + 1) - decimalPart.length).join(0);
+						newValue += settings.decimal + leadingZeros + decimalPart;
 					}
-
-					for (var i = 0; i < len; i++) {
-						if (value.charAt(i) != '0' && value.charAt(i) != settings.decimal) {
-							break;
-						}
-					}
-
-					for (; i < len; i++) {
-						if (strCheck.indexOf(value.charAt(i)) != -1) {
-							a += value.charAt(i);
-						}
-					}
-					var n = parseFloat(a);
-
-					n = isNaN(n) ? 0 : n / Math.pow(10, settings.precision);
-					t = n.toFixed(settings.precision);
-
-					i = settings.precision == 0 ? 0 : 1;
-					var p, d = (t = t.split('.'))[i].substr(0, settings.precision);
-					for (p = (t = t[0]).length; (p -= 3) >= 1;) {
-						t = t.substr(0, p) + settings.thousands + t.substr(p);
-					}
-
-					return (settings.precision > 0)
-						? setSymbol(negative + t + settings.decimal + d + Array((settings.precision + 1) - d.length).join(0))
-						: setSymbol(negative + t);
+					return setSymbol(newValue);
 				}
 
 				function getDefaultMask() {
