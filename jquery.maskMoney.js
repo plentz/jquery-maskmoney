@@ -1,7 +1,7 @@
 /*
 * maskMoney plugin for jQuery
 * http://plentz.github.com/jquery-maskmoney/
-* version: 2.5.1
+* version: 2.5.2
 * Licensed under the MIT license
 */
 ;(function($) {
@@ -111,7 +111,7 @@
 							preventDefault(e);
 							return true;
 						}
-					} else if (canInputMoreNumbers()) {
+					} else if (!canInputMoreNumbers()) {
 						return false;
 					} else {
 						preventDefault(e);
@@ -203,12 +203,13 @@
 				}
 
 				function canInputMoreNumbers() {
-					var reachedMaxLength = ($input.val().length >= $input.attr('maxlength') && $input.attr('maxlength') >= 0);
+					var haventReachedMaxLength = !($input.val().length >= $input.attr('maxlength') && $input.attr('maxlength') >= 0);
 					var selection = getInputSelection($input.get(0));
 					var start = selection.start;
 					var end = selection.end;
-					var hasNumberSelected = (selection.start != selection.end && $input.val().substring(start,end).match(/\d/))? true : false;
-					return reachedMaxLength && !hasNumberSelected;
+					var haveNumberSelected = (selection.start != selection.end && $input.val().substring(start,end).match(/\d/))? true : false;
+					var startWithZero = ($input.val().substring(0, 1) === '0');
+					return haventReachedMaxLength || haveNumberSelected || startWithZero;
 				}
 
 				function preventDefault(e) {
