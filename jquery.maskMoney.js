@@ -1,7 +1,7 @@
 /*
 * maskMoney plugin for jQuery
 * http://plentz.github.com/jquery-maskmoney/
-* version: 2.6.0
+* version: 2.6.1
 * Licensed under the MIT license
 */
 ;(function($) {
@@ -155,6 +155,7 @@
 									// needed to find the position of the last number to be erased
 									var lastNumber = x.value.split("").reverse().join("").search(/\d/);
 									startPos = x.value.length - lastNumber - 1;
+									endPos = startPos + 1;
 								}
 							//delete
 							} else {
