@@ -278,7 +278,7 @@
 
 						if (settings.symbolPosition == 'left') {
 							value = settings.symbol + value;
-						} else if (settings.symbolPosition != 'left'){
+						} else {
 							value = value + settings.symbol;
 						}
 						value = operator + value;
