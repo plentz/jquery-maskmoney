@@ -47,6 +47,14 @@ We have 3 bonus methods that can be useful to you:
  * `.maskMoney('mask')` apply the mask to your input. This method can work as a setter as well, if you pass a value to it, like this `.maskMoney('mask', 1999.99)`
  * `.maskMoney('unmasked')` return a float value (ex.: 'R$ 1.234,56' => 1234.56). PS: If you have only one input field, you should use this way `.maskMoney('unmasked')[0]`, since it will always return an array.
 
+You can also configure maskMoney options using the data-* API instead of passing it as a hash in the `.maskMoney` method call. To use it, simply set the options using `data-<option>`, like this:
+
+ ```html
+ 	<input type="text" data-symbol="R$ " data-thousands="." data-decimal="," />
+ ```
+
+ And when you bind maskMoney to that field, we will read those options.
+
 ***
 ### Contributors:
 
@@ -61,6 +69,7 @@ We have 3 bonus methods that can be useful to you:
  * [Luis Fernando Gomes](https://github.com/luiscoms)
  * [Gary Moore](http://www.gmoore.net/)
  * [Daniel Loureiro](https://github.com/loureirorg)
+ * [Thiago Silva](http://twitter.com/tafs7/)
 
 ***
 ### License:

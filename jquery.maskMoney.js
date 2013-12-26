@@ -1,7 +1,7 @@
 /*
 * maskMoney plugin for jQuery
 * http://plentz.github.com/jquery-maskmoney/
-* version: 2.6.1
+* version: 2.7.0
 * Licensed under the MIT license
 */
 ;(function($) {
@@ -69,6 +69,9 @@
 			return this.each(function() {
 				var $input = $(this);
 				var dirty = false;
+
+				// data-* api
+				settings = $.extend(settings, $input.data());
 
 				function markAsDirty() {
 					dirty = true;
