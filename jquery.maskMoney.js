@@ -104,7 +104,7 @@
 						} else if (key == 13 || key == 9) {
 							if (dirty) {
 								clearDirt();
-								$(this).change();
+								$input.change();
 							}
 							return true;
 						} else if ($.browser.mozilla && (key == 37 || key == 39) && e.charCode == 0) {
@@ -121,12 +121,12 @@
 						preventDefault(e);
 
 						var keyPressedChar = String.fromCharCode(key);
-						var x = $input.get(0);
 						var selection = getInputSelection(x);
 						var startPos = selection.start;
 						var endPos = selection.end;
-						x.value = x.value.substring(0, startPos) + keyPressedChar + x.value.substring(endPos, x.value.length);
-						maskAndPosition(x, startPos + 1);
+						var value = $input.val();
+						$input.val(value.substring(0, startPos) + keyPressedChar + value.substring(endPos, value.length));
+						maskAndPosition(startPos + 1);
 						markAsDirty();
 						return false;
 					}
@@ -140,7 +140,6 @@
 						return false;
 					}
 
-					var x = $input.get(0);
 					var selection = getInputSelection(x);
 					var startPos = selection.start;
 					var endPos = selection.end;
@@ -148,6 +147,7 @@
 					if (key == 8 || key == 46 || key == 63272) { // backspace or delete key (with special case for safari)
 						preventDefault(e);
 
+						var value = $input.val();
 						// not a selection
 						if (startPos == endPos) {
 							// backspace
@@ -156,8 +156,8 @@
 									startPos -= 1;
 								} else {
 									// needed to find the position of the last number to be erased
-									var lastNumber = x.value.split("").reverse().join("").search(/\d/);
-									startPos = x.value.length - lastNumber - 1;
+									var lastNumber = value.split("").reverse().join("").search(/\d/);
+									startPos = value.length - lastNumber - 1;
 									endPos = startPos + 1;
 								}
 							//delete
@@ -166,14 +166,14 @@
 							}
 						}
 
-						x.value = x.value.substring(0, startPos) + x.value.substring(endPos, x.value.length);
+						$input.val(value.substring(0, startPos) + value.substring(endPos, value.length));
 
-						maskAndPosition(x, startPos);
+						maskAndPosition(startPos);
 						markAsDirty();
 						return false;
 					} else if (key == 9) { // tab key
 						if (dirty) {
-							$(this).change();
+							$input.change();
 							clearDirt();
 						}
 						return true;
@@ -240,9 +240,9 @@
 					}
 				}
 
-				function maskAndPosition(x, startPos) {
+				function maskAndPosition(startPos) {
 					var originalLen = $input.val().length;
-					$input.val(maskValue(x.value));
+					$input.val(maskValue($input.val()));
 					var newLen = $input.val().length;
 					startPos = startPos - (originalLen - newLen);
 					setCursorPosition(startPos);
@@ -263,7 +263,7 @@
 					integerPart = integerPart.replace(/^0/g, "");
 					// put settings.thousands every 3 chars
 					integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, settings.thousands);
-					if(integerPart == ''){
+					if (integerPart == '') {
 						integerPart = '0';
 					}
 					var newValue = negative + integerPart;
