@@ -1,7 +1,7 @@
 /*
 * maskMoney plugin for jQuery
 * http://plentz.github.com/jquery-maskmoney/
-* version: 2.7.0
+* version: 2.7.1
 * Licensed under the MIT license
 */
 ;(function($) {
@@ -213,6 +213,15 @@
 					}
 				}
 
+				function clickEvent(event) {
+					if (this.setSelectionRange) {
+						var length = $input.val().length;
+						this.setSelectionRange(length, length);
+					} else {
+						$input.val($input.val());
+					}
+				}
+
 				function canInputMoreNumbers() {
 					var haventReachedMaxLength = !($input.val().length >= $input.attr('maxlength') && $input.attr('maxlength') >= 0);
 					var selection = getInputSelection($input.get(0));
@@ -369,6 +378,7 @@
 				$input.bind('keydown.maskMoney', keydownEvent);
 				$input.bind('blur.maskMoney', blurEvent);
 				$input.bind('focus.maskMoney', focusEvent);
+				$input.bind('click.maskMoney', clickEvent);
 				$input.bind('mask.maskMoney', mask);
 			})
 		}
