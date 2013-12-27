@@ -70,6 +70,7 @@ You can also configure maskMoney options using the data-* API instead of passing
  * [Gary Moore](http://www.gmoore.net/)
  * [Daniel Loureiro](https://github.com/loureirorg)
  * [Thiago Silva](http://twitter.com/tafs7/)
+ * [Guilherme Nagatomo](https://github.com/guilhermehn)
 
 ***
 ### License:

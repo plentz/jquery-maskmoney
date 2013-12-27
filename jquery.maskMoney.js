@@ -1,7 +1,7 @@
 /*
 * maskMoney plugin for jQuery
 * http://plentz.github.com/jquery-maskmoney/
-* version: 2.7.1
+* version: 2.8.0
 * Licensed under the MIT license
 */
 ;(function($) {
@@ -29,7 +29,7 @@
 				if (typeof(value) == 'number') {
 					$this.trigger('mask');
 					var decimalSize = $($this.val().split(/\D/)).last()[0].length;
-					value = value.toFixed(decimalSize)
+					value = value.toFixed(decimalSize);
 					$this.val(value);
 				}
 				return $this.trigger('mask');
@@ -47,7 +47,7 @@
 					unmaskedStr = "-" + unmaskedStr;
 				}
 				return parseFloat(unmaskedStr);
-			})
+			});
 		},
 
 		init : function(settings) {
@@ -62,7 +62,7 @@
 				allowNegative: false
 			}, settings);
 
-			if (settings.defaultZero != null && window.console) {
+			if (settings.defaultZero !== null && window.console) {
 				console.log("settings.defaultZero is deprecated - more info here https://github.com/plentz/jquery-maskmoney/issues/55");
 			}
 
@@ -85,7 +85,7 @@
 					e = e || window.event;
 					var key = e.which || e.charCode || e.keyCode;
 					//needed to handle an IE "special" event
-					if (key == undefined) {
+					if (key === undefined) {
 						return false;
 					}
 					// any key except the numbers 0-9
@@ -107,7 +107,7 @@
 								$input.change();
 							}
 							return true;
-						} else if ($.browser.mozilla && (key == 37 || key == 39) && e.charCode == 0) {
+						} else if ($.browser.mozilla && (key == 37 || key == 39) && e.charCode === 0) {
 							// needed for left arrow key or right arrow key with firefox
 							// the charCode part is to avoid allowing '%'(e.charCode 0, e.keyCode 37)
 							return true;
@@ -136,7 +136,7 @@
 					e = e || window.event;
 					var key = e.which || e.charCode || e.keyCode;
 					//needed to handle an IE "special" event
-					if (key == undefined) {
+					if (key === undefined) {
 						return false;
 					}
 
@@ -196,7 +196,7 @@
 						keypressEvent(e);
 					}
 
-					if ($input.val() == '' || $input.val() == setSymbol(getDefaultMask()) || $input.val() == settings.symbol) {
+					if ($input.val() === '' || $input.val() == setSymbol(getDefaultMask()) || $input.val() == settings.symbol) {
 						if (!settings.allowZero) {
 							$input.val('');
 						} else if (!settings.symbolStay) {
@@ -263,7 +263,7 @@
 					integerPart = integerPart.replace(/^0/g, "");
 					// put settings.thousands every 3 chars
 					integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, settings.thousands);
-					if (integerPart == '') {
+					if (integerPart === '') {
 						integerPart = '0';
 					}
 					var newValue = negative + integerPart;
@@ -282,9 +282,9 @@
 				}
 
 				function setSymbol(value) {
-					if (settings.symbol != '') {
+					if (settings.symbol !== '') {
 						var operator = '';
-						if (value.length != 0 && value.charAt(0) == '-') {
+						if (value.length !== 0 && value.charAt(0) == '-') {
 							value = value.replace('-', '');
 							operator = '-';
 						}
@@ -302,7 +302,7 @@
 				function changeSign() {
 					var inputValue = $input.val();
 					if (settings.allowNegative) {
-						if (inputValue != '' && inputValue.charAt(0) == '-') {
+						if (inputValue !== '' && inputValue.charAt(0) == '-') {
 							return inputValue.replace('-','');
 						} else {
 							return '-' + inputValue;
@@ -326,7 +326,7 @@
 						}
 					});
 					return this;
-				};
+				}
 
 				function getInputSelection(el) {
 					var start = 0, end = 0, normalizedValue, range, textInputRange, len, endRange;
@@ -380,9 +380,9 @@
 				$input.bind('focus.maskMoney', focusEvent);
 				$input.bind('click.maskMoney', clickEvent);
 				$input.bind('mask.maskMoney', mask);
-			})
+			});
 		}
-	}
+	};
 
 	$.fn.maskMoney = function(method) {
 		if (methods[method]) {
