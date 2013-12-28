@@ -2,36 +2,51 @@ module.exports = function(grunt) {
   "use strict";
 
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
+    pkg: grunt.file.readJSON("package.json"),
+    meta: {
+		banner: "/*\n" +
+			" *  <%= pkg.title || pkg.name %> - v<%= pkg.version %>\n" +
+			" *  <%= pkg.description %>\n" +
+			" *  <%= pkg.homepage %>\n" +
+			" *\n" +
+			" *  Made by <%= pkg.author.name %>\n" +
+			" *  Under <%= pkg.licenses[0].type %> License (<%= pkg.licenses[0].url %>)\n" +
+			" */\n"
+    },
     jshint: {
-      all: ["jquery.maskMoney.js", "Gruntfile.js"],
+      all: ["src/jquery.maskMoney.js", "Gruntfile.js"],
       options: {
-        globals: {
-          bitwise: true,
-          jQuery: true,
-          console: true,
-          module: true
-        }
+          jshintrc: true
       }
     },
+	concat: {
+		dist: {
+			src: ["src/jquery.maskMoney.js"],
+			dest: "dist/jquery.maskMoney.js"
+		},
+		options: {
+			banner: "<%= meta.banner %>"
+		}
+	},
     uglify: {
       options: {
-        banner: '/*\n    <%= pkg.description %>\n    version: <%= pkg.version %>\n    <%= pkg.homepage %>\n    Copyright (c) 2009 - <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n    Licensed under the MIT license (https://github.com/plentz/jquery-maskmoney/blob/master/LICENSE)\n*/\n',
-        preserveComments: false,
+		banner: "<%= meta.banner %>",
         mangle: {
           except: ["jQuery", "$"]
         }
       },
       build: {
         files: [
-          { src: "jquery.maskMoney.js", dest: "jquery.maskMoney.min.js" },
+          { src: "src/jquery.maskMoney.js", dest: "dist/jquery.maskMoney.min.js" },
         ]
       }
     }
   });
 
+  grunt.loadNpmTasks("grunt-contrib-concat");
   grunt.loadNpmTasks("grunt-contrib-jshint");
   grunt.loadNpmTasks("grunt-contrib-uglify");
 
-  grunt.registerTask("default", ["jshint", "uglify"]);
+  grunt.registerTask("default", ["jshint", "concat", "uglify"]);
+  grunt.registerTask("travis", ["jshint"]);
 };

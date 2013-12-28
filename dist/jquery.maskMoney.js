@@ -1,3 +1,11 @@
+/*
+ *  jquery-maskMoney - v2.9.4
+ *  maskMoney plugin for jQuery
+ *  https://github.com/plentz/jquery-maskmoney
+ *
+ *  Made by Diego Plentz
+ *  Under MIT License (https://raw.github.com/plentz/jquery-maskmoney/master/LICENSE)
+ */
 (function ($) {
     if (!$.browser) {
         $.browser = {};
@@ -9,7 +17,7 @@
 
     var methods = {
         destroy : function () {
-            $(this).unbind('.maskMoney');
+            $(this).unbind(".maskMoney");
 
             if ($.browser.msie) {
                 this.onpaste = null;
@@ -21,23 +29,23 @@
             return this.each(function () {
                 var $this = $(this),
                     decimalSize;
-                if (typeof value === 'number') {
-                    $this.trigger('mask');
+                if (typeof value === "number") {
+                    $this.trigger("mask");
                     decimalSize = $($this.val().split(/\D/)).last()[0].length;
                     value = value.toFixed(decimalSize);
                     $this.val(value);
                 }
-                return $this.trigger('mask');
+                return $this.trigger("mask");
             });
         },
 
         unmasked : function () {
             return this.map(function () {
-                var unmaskedStr = ($(this).val() || '0'),
+                var unmaskedStr = ($(this).val() || "0"),
                     isNegative = unmaskedStr.indexOf("-") !== -1,
                     decimalPart = $(unmaskedStr.split(/\D/)).last()[0];
-                unmaskedStr = unmaskedStr.replace(/\D/g, '');
-                unmaskedStr = unmaskedStr.replace(new RegExp(decimalPart + '$'), '.' + decimalPart);
+                unmaskedStr = unmaskedStr.replace(/\D/g, "");
+                unmaskedStr = unmaskedStr.replace(new RegExp(decimalPart + "$"), "." + decimalPart);
                 if (isNegative) {
                     unmaskedStr = "-" + unmaskedStr;
                 }
@@ -47,11 +55,11 @@
 
         init : function (settings) {
             settings = $.extend({
-                prefix: '',
-                suffix: '',
+                prefix: "",
+                suffix: "",
                 affixesStay: true,
-                thousands: ',',
-                decimal: '.',
+                thousands: ",",
+                decimal: ".",
                 precision: 2,
                 allowZero: false,
                 allowNegative: false
@@ -118,12 +126,12 @@
                 } // getInputSelection
 
                 function canInputMoreNumbers() {
-                    var haventReachedMaxLength = !($input.val().length >= $input.attr('maxlength') && $input.attr('maxlength') >= 0),
+                    var haventReachedMaxLength = !($input.val().length >= $input.attr("maxlength") && $input.attr("maxlength") >= 0),
                         selection = getInputSelection(),
                         start = selection.start,
                         end = selection.end,
                         haveNumberSelected = (selection.start !== selection.end && $input.val().substring(start, end).match(/\d/)) ? true : false,
-                        startWithZero = ($input.val().substring(0, 1) === '0');
+                        startWithZero = ($input.val().substring(0, 1) === "0");
                     return haventReachedMaxLength || haveNumberSelected || startWithZero;
                 }
 
@@ -135,8 +143,8 @@
                         } else if (elem.createTextRange) {
                             var range = elem.createTextRange();
                             range.collapse(true);
-                            range.moveEnd('character', pos);
-                            range.moveStart('character', pos);
+                            range.moveEnd("character", pos);
+                            range.moveStart("character", pos);
                             range.select();
                         }
                     });
@@ -144,16 +152,16 @@
                 }
 
                 function setSymbol(value) {
-                    var operator = '';
-                    if (value.indexOf('-') > -1) {
-                        value = value.replace('-', '');
-                        operator = '-';
+                    var operator = "";
+                    if (value.indexOf("-") > -1) {
+                        value = value.replace("-", "");
+                        operator = "-";
                     }
                     return operator + settings.prefix + value + settings.suffix;
                 }
 
                 function maskValue(value) {
-                    var negative = (value.indexOf('-') > -1) ? '-' : '',
+                    var negative = (value.indexOf("-") > -1) ? "-" : "",
                         onlyNumbers = value.replace(/[^0-9]/g, ""),
                         integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision),
                         newValue,
@@ -164,8 +172,8 @@
                     integerPart = integerPart.replace(/^0/g, "");
                     // put settings.thousands every 3 chars
                     integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, settings.thousands);
-                    if (integerPart === '') {
-                        integerPart = '0';
+                    if (integerPart === "") {
+                        integerPart = "0";
                     }
                     newValue = negative + integerPart;
 
@@ -193,10 +201,10 @@
                 function changeSign() {
                     var inputValue = $input.val();
                     if (settings.allowNegative) {
-                        if (inputValue !== '' && inputValue.charAt(0) === '-') {
-                            return inputValue.replace('-', '');
+                        if (inputValue !== "" && inputValue.charAt(0) === "-") {
+                            return inputValue.replace("-", "");
                         } else {
-                            return '-' + inputValue;
+                            return "-" + inputValue;
                         }
                     } else {
                         return inputValue;
@@ -228,7 +236,7 @@
                         // +(plus) key
                         } else if (key === 43) {
                             markAsDirty();
-                            $input.val($input.val().replace('-', ''));
+                            $input.val($input.val().replace("-", ""));
                             return false;
                         // enter key or tab key
                         } else if (key === 13 || key === 9) {
@@ -239,7 +247,7 @@
                             return true;
                         } else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
                             // needed for left arrow key or right arrow key with firefox
-                            // the charCode part is to avoid allowing '%'(e.charCode 0, e.keyCode 37)
+                            // the charCode part is to avoid allowing "%"(e.charCode 0, e.keyCode 37)
                             return true;
                         } else { // any other key with keycode less than 48 and greater than 57
                             preventDefault(e);
@@ -282,7 +290,7 @@
                         if (startPos === endPos) {
                             // backspace
                             if (key === 8) {
-                                if (settings.suffix === '') {
+                                if (settings.suffix === "") {
                                     startPos -= 1;
                                 } else {
                                     // needed to find the position of the last number to be erased
@@ -312,7 +320,7 @@
                     }
                 }
 
-                function focusEvent(e) {
+                function focusEvent() {
                     mask();
                     if (this.createTextRange) {
                         var textRange = this.createTextRange();
@@ -322,8 +330,8 @@
                 }
 
                 function getDefaultMask() {
-                    var n = parseFloat('0') / Math.pow(10, settings.precision);
-                    return (n.toFixed(settings.precision)).replace(new RegExp('\\.', 'g'), settings.decimal);
+                    var n = parseFloat("0") / Math.pow(10, settings.precision);
+                    return (n.toFixed(settings.precision)).replace(new RegExp("\\.", "g"), settings.decimal);
                 }
 
                 function blurEvent(e) {
@@ -331,9 +339,9 @@
                         keypressEvent(e);
                     }
 
-                    if ($input.val() === '' || $input.val() === setSymbol(getDefaultMask())) {
+                    if ($input.val() === "" || $input.val() === setSymbol(getDefaultMask())) {
                         if (!settings.allowZero) {
-                            $input.val('');
+                            $input.val("");
                         } else if (!settings.affixesStay) {
                             $input.val(getDefaultMask());
                         } else {
@@ -341,13 +349,13 @@
                         }
                     } else {
                         if (!settings.affixesStay) {
-                            var newValue = $input.val().replace(settings.prefix, '').replace(settings.suffix, '');
+                            var newValue = $input.val().replace(settings.prefix, "").replace(settings.suffix, "");
                             $input.val(newValue);
                         }
                     }
                 }
 
-                function clickEvent(event) {
+                function clickEvent() {
                     if (this.setSelectionRange) {
                         var length = $input.val().length;
                         this.setSelectionRange(length, length);
@@ -356,13 +364,13 @@
                     }
                 }
 
-                $input.unbind('.maskMoney');
-                $input.bind('keypress.maskMoney', keypressEvent);
-                $input.bind('keydown.maskMoney', keydownEvent);
-                $input.bind('blur.maskMoney', blurEvent);
-                $input.bind('focus.maskMoney', focusEvent);
-                $input.bind('click.maskMoney', clickEvent);
-                $input.bind('mask.maskMoney', mask);
+                $input.unbind(".maskMoney");
+                $input.bind("keypress.maskMoney", keypressEvent);
+                $input.bind("keydown.maskMoney", keydownEvent);
+                $input.bind("blur.maskMoney", blurEvent);
+                $input.bind("focus.maskMoney", focusEvent);
+                $input.bind("click.maskMoney", clickEvent);
+                $input.bind("mask.maskMoney", mask);
             });
         }
     };
@@ -370,10 +378,10 @@
     $.fn.maskMoney = function (method) {
         if (methods[method]) {
             return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-        } else if (typeof method === 'object' || ! method) {
+        } else if (typeof method === "object" || ! method) {
             return methods.init.apply(this, arguments);
         } else {
-            $.error('Method ' +  method + ' does not exist on jQuery.maskMoney');
+            $.error("Method " +  method + " does not exist on jQuery.maskMoney");
         }
     };
 })(window.jQuery || window.Zepto);

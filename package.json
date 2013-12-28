@@ -1,7 +1,7 @@
 {
   "name": "jquery-maskMoney",
   "description": "maskMoney plugin for jQuery",
-  "version": "2.9.3",
+  "version": "2.9.4",
   "homepage": "https://github.com/plentz/jquery-maskmoney",
   "repository": {
     "type": "git",
@@ -18,7 +18,17 @@
   "devDependencies": {
     "amdefine": "latest",
     "grunt": "latest",
+    "grunt-contrib-concat": "latest",
     "grunt-contrib-jshint": "latest",
     "grunt-contrib-uglify": "latest"
-  }
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.github.com/plentz/jquery-maskmoney/master/LICENSE"
+    }
+  ],
+	"scripts": {
+		"test": "grunt travis --verbose"
+	}
 }
