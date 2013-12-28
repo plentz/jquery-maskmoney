@@ -186,9 +186,10 @@
                 }
 
                 function maskAndPosition(startPos) {
-                    var originalLen = $input.val().length;
+                    var originalLen = $input.val().length,
+                        newLen;
                     $input.val(maskValue($input.val()));
-                    var newLen = $input.val().length;
+                    newLen = $input.val().length;
                     startPos = startPos - (originalLen - newLen);
                     setCursorPosition(startPos);
                 }
@@ -221,8 +222,12 @@
 
                 function keypressEvent(e) {
                     e = e || window.event;
-                    var key = e.which || e.charCode || e.keyCode;
-                    //needed to handle an IE "special" event
+                    var key = e.which || e.charCode || e.keyCode,
+                        keyPressedChar,
+                        selection,
+                        startPos,
+                        endPos;
+                    //nevalue = $inputeded to handle an IE "special" event
                     if (key === undefined) {
                         return false;
                     }
@@ -258,11 +263,11 @@
                     } else {
                         preventDefault(e);
 
-                        var keyPressedChar = String.fromCharCode(key);
-                        var selection = getInputSelection();
-                        var startPos = selection.start;
-                        var endPos = selection.end;
-                        var value = $input.val();
+                        keyPressedChar = String.fromCharCode(key);
+                        selection = getInputSelection();
+                        startPos = selection.start;
+                        endPos = selection.end;
+                        value = $input.val();
                         $input.val(value.substring(0, startPos) + keyPressedChar + value.substring(endPos, value.length));
                         maskAndPosition(startPos + 1);
                         markAsDirty();
@@ -272,20 +277,25 @@
 
                 function keydownEvent(e) {
                     e = e || window.event;
-                    var key = e.which || e.charCode || e.keyCode;
+                    var key = e.which || e.charCode || e.keyCode,
+                        selection,
+                        startPos,
+                        endPos,
+                        value,
+                        lastNumber;
                     //needed to handle an IE "special" event
                     if (key === undefined) {
                         return false;
                     }
 
-                    var selection = getInputSelection();
-                    var startPos = selection.start;
-                    var endPos = selection.end;
+                    selection = getInputSelection();
+                    startPos = selection.start;
+                    endPos = selection.end;
 
                     if (key === 8 || key === 46 || key === 63272) { // backspace or delete key (with special case for safari)
                         preventDefault(e);
 
-                        var value = $input.val();
+                        value = $input.val();
                         // not a selection
                         if (startPos === endPos) {
                             // backspace
@@ -294,7 +304,7 @@
                                     startPos -= 1;
                                 } else {
                                     // needed to find the position of the last number to be erased
-                                    var lastNumber = value.split("").reverse().join("").search(/\d/);
+                                    lastNumber = value.split("").reverse().join("").search(/\d/);
                                     startPos = value.length - lastNumber - 1;
                                     endPos = startPos + 1;
                                 }
