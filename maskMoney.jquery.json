@@ -1,38 +1,33 @@
 {
   "name": "maskMoney",
-  "title": "jQuery maskMoney",
-  "description": "jQuery plugin to mask data entry in the input text in the form of money (currency)",
-  "keywords": ["form", "input", "mask", "money"],
   "version": "2.9.4",
+  "title": "jQuery maskMoney",
   "author": {
     "name": "Diego Plentz",
     "email": "diego@plentz.org",
     "url": "http://plentz.org"
   },
-  "maintainers": [
-    {
-      "name": "Diego Plentz",
-      "email": "diego@plentz.org",
-      "url": "http://plentz.org"
-    },
-    {
-      "name": "Plínio Balduino",
-      "email": "pbalduino+github@gmail.com",
-      "url": "https://github.com/pbalduino"
-    }
-  ],
   "licenses": [
     {
       "type": "MIT",
       "url": "https://raw.github.com/plentz/jquery-maskmoney/master/LICENSE"
     }
   ],
-  "bugs": "https://github.com/plentz/jquery-maskmoney/issues",
+  "dependencies": {
+    "jquery": "*"
+  },
   "homepage": "http://plentz.github.com/jquery-maskmoney",
+  "description": "jQuery plugin to mask data entry in the input text in the form of money (currency)",
+  "keywords": [
+    "form",
+    "input",
+    "mask",
+    "money"
+  ],
   "docs": "http://github.com/plentz/jquery-maskmoney",
   "demo": "http://plentz.github.com/jquery-maskmoney",
   "download": "https://raw.github.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js",
-  "dependencies": {
-    "jquery": ">=1.6"
+  "bugs": {
+    "url": "https://github.com/plentz/jquery-maskmoney/issues"
   }
 }

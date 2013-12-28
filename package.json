@@ -1,6 +1,6 @@
 {
   "name": "jquery-maskMoney",
-  "description": "maskMoney plugin for jQuery",
+  "description": "jQuery plugin to mask data entry in the input text in the form of money (currency)",
   "version": "2.9.4",
   "homepage": "https://github.com/plentz/jquery-maskmoney",
   "repository": {
@@ -14,6 +14,9 @@
     "name": "Diego Plentz",
     "email": "diego@plentz.org",
     "url": "http://plentz.org"
+  },
+  "dependencies": {
+    "jquery": ">=1.6"
   },
   "devDependencies": {
     "amdefine": "latest",

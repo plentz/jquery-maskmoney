@@ -1,6 +1,6 @@
 /*
  *  jquery-maskMoney - v2.9.4
- *  maskMoney plugin for jQuery
+ *  jQuery plugin to mask data entry in the input text in the form of money (currency)
  *  https://github.com/plentz/jquery-maskmoney
  *
  *  Made by Diego Plentz
