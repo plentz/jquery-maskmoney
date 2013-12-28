@@ -1,7 +1,7 @@
 {
   "name": "jquery-maskMoney",
   "description": "maskMoney plugin for jQuery",
-  "version": "2.9.1",
+  "version": "2.9.3",
   "homepage": "https://github.com/plentz/jquery-maskmoney",
   "repository": {
     "type": "git",

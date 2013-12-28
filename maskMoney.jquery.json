@@ -3,7 +3,7 @@
   "title": "jQuery maskMoney",
   "description": "jQuery plugin to mask data entry in the input text in the form of money (currency)",
   "keywords": ["form", "input", "mask", "money"],
-  "version": "2.9.1",
+  "version": "2.9.3",
   "author": {
     "name": "Diego Plentz",
     "email": "diego@plentz.org",
