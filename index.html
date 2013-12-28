@@ -1,99 +1,72 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Jquery-maskMoney by plentz</title>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Jquery-maskMoney : jQuery plugin to mask data entry in the input text in the form of money (currency)." />
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
-		<script src="javascripts/jquery.maskMoney.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-</head>
+    <title>Jquery-maskMoney</title>
+  </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Jquery-maskMoney</h1>
-        <p>jQuery plugin to mask data entry in the input text in the form of money (currency).</p>
 
-        <p class="view"><a href="https://github.com/plentz/jquery-maskmoney">View the Project on GitHub <small>plentz/jquery-maskmoney</small></a></p>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/plentz/jquery-maskmoney">View on GitHub</a>
 
+          <h1 id="project_title">Jquery-maskMoney</h1>
+          <h2 id="project_tagline">jQuery plugin to mask data entry in the input text in the form of money (currency).</h2>
 
-        <ul>
-          <li><a href="https://github.com/plentz/jquery-maskmoney/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/plentz/jquery-maskmoney/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/plentz/jquery-maskmoney">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/plentz/jquery-maskmoney/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/plentz/jquery-maskmoney/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <p>Just a simple way to create masks to your currency form fields with <a href="http://jquery.com/">jQuery</a>.</p>
 
+<hr><h3>
+<a name="show-time" class="anchor" href="#show-time"><span class="octicon octicon-link"></span></a>Show Time!</h3>
 
-<hr><h3>Usage:</h3>
+<p>To view a complete demonstration of it's features and usage, access our <a href="http://plentz.github.com/jquery-maskmoney">examples page</a>!</p>
 
-<div class="highlight"><pre>    <span class="nt">&lt;head&gt;</span>
-        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"</span> <span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;&lt;/script&gt;</span>
-        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"jquery.maskMoney.js"</span> <span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;&lt;/script&gt;</span>
-    <span class="nt">&lt;/head&gt;</span>
-    <span class="nt">&lt;body&gt;</span>
-        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"currency"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/body&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
-    <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-        <span class="nx">$</span><span class="p">(</span><span class="s2">"#currency"</span><span class="p">).</span><span class="nx">maskMoney</span><span class="p">();</span>
-    <span class="p">})</span>
-    <span class="nt">&lt;/script&gt;</span>
+<hr><h3>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage:</h3>
+
+<div class="highlight highlight-html"><pre><span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"</span> <span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"jquery.maskMoney.js"</span> <span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"currency"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+  <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">'#currency'</span><span class="p">).</span><span class="nx">maskMoney</span><span class="p">();</span>
+  <span class="p">})</span>
+<span class="nt">&lt;/script&gt;</span>
 </pre></div>
 
-
-<hr><h3>Show Time!</h3>
-
-	<hr><pre>$("#demo1").maskMoney();</pre>
-	<input type="text" id="demo1" />
-	<script type="text/javascript">$("#demo1").maskMoney();</script>
-	<br/><br/>
-
-	<hr><pre>$("#demo2").maskMoney({thousands:'', decimal:'.'});</pre>
-	<input type="text" id="demo2" />
-	<script type="text/javascript">$("#demo2").maskMoney({thousands:'', decimal:'.'});</script>
-	<br/><br/>
-
-	<hr><pre>$("#demo3").maskMoney({allowZero:false, allowNegative:true, defaultZero:false});</pre>
-	<input type="text" id="demo3" />
-	<script type="text/javascript">$("#demo3").maskMoney({allowZero:false, allowNegative:true, defaultZero:false});</script>
-	<br/><br/>
-
-	<hr><pre>$("#demo4").maskMoney({symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});</pre>
-	<input type="text" id="demo4" />
-	<script type="text/javascript">$("#demo4").maskMoney({symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});</script>
-	<br/><br/>
-
-	<hr><pre>$("#demo5").maskMoney('mask');</pre>
-	<input type="text" id="demo5" value="1234567.89"/>
-	<script type="text/javascript">$("#demo5").maskMoney({symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});</script>
-	<input type="button" onclick="$('#demo5').maskMoney('mask')" value="trigger mask event at demo5"/>
-	<br/><br/>
-
-	<hr><pre>$("#demo6").maskMoney('destroy');</pre>
-	<input type="text" id="demo6"/>
-	<script type="text/javascript">$("#demo6").maskMoney();</script>
-	<input type="button" onclick="$('input').maskMoney('destroy')" value="remove maskmoney from demo6"/>
-	<br/><br/>
-
-<hr><h3>Options:</h3>
+<hr><h3>
+<a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options:</h3>
 
 <p>The options that you can set are:</p>
 
 <ul>
 <li>
-<code>symbol</code>: the symbol to be displayed before the value entered by the user(example: "US$"). default: ''</li>
+<code>prefix</code>: the prefix to be displayed before(aha!) the value entered by the user(example: "US$ 1234.23"). default: ''</li>
 <li>
-<code>symbolStay</code>: set if the symbol will stay in the field after the user exists the field. default: false</li>
+<code>suffix</code>: the prefix to be displayed after the value entered by the user(example: "1234.23 €"). default: ''</li>
+<li>
+<code>affixesStay</code>: set if the prefix and suffix will stay in the field's value after the user exits the field. default: true</li>
 <li>
 <code>thousands</code>: the thousands separator. default: ','</li>
 <li>
@@ -101,31 +74,33 @@
 <li>
 <code>precision</code>: how many decimal places are allowed. default: 2</li>
 <li>
-<code>defaultZero</code>: when the user enters the field, it sets a default mask using zero. default: true</li>
-<li>
 <code>allowZero</code>: use this setting to prevent users from inputing zero. default: false</li>
 <li>
 <code>allowNegative</code>: use this setting to prevent users from inputing negative values. default: false</li>
-</ul><hr><h3>Bonus!</h3>
+</ul><p><strong>IMPORTANT</strong>: if you try to bind maskMoney to a read only field, nothing will happen, since we ignore completely read only fields. So, if you have a read only field, try to bind maskMoney to it, it will not work. Even if you change the field removing the readonly property, you will need to re-bind maskMoney to make it work.</p>
 
-<p>We have 2 bonus methods that can be useful to you:</p>
+<hr><h3>
+<a name="bonus" class="anchor" href="#bonus"><span class="octicon octicon-link"></span></a>Bonus!</h3>
+
+<p>We have 3 bonus methods that can be useful to you:</p>
 
 <ul>
 <li>
-<code>.maskMoney('destroy')</code> which removes maskMoney from an element.</li>
+<code>.maskMoney('destroy')</code> removes maskMoney from an element.</li>
 <li>
-<code>.maskMoney('mask')</code> which causes maskMoney to actually apply the mask to your input.</li>
-<li>
-<code>.maskMoney('unmasked')</code> return a float value (ex.: 'R$ 1.234,56' => 1234.56). PS: If you have only one input field, you should use this way <code>.maskMoney('unmasked')[0]</code>, since it will always return an array.
-
-You can also configure maskMoney options using the data-* API instead of passing it as a hash in the <code>.maskMoney</code> method call. To use it, simply set the options using `data-<option>`, like this:
-<pre>
-	<input type="text" data-symbol="R$ " data-thousands="." data-decimal="," />
-</pre>
-
-And when you bind maskMoney to that field, we will read those options.
+<code>.maskMoney('mask')</code> apply the mask to your input. This method can work as a setter as well, if you pass a value to it, like this <code>.maskMoney('mask', 1999.99)</code>
 </li>
-</ul><hr><h3>Contributors:</h3>
+<li>
+<code>.maskMoney('unmasked')</code> return a float value (ex.: 'R$ 1.234,56' =&gt; 1234.56). PS: If you have only one input field, you should use this way <code>.maskMoney('unmasked')[0]</code>, since it will always return an array.</li>
+</ul><p>You can also configure maskMoney options using the data-* API instead of passing it as a hash in the <code>.maskMoney</code> method call. To use it, simply set the options using <code>data-&lt;option&gt;</code>, like this:</p>
+
+<div class="highlight highlight-html"><pre>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">data-symbol=</span><span class="s">"R$ "</span> <span class="na">data-thousands=</span><span class="s">"."</span> <span class="na">data-decimal=</span><span class="s">","</span> <span class="nt">/&gt;</span>
+</pre></div>
+
+<p>And when you bind maskMoney to that field, we will read those options.</p>
+
+<hr><h3>
+<a name="contributors" class="anchor" href="#contributors"><span class="octicon octicon-link"></span></a>Contributors:</h3>
 
 <ul>
 <li><a href="mailto:aureliosaraiva@gmail.com">Aurélio Saraiva</a></li>
@@ -141,16 +116,21 @@ And when you bind maskMoney to that field, we will read those options.
 <li><a href="https://github.com/loureirorg">Daniel Loureiro</a></li>
 <li><a href="http://twitter.com/tafs7/">Thiago Silva</a></li>
 <li><a href="https://github.com/guilhermehn">Guilherme Nagatomo</a></li>
-</ul><hr><h3>License:</h3>
+</ul><hr><h3>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License:</h3>
 
 <p><strong>jQuery-maskMoney</strong> is released under the MIT license.</p>
       </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/plentz">plentz</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Jquery-maskMoney maintained by <a href="https://github.com/plentz">plentz</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -161,6 +141,7 @@ And when you bind maskMoney to that field, we will read those options.
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
+
 
   </body>
 </html>
