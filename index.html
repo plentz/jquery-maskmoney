@@ -24,25 +24,25 @@
 		<pre class="brush: js">$("#demo1").maskMoney();</pre>
 
 		<input type="text" id="demo2" />
-		<script type="text/javascript">$("#demo2").maskMoney({thousands:',', decimal:'.', allowZero: true, symbol: ' €', symbolPosition: 'right', symbolStay: true});</script>
-		<pre class="brush: js">$("#demo2").maskMoney({thousands:'', decimal:'.', allowZero:true, symbol: ' €', symbolPosition: 'right', symbolStay: true});</pre>
+		<script type="text/javascript">$("#demo2").maskMoney({thousands:',', decimal:'.', allowZero: true, suffix: ' €'});</script>
+		<pre class="brush: js">$("#demo2").maskMoney({thousands:'', decimal:'.', allowZero:true, suffix: ' €'});</pre>
 
 		<input type="text" id="demo3" />
-		<script type="text/javascript">$("#demo3").maskMoney({symbol:'R$ ', allowNegative: true, thousands:'.', decimal:',', symbolStay: true});</script>
-		<pre class="brush: js">$("#demo3").maskMoney({symbol:'R$ ', allowNegative: true, thousands:'.', decimal:',', symbolStay: true});</pre>
+		<script type="text/javascript">$("#demo3").maskMoney({prefix:'R$ ', allowNegative: true, thousands:'.', decimal:',', affixesStay: false});</script>
+		<pre class="brush: js">$("#demo3").maskMoney({prefix:'R$ ', allowNegative: true, thousands:'.', decimal:',', affixesStay: false});</pre>
 
-		<input type="text" id="demo4" data-thousands="." data-decimal="," data-symbol="R$ " />
+		<input type="text" id="demo4" data-thousands="." data-decimal="," data-prefix="R$ " />
 		<script type="text/javascript">$("#demo4").maskMoney();</script>
 		<pre class="brush: js">$("#demo4").maskMoney();</pre>
-		<pre class="brush: html"><input type="text" id="demo4" data-thousands="." data-decimal="," data-symbol="R$ " /></pre>
+		<pre class="brush: html"><input type="text" id="demo4" data-thousands="." data-decimal="," data-prefix="R$ " /></pre>
 
 		<input type="text" id="demo5" value="1234567.89"/>
-		<script type="text/javascript">$("#demo5").maskMoney({symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});</script>
+		<script type="text/javascript">$("#demo5").maskMoney({prefix:'R$ ', thousands:'.', decimal:',', affixesStay: true});</script>
 		<input type="button" onclick="$('#demo5').maskMoney('mask')" value="trigger mask event at demo5"/>
 		<pre class="brush: js">$("#demo5").maskMoney('mask');</pre>
 
 		<input type="text" id="demo6"/>
-		<script type="text/javascript">$("#demo6").maskMoney({symbol:'R$ ', thousands:'.', decimal:',', symbolStay: true});</script>
+		<script type="text/javascript">$("#demo6").maskMoney({prefix:'R$ ', thousands:'.', decimal:',', affixesStay: true});</script>
 		<input type="button" onclick="$('#demo6').maskMoney('mask', 1999.99)" value="trigger mask event at demo6, passing a float value as parameter"/>
 		<pre class="brush: js">$("#demo6").maskMoney('mask', 1999.99);</pre>
 

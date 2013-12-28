@@ -1,7 +1,7 @@
 /*
 * maskMoney plugin for jQuery
 * http://plentz.github.com/jquery-maskmoney/
-* version: 2.8.1
+* version: 2.9.0
 * Licensed under the MIT license
 */
 (function ($) {
@@ -53,9 +53,9 @@
 
         init : function (settings) {
             settings = $.extend({
-                symbol: '',
-                symbolStay: false,
-                symbolPosition: 'left',
+                prefix: '',
+                suffix: '',
+                affixesStay: true,
                 thousands: ',',
                 decimal: '.',
                 precision: 2,
@@ -150,21 +150,12 @@
                 }
 
                 function setSymbol(value) {
-                    if (settings.symbol !== '') {
-                        var operator = '';
-                        if (value.length !== 0 && value.charAt(0) === '-') {
-                            value = value.replace('-', '');
-                            operator = '-';
-                        }
-
-                        if (settings.symbolPosition === 'left') {
-                            value = settings.symbol + value;
-                        } else {
-                            value = value + settings.symbol;
-                        }
-                        value = operator + value;
+                    var operator = '';
+                    if (value.indexOf('-') > -1) {
+                        value = value.replace('-', '');
+                        operator = '-';
                     }
-                    return value;
+                    return operator + settings.prefix + value + settings.suffix;
                 }
 
                 function maskValue(value) {
@@ -297,7 +288,7 @@
                         if (startPos === endPos) {
                             // backspace
                             if (key === 8) {
-                                if (settings.symbolPosition === 'left') {
+                                if (settings.suffix === '') {
                                     startPos -= 1;
                                 } else {
                                     // needed to find the position of the last number to be erased
@@ -346,19 +337,18 @@
                         keypressEvent(e);
                     }
 
-                    if ($input.val() === '' || $input.val() === setSymbol(getDefaultMask()) || $input.val() === settings.symbol) {
+                    if ($input.val() === '' || $input.val() === setSymbol(getDefaultMask())) {
                         if (!settings.allowZero) {
                             $input.val('');
-                        } else if (!settings.symbolStay) {
+                        } else if (!settings.affixesStay) {
                             $input.val(getDefaultMask());
                         } else {
                             $input.val(setSymbol(getDefaultMask()));
                         }
                     } else {
-                        if (!settings.symbolStay) {
-                            $input.val($input.val().replace(settings.symbol, ''));
-                        } else if (settings.symbolStay && $input.val() === settings.symbol) {
-                            $input.val(setSymbol(getDefaultMask()));
+                        if (!settings.affixesStay) {
+                            var newValue = $input.val().replace(settings.prefix, '').replace(settings.suffix, '');
+                            $input.val(newValue);
                         }
                     }
                 }

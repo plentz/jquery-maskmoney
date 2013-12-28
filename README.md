@@ -27,9 +27,9 @@ To view a complete demonstration of it's features and usage, access our [example
 
 The options that you can set are:
 
- * `symbol`: the symbol to be displayed before the value entered by the user(example: "US$"). default: ''
- * `symbolStay`: set if the symbol will stay in the field after the user exits the field. default: false
- * `symbolPosition`: use this setting to position the symbol at the left or right side of the value. default 'left'
+ * `prefix`: the prefix to be displayed before(aha!) the value entered by the user(example: "US$ 1234.23"). default: ''
+ * `suffix`: the prefix to be displayed after the value entered by the user(example: "1234.23 €"). default: ''
+ * `affixesStay`: set if the prefix and suffix will stay in the field's value after the user exits the field. default: true
  * `thousands`: the thousands separator. default: ','
  * `decimal`: the decimal separator. default: '.'
  * `precision`: how many decimal places are allowed. default: 2
