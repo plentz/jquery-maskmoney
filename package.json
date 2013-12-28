@@ -1,14 +1,19 @@
 {
   "name": "jquery-maskMoney",
+  "description": "maskMoney plugin for jQuery",
   "version": "2.9.0",
-  "author": "Diego Plentz (plentz.org)",
-  "description": "jQuery Masked Input Plugin",
+  "homepage": "https://github.com/plentz/jquery-maskmoney",
   "repository": {
     "type": "git",
     "url": "https://github.com/plentz/jquery-maskmoney.git"
   },
   "bugs": {
     "url": "https://github.com/plentz/jquery-maskmoney/issues"
+  },
+  "author": {
+    "name": "Diego Plentz",
+    "email": "diego@plentz.org",
+    "url": "http://plentz.org"
   },
   "devDependencies": {
     "amdefine": "latest",
