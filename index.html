@@ -35,49 +35,6 @@
       <section id="main_content" class="inner">
         <p>Just a simple way to create masks to your currency form fields with <a href="http://jquery.com/">jQuery</a>.</p>
 
-<hr><h3>
-<a name="show-time" class="anchor" href="#show-time"><span class="octicon octicon-link"></span></a>Show Time!</h3>
-
-
-<input type="text" id="demo1" value="0.01" />
-<script type="text/javascript">$("#demo1").maskMoney();</script>
-<pre>$("#demo1").maskMoney();</pre>
-
-<input type="text" id="demo2" />
-<script type="text/javascript">$("#demo2").maskMoney({thousands:',', decimal:'.', allowZero: true, suffix: ' €'});</script>
-<pre>$("#demo2").maskMoney({thousands:'', decimal:'.', allowZero:true, suffix: ' €'});</pre>
-
-<input type="text" id="demo3" />
-<script type="text/javascript">$("#demo3").maskMoney({prefix:'R$ ', allowNegative: true, thousands:'.', decimal:',', affixesStay: false});</script>
-<pre>$("#demo3").maskMoney({prefix:'R$ ', allowNegative: true, thousands:'.', decimal:',', affixesStay: false});</pre>
-
-<input type="text" id="demo4" data-thousands="." data-decimal="," data-prefix="R$ " />
-<script type="text/javascript">$("#demo4").maskMoney();</script>
-<pre>$("#demo4").maskMoney();</pre>
-<pre class="brush: html"><input type="text" id="demo4" data-thousands="." data-decimal="," data-prefix="R$ " /></pre>
-
-<input type="text" id="demo5" value="1234567.89"/>
-<script type="text/javascript">$("#demo5").maskMoney({prefix:'R$ ', thousands:'.', decimal:',', affixesStay: true});</script>
-<input type="button" onclick="$('#demo5').maskMoney('mask')" value="trigger mask event at demo5"/>
-<pre>$("#demo5").maskMoney('mask');</pre>
-
-<input type="text" id="demo6"/>
-<script type="text/javascript">$("#demo6").maskMoney({prefix:'R$ ', thousands:'.', decimal:',', affixesStay: true});</script>
-<input type="button" onclick="$('#demo6').maskMoney('mask', 1999.99)" value="trigger mask event at demo6, passing a float value as parameter"/>
-<pre>$("#demo6").maskMoney('mask', 1999.99);</pre>
-
-<input type="text" id="demo7"/>
-<script type="text/javascript">$("#demo7").maskMoney();</script>
-<input type="button" onclick="$('#demo7').maskMoney('destroy')" value="remove maskmoney from demo7"/>
-<pre>$("#demo6").maskMoney('destroy');</pre>
-
-<input type="text" id="demo8" value="R$ 1.231.231,23"/>
-<script type="text/javascript">$("#demo8").maskMoney();</script>
-<input type="button" onclick="var num = $('#demo8').maskMoney('unmasked')[0];alert('type: '+typeof(num) + ', value: ' + num)" value="alert unmasked value and type from demo7"/>
-<pre>
-	var num = $('#demo8').maskMoney('unmasked')[0];
-	alert('type: '+ typeof(num) + ', value: ' + num)
-</pre>
 
 
 <hr><h3>
@@ -96,6 +53,51 @@
   <span class="p">})</span>
 <span class="nt">&lt;/script&gt;</span>
 </pre></div>
+
+<hr><h3>
+<a name="show-time" class="anchor" href="#show-time"><span class="octicon octicon-link"></span></a>Show Time!</h3>
+
+
+<input type="text" id="demo1" value="0.01" />
+<script type="text/javascript">$("#demo1").maskMoney();</script>
+<code>$("#demo1").maskMoney();</code>
+
+<hr><input type="text" id="demo2" />
+<script type="text/javascript">$("#demo2").maskMoney({thousands:',', decimal:'.', allowZero: true, suffix: ' €'});</script>
+<code>$("#demo2").maskMoney({thousands:'', decimal:'.', allowZero:true, suffix: ' €'});</code>
+
+<hr><input type="text" id="demo3" />
+<script type="text/javascript">$("#demo3").maskMoney({prefix:'R$ ', allowNegative: true, thousands:'.', decimal:',', affixesStay: false});</script>
+<code>$("#demo3").maskMoney({prefix:'R$ ', allowNegative: true, thousands:'.', decimal:',', affixesStay: false});</code>
+
+<hr><input type="text" id="demo4" data-thousands="." data-decimal="," data-prefix="R$ " />
+<script type="text/javascript">$("#demo4").maskMoney();</script>
+<code>$("#demo4").maskMoney();</code>
+<pre class="brush: html"><input type="text" id="demo4" data-thousands="." data-decimal="," data-prefix="R$ " /></code>
+
+<hr><input type="text" id="demo5" value="1234567.89"/>
+<script type="text/javascript">$("#demo5").maskMoney({prefix:'R$ ', thousands:'.', decimal:',', affixesStay: true});</script>
+<input type="button" onclick="$('#demo5').maskMoney('mask')" value="trigger mask event at demo5"/>
+<code>$("#demo5").maskMoney('mask');</code>
+
+<hr><input type="text" id="demo6"/>
+<script type="text/javascript">$("#demo6").maskMoney({prefix:'R$ ', thousands:'.', decimal:',', affixesStay: true});</script>
+<input type="button" onclick="$('#demo6').maskMoney('mask', 1999.99)" value="trigger mask event at demo6, passing a float value as parameter"/>
+<code>$("#demo6").maskMoney('mask', 1999.99);</code>
+
+<hr><input type="text" id="demo7"/>
+<script type="text/javascript">$("#demo7").maskMoney();</script>
+<input type="button" onclick="$('#demo7').maskMoney('destroy')" value="remove maskmoney from demo7"/>
+<code>$("#demo6").maskMoney('destroy');</code>
+
+<hr><input type="text" id="demo8" value="R$ 1.231.231,23"/>
+<script type="text/javascript">$("#demo8").maskMoney();</script>
+<input type="button" onclick="var num = $('#demo8').maskMoney('unmasked')[0];alert('type: '+typeof(num) + ', value: ' + num)" value="alert unmasked value and type from demo7"/>
+<code>
+	var num = $('#demo8').maskMoney('unmasked')[0];
+	alert('type: '+ typeof(num) + ', value: ' + num)
+</code>
+
 
 <hr><h3>
 <a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options:</h3>
