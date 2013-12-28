@@ -17,7 +17,7 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         banner: '/*\n    <%= pkg.description %>\n    version: <%= pkg.version %>\n    <%= pkg.homepage %>\n    Copyright (c) 2009 - <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n    Licensed under the MIT license (https://github.com/plentz/jquery-maskmoney/blob/master/LICENSE)\n*/\n',
-        preserveComments: 0,
+        preserveComments: false,
         mangle: {
           except: ["jQuery", "$"]
         }
