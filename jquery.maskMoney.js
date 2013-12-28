@@ -1,9 +1,3 @@
-/*
-* maskMoney plugin for jQuery
-* http://plentz.github.com/jquery-maskmoney/
-* version: 2.9.0
-* Licensed under the MIT license
-*/
 (function ($) {
     if (!$.browser) {
         $.browser = {};
