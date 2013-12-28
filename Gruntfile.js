@@ -4,7 +4,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     jshint: {
-      all: ["jquery.maskMoney.js"],
+      all: ["jquery.maskMoney.js", "Gruntfile.js"],
       options: {
         globals: {
           bitwise: true,
