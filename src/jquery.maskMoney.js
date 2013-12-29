@@ -37,9 +37,9 @@
                 var value = ($(this).val() || "0"),
                     isNegative = value.indexOf("-") !== -1,
                     decimalPart;
-                // get the last position of the array that is a number(probably there's a better way to do that)
+                // get the last position of the array that is a number(coercion makes "" to be evaluated as false)
                 $(value.split(/\D/).reverse()).each(function (index, element) {
-                    if(element.match(/\d/)) {
+                    if(element) {
                         decimalPart = element;
                         return false;
                    }
