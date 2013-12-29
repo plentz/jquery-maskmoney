@@ -18,7 +18,7 @@
   "globals": {
     "jQuery": true,
     "$": true,
-    "console": true,
+    "devel": true,
     // QUnit
     "test": true,
     "module": true,
@@ -32,6 +32,9 @@
     "notDeepEqual": true,
     "strictEqual": true,
     "notStrictEqual": true,
-    "raises": true
+    "raises": true,
+    // util functions
+    "keypress": true,
+    "keydown": true
   }
 }
