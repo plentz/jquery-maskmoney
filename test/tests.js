@@ -16,7 +16,7 @@ test("init", function() {
 
 
 test("destroy", function() {
-  var $mm = $("#input1").maskMoney();
+  var events, $mm = $("#input1").maskMoney();
   $mm.maskMoney("destroy");
   events = jQuery._data($mm.get(0), "events");
   equal(events, undefined, "destroy method removed all attached events");
