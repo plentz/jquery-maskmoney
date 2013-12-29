@@ -147,7 +147,6 @@
                             range.select();
                         }
                     });
-                    return this;
                 }
 
                 function setSymbol(value) {
