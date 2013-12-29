@@ -17,6 +17,21 @@
   "unused": true,
   "globals": {
     "jQuery": true,
-    "console": true
+    "$": true,
+    "console": true,
+    // QUnit
+    "test": true,
+    "module": true,
+    "expect": true,
+    "stop": true,
+    "start": true,
+    "ok": true,
+    "equal": true,
+    "notEqual": true,
+    "deepEqual": true,
+    "notDeepEqual": true,
+    "strictEqual": true,
+    "notStrictEqual": true,
+    "raises": true
   }
 }
