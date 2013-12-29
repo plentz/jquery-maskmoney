@@ -68,9 +68,10 @@ test("with collection of fields", function() {
   deepEqual(unmaskedCollection, [123456.78, 876543.21], "unmask method return the correct number when the field value has prefix and suffix");
 });
 
+
 module("focus");
 test("with prefix", function() {
-  var jsEvent, $mm = $("#input1").maskMoney();
+  var $mm = $("#input1").maskMoney();
   $mm.val("12345678");
   $mm.trigger("focus");
   equal($mm.val(), "123,456.78", "format the value of the field on focus");
