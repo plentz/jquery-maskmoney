@@ -5,7 +5,7 @@ Just a simple way to create masks to your currency form fields with [jQuery](htt
 ***
 ### Download
 
-To get the last(minified) version, [click here](https://raw.github.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js).
+To get the latest(minified) version, [click here](https://raw.github.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js).
 
 ***
 ### Show Time!
