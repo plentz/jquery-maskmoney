@@ -35,7 +35,14 @@
             return this.map(function () {
                 var unmaskedStr = ($(this).val() || "0"),
                     isNegative = unmaskedStr.indexOf("-") !== -1,
-                    decimalPart = $(unmaskedStr.split(/\D/)).last()[0];
+                    decimalPart;
+                // get the last position of the array that is a number(probably there's a better way to do that)
+                $(unmaskedStr.split(/\D/).reverse()).each(function (index, value) {
+                    if(value.match(/\d/)) {
+                        decimalPart = value;
+                        return false;
+                   }
+                });
                 unmaskedStr = unmaskedStr.replace(/\D/g, "");
                 unmaskedStr = unmaskedStr.replace(new RegExp(decimalPart + "$"), "." + decimalPart);
                 if (isNegative) {
