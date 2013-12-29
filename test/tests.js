@@ -3,6 +3,26 @@ test("chainable", function() {
   equal($("input:first").val(), "123", "class was added correctly from chaining");
 });
 
+
+test("init", function() {
+  var events, $mm = $("input:first").maskMoney();
+  events = jQuery._data($mm.get(0), "events");
+  ok(events.blur, "attached the blur event");
+  ok(events.keypress, "attached the keypress event");
+  ok(events.keydown, "attached the keydown event");
+  ok(events.focus, "attached the focus event");
+  ok(events.click, "attached the click event");
+});
+
+
+test("destroy", function() {
+  var $mm = $("input:first").maskMoney();
+  $mm.maskMoney("destroy");
+  events = jQuery._data($mm.get(0), "events");
+  equal(events, undefined, "destroy method removed all attached events");
+});
+
+
 module("mask");
 test("simple", function() {
   var $mm = $("input:first").maskMoney();
@@ -16,7 +36,6 @@ test("with a number as parameter", function() {
   $mm.maskMoney("mask", 123456.78);
   equal($mm.val(), "123,456.78", "mask method when trigged with a number as parameter correctly formatted input value");
 });
-
 
 
 module("unmasked");
@@ -42,7 +61,7 @@ test("with prefix and suffix", function() {
 });
 
 test("with collection of fields", function() {
-  var unmasked, $mm = $(".all");
+  var unmaskedCollection, $mm = $(".all");
   $("#input1").val("+ 123.456,78 €");
   $("#input2").val("R$ 876.543,21");
   unmaskedCollection = $mm.maskMoney("unmasked").get();
