@@ -41,22 +41,22 @@
 
         unmasked : function () {
             return this.map(function () {
-                var unmaskedStr = ($(this).val() || "0"),
-                    isNegative = unmaskedStr.indexOf("-") !== -1,
+                var value = ($(this).val() || "0"),
+                    isNegative = value.indexOf("-") !== -1,
                     decimalPart;
                 // get the last position of the array that is a number(probably there's a better way to do that)
-                $(unmaskedStr.split(/\D/).reverse()).each(function (index, value) {
-                    if(value.match(/\d/)) {
-                        decimalPart = value;
+                $(value.split(/\D/).reverse()).each(function (index, element) {
+                    if(element.match(/\d/)) {
+                        decimalPart = element;
                         return false;
                    }
                 });
-                unmaskedStr = unmaskedStr.replace(/\D/g, "");
-                unmaskedStr = unmaskedStr.replace(new RegExp(decimalPart + "$"), "." + decimalPart);
+                value = value.replace(/\D/g, "");
+                value = value.replace(new RegExp(decimalPart + "$"), "." + decimalPart);
                 if (isNegative) {
-                    unmaskedStr = "-" + unmaskedStr;
+                    value = "-" + value;
                 }
-                return parseFloat(unmaskedStr);
+                return parseFloat(value);
             });
         },
 
