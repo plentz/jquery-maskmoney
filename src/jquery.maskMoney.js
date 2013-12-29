@@ -227,7 +227,7 @@
                         startPos,
                         endPos,
                         value;
-                    //nevalue = $inputeded to handle an IE "special" event
+                    //added to handle an IE "special" event
                     if (key === undefined) {
                         return false;
                     }
