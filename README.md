@@ -11,7 +11,7 @@ To view a complete demonstration of it's features and usage, access our [example
 ### Usage:
 ```html
 <head>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
   <script src="dist/jquery.maskMoney.min.js" type="text/javascript"></script>
 </head>
 <body>
