@@ -14,7 +14,7 @@ module.exports = function(grunt) {
             " */\n"
         },
         jshint: {
-            all: ["src/jquery.maskMoney.js", "Gruntfile.js"],
+            all: ["Gruntfile.js", "src/**/*.js", "test/**/*.js"],
             options: {
                 jshintrc: true
             }
@@ -41,6 +41,9 @@ module.exports = function(grunt) {
                 ]
             }
         },
+        qunit: {
+          all: ["test/*.html"]
+        },
         jquerymanifest: {
             options: {
                 source: grunt.file.readJSON("package.json"),
@@ -54,6 +57,10 @@ module.exports = function(grunt) {
                     "keywords": ["form", "input", "mask", "money"],
                 }
             }
+        },
+        watch: {
+          files: ["test/*.html", "test/*.js", "src/*.js"],
+          tasks: ["jshint", "qunit"]
         }
     });
 
@@ -61,7 +68,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-jquerymanifest");
+    grunt.loadNpmTasks("grunt-contrib-qunit");
+    grunt.loadNpmTasks("grunt-contrib-watch");
 
-    grunt.registerTask("default", ["jshint", "concat", "uglify", "jquerymanifest"]);
-    grunt.registerTask("travis", ["jshint"]);
+    grunt.registerTask("test", ["jshint", "qunit"]);
+    grunt.registerTask("default", ["jshint", "qunit", "concat", "uglify", "jquerymanifest"]);
 };
