@@ -1,4 +1,5 @@
 (function ($) {
+    "use strict";
     if (!$.browser) {
         $.browser = {};
         $.browser.mozilla = /mozilla/.test(navigator.userAgent.toLowerCase()) && !/webkit/.test(navigator.userAgent.toLowerCase());
@@ -224,7 +225,8 @@
                         keyPressedChar,
                         selection,
                         startPos,
-                        endPos;
+                        endPos,
+                        value;
                     //nevalue = $inputeded to handle an IE "special" event
                     if (key === undefined) {
                         return false;
@@ -330,8 +332,10 @@
 
                 function focusEvent() {
                     mask();
-                    if (this.createTextRange) {
-                        var textRange = this.createTextRange();
+                    var input = $input.get(0),
+                        textRange;
+                    if (input.createTextRange) {
+                        textRange = input.createTextRange();
                         textRange.collapse(false); // set the cursor at the end of the input
                         textRange.select();
                     }
@@ -364,9 +368,11 @@
                 }
 
                 function clickEvent() {
-                    if (this.setSelectionRange) {
-                        var length = $input.val().length;
-                        this.setSelectionRange(length, length);
+                    var input = $input.get(0),
+                        length;
+                    if (input.setSelectionRange) {
+                        length = $input.val().length;
+                        input.setSelectionRange(length, length);
                     } else {
                         $input.val($input.val());
                     }
