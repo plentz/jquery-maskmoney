@@ -50,7 +50,6 @@ module.exports = function(grunt) {
                 overrides: {
                     "name": "maskMoney",
                     "title": "jQuery maskMoney",
-                    "homepage": "http://plentz.github.com/jquery-maskmoney",
                     "download": "https://raw.github.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js",
                     "docs": "http://github.com/plentz/jquery-maskmoney",
                     "demo": "http://plentz.github.com/jquery-maskmoney",
