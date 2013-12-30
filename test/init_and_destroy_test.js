@@ -6,8 +6,9 @@ test("chainable", function() {
 });
 
 test("init", function() {
-    var events, $mm = $("#input1").maskMoney();
-    events = jQuery._data($mm.get(0), "events");
+    var input = $("#input1").maskMoney(),
+        events;
+    events = jQuery._data(input.get(0), "events");
     ok(events.blur, "attached the blur event");
     ok(events.keypress, "attached the keypress event");
     ok(events.keydown, "attached the keydown event");
@@ -17,8 +18,9 @@ test("init", function() {
 
 
 test("destroy", function() {
-    var events, $mm = $("#input1").maskMoney();
-    $mm.maskMoney("destroy");
-    events = jQuery._data($mm.get(0), "events");
+    var input = $("#input1").maskMoney(),
+        events;
+    input.maskMoney("destroy");
+    events = jQuery._data(input.get(0), "events");
     equal(events, undefined, "destroy method removed all attached events");
 });
