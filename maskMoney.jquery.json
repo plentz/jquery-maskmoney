@@ -26,8 +26,6 @@
   "docs": "http://github.com/plentz/jquery-maskmoney",
   "demo": "http://plentz.github.com/jquery-maskmoney",
   "download": "https://raw.github.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js",
-  "bugs": {
-    "url": "https://github.com/plentz/jquery-maskmoney/issues"
-  },
+  "bugs": "https://github.com/plentz/jquery-maskmoney/issues",
   "homepage": "https://github.com/plentz/jquery-maskmoney"
 }
