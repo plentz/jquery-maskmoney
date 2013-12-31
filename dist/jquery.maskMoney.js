@@ -1,5 +1,5 @@
 /*
- *  jquery-maskMoney - v2.9.6
+ *  jquery-maskMoney - v3.0.0
  *  jQuery plugin to mask data entry in the input text in the form of money (currency)
  *  https://github.com/plentz/jquery-maskmoney
  *
@@ -7,6 +7,7 @@
  *  Under MIT License (https://raw.github.com/plentz/jquery-maskmoney/master/LICENSE)
  */
 (function ($) {
+    "use strict";
     if (!$.browser) {
         $.browser = {};
         $.browser.mozilla = /mozilla/.test(navigator.userAgent.toLowerCase()) && !/webkit/.test(navigator.userAgent.toLowerCase());
@@ -44,9 +45,9 @@
                 var value = ($(this).val() || "0"),
                     isNegative = value.indexOf("-") !== -1,
                     decimalPart;
-                // get the last position of the array that is a number(probably there's a better way to do that)
+                // get the last position of the array that is a number(coercion makes "" to be evaluated as false)
                 $(value.split(/\D/).reverse()).each(function (index, element) {
-                    if(element.match(/\d/)) {
+                    if(element) {
                         decimalPart = element;
                         return false;
                    }
@@ -74,21 +75,20 @@
 
             return this.each(function () {
                 var $input = $(this),
-                    dirty = false;
+                    onFocusValue;
 
                 // data-* api
                 settings = $.extend(settings, $input.data());
 
-                function markAsDirty() {
-                    dirty = true;
-                }
-
-                function clearDirt() {
-                    dirty = false;
-                }
-
                 function getInputSelection() {
-                    var start = 0, end = 0, normalizedValue, range, textInputRange, len, endRange, el = $input.get(0);
+                    var el = $input.get(0),
+                        start = 0,
+                        end = 0,
+                        normalizedValue,
+                        range,
+                        textInputRange,
+                        len,
+                        endRange;
 
                     if (typeof el.selectionStart === "number" && typeof el.selectionEnd === "number") {
                         start = el.selectionStart;
@@ -155,7 +155,6 @@
                             range.select();
                         }
                     });
-                    return this;
                 }
 
                 function setSymbol(value) {
@@ -233,8 +232,9 @@
                         keyPressedChar,
                         selection,
                         startPos,
-                        endPos;
-                    //nevalue = $inputeded to handle an IE "special" event
+                        endPos,
+                        value;
+                    //added to handle an IE "special" event
                     if (key === undefined) {
                         return false;
                     }
@@ -242,20 +242,14 @@
                     if (key < 48 || key > 57) {
                         // -(minus) key
                         if (key === 45) {
-                            markAsDirty();
                             $input.val(changeSign());
                             return false;
                         // +(plus) key
                         } else if (key === 43) {
-                            markAsDirty();
                             $input.val($input.val().replace("-", ""));
                             return false;
                         // enter key or tab key
                         } else if (key === 13 || key === 9) {
-                            if (dirty) {
-                                clearDirt();
-                                $input.change();
-                            }
                             return true;
                         } else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
                             // needed for left arrow key or right arrow key with firefox
@@ -277,7 +271,6 @@
                         value = $input.val();
                         $input.val(value.substring(0, startPos) + keyPressedChar + value.substring(endPos, value.length));
                         maskAndPosition(startPos + 1);
-                        markAsDirty();
                         return false;
                     }
                 }
@@ -324,13 +317,8 @@
                         $input.val(value.substring(0, startPos) + value.substring(endPos, value.length));
 
                         maskAndPosition(startPos);
-                        markAsDirty();
                         return false;
                     } else if (key === 9) { // tab key
-                        if (dirty) {
-                            $input.change();
-                            clearDirt();
-                        }
                         return true;
                     } else { // any other key
                         return true;
@@ -338,9 +326,12 @@
                 }
 
                 function focusEvent() {
+                    onFocusValue = $input.val();
                     mask();
-                    if (this.createTextRange) {
-                        var textRange = this.createTextRange();
+                    var input = $input.get(0),
+                        textRange;
+                    if (input.createTextRange) {
+                        textRange = input.createTextRange();
                         textRange.collapse(false); // set the cursor at the end of the input
                         textRange.select();
                     }
@@ -370,12 +361,17 @@
                             $input.val(newValue);
                         }
                     }
+                    if ($input.val() !== onFocusValue) {
+                        $input.change();
+                    }
                 }
 
                 function clickEvent() {
-                    if (this.setSelectionRange) {
-                        var length = $input.val().length;
-                        this.setSelectionRange(length, length);
+                    var input = $input.get(0),
+                        length;
+                    if (input.setSelectionRange) {
+                        length = $input.val().length;
+                        input.setSelectionRange(length, length);
                     } else {
                         $input.val($input.val());
                     }
