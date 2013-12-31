@@ -1,6 +1,6 @@
 {
   "name": "jquery-maskmoney",
-  "filename": "jquery.maskMoney.js",
+  "filename": "jquery.maskMoney.min.js",
   "description": "jQuery plugin to mask data entry in the input text in the form of money (currency)",
   "version": "3.0.0",
   "homepage": "https://github.com/plentz/jquery-maskmoney",
@@ -21,7 +21,7 @@
   "npmFileMap": [{
     "basePath": "/dist/",
     "files": [
-      "*"
+      "jquery.maskMoney.min.js"
     ]
   }],
   "devDependencies": {
