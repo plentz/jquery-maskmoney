@@ -55,6 +55,7 @@
 
         init : function (settings) {
             settings = $.extend({
+                autoLoad: false,
                 prefix: "",
                 suffix: "",
                 affixesStay: true,
@@ -376,6 +377,10 @@
                 $input.bind("focus.maskMoney", focusEvent);
                 $input.bind("click.maskMoney", clickEvent);
                 $input.bind("mask.maskMoney", mask);
+
+                if (settings.autoLoad){
+                    mask();
+                }
             });
         }
     };
