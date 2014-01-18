@@ -3,16 +3,30 @@
 module("allowEmpty");
 
 // Test allowZero: false with 0 default value
-test("allowZero: false -  mask empties 0 value", function() {
+test("allowZero: false -  mask empties default 0 value", function() {
     var input = $("#input4").maskMoney();
     input.trigger('mask');
     equal(input.val(), "", "0 value should be empty due to settings");
 });
 
 // Test allowZero: true with 0 default value
-test("allowZero: true - mask keeps 0 value", function() {
+test("allowZero: true - mask keeps default 0 value", function() {
     var input = $("#input5").maskMoney();
     input.trigger('mask');
+    equal(input.val(), "0.00$", "0 value should be 0.00$ due to settings");
+});
+
+// Test allowZero: false with 0 input
+test("allowZero: false -  mask empties 0 input value", function() {
+    var input = $("#input4").maskMoney();
+    keypress(input, 0);
+    equal(input.val(), "", "0 value should be empty due to settings");
+});
+
+// Test allowZero: true with 0 input
+test("allowZero: true - mask keeps 0 input value", function() {
+    var input = $("#input5").maskMoney();
+    keypress(input, 0);
     equal(input.val(), "0.00$", "0 value should be 0.00$ due to settings");
 });
 
@@ -49,7 +63,7 @@ test("allowZero: true - input changes to a zero value", function() {
 });
 
 // Test allowZero: true with input changes to an empty value
-test("allowZero: true - input changes to empty", function() {
+test("allowZero: true - backspace on zero value changes to empty", function() {
     var input = $("#input5").maskMoney();
     input.trigger('mask'); // formats the 0 default value
 

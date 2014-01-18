@@ -185,7 +185,6 @@
                     }
                     if (settings.allowEmpty) {
                         if ( leaveEmpty || value == '' || !settings.allowZero && newValue === getDefaultMask() ) {
-                            leaveEmpty = true;
                             return '';
                         }
                     }
