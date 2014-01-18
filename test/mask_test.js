@@ -8,6 +8,13 @@ test("simple", function() {
     equal(input.val(), "0.00", "mask method when trigged correctly formatted input value");
 });
 
+test("with a lot of leading zeroes", function() {
+    var input = $("#input1").maskMoney();
+    input.val("000000000123");
+    input.maskMoney("mask");
+    equal(input.val(), "1.23", "removes the unecessary zeroes");
+});
+
 test("with a number as parameter", function() {
     var input = $("#input1").maskMoney();
     input.maskMoney("mask", 123456.78);
