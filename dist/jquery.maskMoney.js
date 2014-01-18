@@ -1,5 +1,5 @@
 /*
- *  jquery-maskmoney - v3.0.1
+ *  jquery-maskmoney - v3.0.2
  *  jQuery plugin to mask data entry in the input text in the form of money (currency)
  *  https://github.com/plentz/jquery-maskmoney
  *
@@ -167,7 +167,7 @@
                 }
 
                 function maskValue(value) {
-                    var negative = (value.indexOf("-") > -1) ? "-" : "",
+                    var negative = (value.indexOf("-") > -1 && settings.allowNegative) ? "-" : "",
                         onlyNumbers = value.replace(/[^0-9]/g, ""),
                         integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision),
                         newValue,
@@ -342,7 +342,6 @@
                     setTimeout(function() {
                         mask();
                     }, 0);
-                    return true;
                 }
 
                 function getDefaultMask() {
