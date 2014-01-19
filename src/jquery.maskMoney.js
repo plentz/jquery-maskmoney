@@ -159,7 +159,7 @@
                 }
 
                 function maskValue(value) {
-                    var negative = (value.indexOf("-") > -1) ? "-" : "",
+                    var negative = (value.indexOf("-") > -1 && settings.allowNegative) ? "-" : "",
                         onlyNumbers = value.replace(/[^0-9]/g, ""),
                         integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision),
                         newValue,
@@ -167,7 +167,7 @@
                         leadingZeros;
 
                     // remove initial zeros
-                    integerPart = integerPart.replace(/^0/g, "");
+                    integerPart = integerPart.replace(/^0*/g, "");
                     // put settings.thousands every 3 chars
                     integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, settings.thousands);
                     if (integerPart === "") {
@@ -230,6 +230,7 @@
                     if (key === undefined) {
                         return false;
                     }
+
                     // any key except the numbers 0-9
                     if (key < 48 || key > 57) {
                         // -(minus) key
@@ -329,6 +330,12 @@
                     }
                 }
 
+                function cutPasteEvent() {
+                    setTimeout(function() {
+                        mask();
+                    }, 0);
+                }
+
                 function getDefaultMask() {
                     var n = parseFloat("0") / Math.pow(10, settings.precision);
                     return (n.toFixed(settings.precision)).replace(new RegExp("\\.", "g"), settings.decimal);
@@ -375,6 +382,8 @@
                 $input.bind("blur.maskMoney", blurEvent);
                 $input.bind("focus.maskMoney", focusEvent);
                 $input.bind("click.maskMoney", clickEvent);
+                $input.bind("cut.maskMoney", cutPasteEvent);
+                $input.bind("paste.maskMoney", cutPasteEvent);
                 $input.bind("mask.maskMoney", mask);
             });
         }
