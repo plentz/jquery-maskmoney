@@ -185,8 +185,8 @@
                     }
 
                     if (settings.allowEmpty) {
-                        if ( leaveEmpty || value == '' || !settings.allowZero && newValue === getDefaultMask() ) {
-                            return '';
+                        if ( leaveEmpty || value == "" || !settings.allowZero && newValue === getDefaultMask() ) {
+                            return "";
                         }
                     }
 
@@ -318,9 +318,9 @@
                         }
 
                         if (settings.allowEmpty) {
-                            if (defaultEmptyValue === value || value == '') {
+                            if (defaultEmptyValue === value || value == "") {
                                 leaveEmpty = true;
-                                $input.val('');
+                                $input.val("");
                                 return false;
                             }
                         }
