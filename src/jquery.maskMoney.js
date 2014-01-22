@@ -185,7 +185,7 @@
                     }
 
                     if (settings.allowEmpty) {
-                        if ( leaveEmpty || value == "" || !settings.allowZero && newValue === getDefaultMask() ) {
+                        if ( leaveEmpty || value === "" || !settings.allowZero && newValue === getDefaultMask() ) {
                             return "";
                         }
                     }
@@ -318,7 +318,7 @@
                         }
 
                         if (settings.allowEmpty) {
-                            if (defaultEmptyValue === value || value == "") {
+                            if (defaultEmptyValue === value || value === "") {
                                 leaveEmpty = true;
                                 $input.val("");
                                 return false;
