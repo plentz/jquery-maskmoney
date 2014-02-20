@@ -290,6 +290,11 @@
                         preventDefault(e);
 
                         value = $input.val();
+
+                        if(!settings.treatEmptyAsZero && (value === "" || value === setSymbol(getDefaultMask()) )) {
+                          $input.val("");
+                          return false;
+                        }
                         // not a selection
                         if (startPos === endPos) {
                             // backspace
