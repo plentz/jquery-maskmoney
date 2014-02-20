@@ -62,7 +62,8 @@
                 decimal: ".",
                 precision: 2,
                 allowZero: false,
-                allowNegative: false
+                allowNegative: false,
+                treatEmptyAsZero: true
             }, settings);
 
             return this.each(function () {
@@ -319,8 +320,13 @@
                 }
 
                 function focusEvent() {
-                    onFocusValue = $input.val();
-                    mask();
+                    onFocusValue = $input.val().trim();
+                    if (onFocusValue === "" && !settings.treatEmptyAsZero) {
+                      $input.val("");
+                    } else {
+                      mask();
+                    }
+
                     var input = $input.get(0),
                         textRange;
                     if (input.createTextRange) {
@@ -346,14 +352,22 @@
                         keypressEvent(e);
                     }
 
-                    if ($input.val() === "" || $input.val() === setSymbol(getDefaultMask())) {
-                        if (!settings.allowZero) {
+                    if ($input.val() === "") {
+                        if (!settings.allowZero || !settings.treatEmptyAsZero) {
                             $input.val("");
                         } else if (!settings.affixesStay) {
                             $input.val(getDefaultMask());
                         } else {
                             $input.val(setSymbol(getDefaultMask()));
                         }
+                    } else if($input.val() === setSymbol(getDefaultMask())) {
+                      if (!settings.allowZero) {
+                        $input.val("");
+                      } else if (!settings.affixesStay) {
+                        $input.val(getDefaultMask());
+                      } else {
+                        $input.val(setSymbol(getDefaultMask()));
+                      }
                     } else {
                         if (!settings.affixesStay) {
                             var newValue = $input.val().replace(settings.prefix, "").replace(settings.suffix, "");
