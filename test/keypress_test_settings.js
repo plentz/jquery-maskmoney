@@ -10,13 +10,3 @@ test("decimalOnly : true - reject third keystroke", function(){
 
     equal(input.val(), "0.12", "format the value of the field on focus");
 });
-
-test("decimalOnly : false - allow third keystroke", function(){
-    var input = $("#input1").maskMoney();
-    input.trigger("focus");
-    keypress(input, 1);
-    keypress(input, 2);
-    keypress(input, 3);
-
-    equal(input.val(), "1.23", "format the value of the field on focus");
-});

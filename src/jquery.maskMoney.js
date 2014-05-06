@@ -333,10 +333,18 @@
                 }
 
                 function cutPasteEvent() {
+		    checkDecimalOnly();
                     setTimeout(function() {
                         mask();
                     }, 0);
                 }
+
+		function checkDecimalOnly(){
+		    var value = $input.val();
+		    if(value.substring(0,1) !== "0" && settings.decimalOnly){
+		    	$input.val("0" + value.substring(1));
+		    }
+		}
 
                 function getDefaultMask() {
                     var n = parseFloat("0") / Math.pow(10, settings.precision);
