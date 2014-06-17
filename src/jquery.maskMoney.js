@@ -9,7 +9,7 @@
     }
 
     var methods = {
-        destroy : function () {
+        destroy: function () {
             $(this).unbind(".maskMoney");
 
             if ($.browser.msie) {
@@ -18,7 +18,7 @@
             return this;
         },
 
-        mask : function (value) {
+        mask: function (value) {
             return this.each(function () {
                 var $this = $(this),
                     decimalSize;
@@ -32,17 +32,17 @@
             });
         },
 
-        unmasked : function () {
+        unmasked: function () {
             return this.map(function () {
                 var value = ($(this).val() || "0"),
                     isNegative = value.indexOf("-") !== -1,
                     decimalPart;
                 // get the last position of the array that is a number(coercion makes "" to be evaluated as false)
                 $(value.split(/\D/).reverse()).each(function (index, element) {
-                    if(element) {
+                    if (element) {
                         decimalPart = element;
                         return false;
-                   }
+                    }
                 });
                 value = value.replace(/\D/g, "");
                 value = value.replace(new RegExp(decimalPart + "$"), "." + decimalPart);
@@ -53,7 +53,7 @@
             });
         },
 
-        init : function (settings) {
+        init: function (settings) {
             settings = $.extend({
                 prefix: "",
                 suffix: "",
@@ -62,7 +62,8 @@
                 decimal: ".",
                 precision: 2,
                 allowZero: false,
-                allowNegative: false
+                allowNegative: false,
+                selectAll: false
             }, settings);
 
             return this.each(function () {
@@ -237,11 +238,11 @@
                         if (key === 45) {
                             $input.val(changeSign());
                             return false;
-                        // +(plus) key
+                            // +(plus) key
                         } else if (key === 43) {
                             $input.val($input.val().replace("-", ""));
                             return false;
-                        // enter key or tab key
+                            // enter key or tab key
                         } else if (key === 13 || key === 9) {
                             return true;
                         } else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
@@ -301,7 +302,7 @@
                                     startPos = value.length - lastNumber - 1;
                                     endPos = startPos + 1;
                                 }
-                            //delete
+                                //delete
                             } else {
                                 endPos += 1;
                             }
@@ -331,7 +332,7 @@
                 }
 
                 function cutPasteEvent() {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         mask();
                     }, 0);
                 }
@@ -370,7 +371,8 @@
                         length;
                     if (input.setSelectionRange) {
                         length = $input.val().length;
-                        input.setSelectionRange(length, length);
+                        start = settings.selectAll ? 0 : length;
+                        input.setSelectionRange(start, length);
                     } else {
                         $input.val($input.val());
                     }
@@ -392,10 +394,10 @@
     $.fn.maskMoney = function (method) {
         if (methods[method]) {
             return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-        } else if (typeof method === "object" || ! method) {
+        } else if (typeof method === "object" || !method) {
             return methods.init.apply(this, arguments);
         } else {
-            $.error("Method " +  method + " does not exist on jQuery.maskMoney");
+            $.error("Method " + method + " does not exist on jQuery.maskMoney");
         }
     };
 })(window.jQuery || window.Zepto);
