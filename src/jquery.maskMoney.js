@@ -371,7 +371,7 @@
                         length;
                     if (input.setSelectionRange) {
                         length = $input.val().length;
-                        start = settings.selectAll ? 0 : length;
+                        var start = settings.selectAll ? 0 : length;
                         input.setSelectionRange(start, length);
                     } else {
                         $input.val($input.val());
