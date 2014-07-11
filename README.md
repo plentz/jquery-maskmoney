@@ -59,7 +59,7 @@ We have 3 bonus methods that can be useful to you:
 You can also configure maskMoney options using the data-* API instead of passing it as a hash in the `.maskMoney` method call. To use it, simply set the options using `data-<option>`, like this:
 
  ```html
- 	<input type="text" data-affixes-stay="true" data-symbol="R$ " data-thousands="." data-decimal="," />
+ 	<input type="text" data-affixes-stay="true" data-prefix="R$ " data-thousands="." data-decimal="," />
  ```
 
  And when you bind maskMoney to that field, we will read those options. **ATTENTION**: for settings that isn't entirely lowercase, you will need to use dashes instead of capital letters. For example, to set `allowZero`, you will need to add a attribute called `data-allow-zero`.
