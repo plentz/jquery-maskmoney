@@ -62,7 +62,8 @@
                 decimal: ".",
                 precision: 2,
                 allowZero: false,
-                allowNegative: false
+                allowNegative: false,
+                decimalOnly: false
             }, settings);
 
             return this.each(function () {
@@ -123,14 +124,15 @@
                         end: end
                     };
                 } // getInputSelection
-
+                
                 function canInputMoreNumbers() {
-                    var haventReachedMaxLength = !($input.val().length >= $input.attr("maxlength") && $input.attr("maxlength") >= 0),
+                    var decimalOnly = (($input.val().substring(2, 3) !== "0") && settings.decimalOnly),
+			haventReachedMaxLength = !decimalOnly && !($input.val().length >= $input.attr("maxlength") && $input.attr("maxlength") >= 0),
                         selection = getInputSelection(),
                         start = selection.start,
                         end = selection.end,
                         haveNumberSelected = (selection.start !== selection.end && $input.val().substring(start, end).match(/\d/)) ? true : false,
-                        startWithZero = ($input.val().substring(0, 1) === "0");
+                        startWithZero = !decimalOnly && ($input.val().substring(0, 1) === "0");
                     return haventReachedMaxLength || haveNumberSelected || startWithZero;
                 }
 
@@ -331,10 +333,18 @@
                 }
 
                 function cutPasteEvent() {
+		    checkDecimalOnly();
                     setTimeout(function() {
                         mask();
                     }, 0);
                 }
+
+		function checkDecimalOnly(){
+		    var value = $input.val();
+		    if(value.substring(0,1) !== "0" && settings.decimalOnly){
+		    	$input.val("0" + value.substring(1));
+		    }
+		}
 
                 function getDefaultMask() {
                     var n = parseFloat("0") / Math.pow(10, settings.precision);

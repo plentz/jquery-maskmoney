@@ -25,3 +25,16 @@ test("when pasting", function() {
         equal(input.val(), "123,456.78", "format the value of the field");
     }, 1);
 });
+
+test("when pasting w/ decimalOnly: true", function() {
+    stop();
+    var input = $("#input1").maskMoney({decimalOnly:true});
+    input.val("1.23");
+    input.trigger("paste");
+    setTimeout( function() {
+        start();
+        equal(input.val(), "0.23", "format the value of the field");
+    }, 1);
+});
+
+
