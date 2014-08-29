@@ -22,11 +22,11 @@
             var maskObj = maskClass.apply(this, [settings]),
                 $this = $(this);
         
-            if ($this.is('input'))
+            if ($this.is("input")){
                 $this.val(maskObj.maskValue($this.val()));
-            else 
+            } else { 
                 $this.text(maskObj.maskValue($this.text()));
-            
+            }            
             return $this;
         },
 
@@ -85,7 +85,7 @@
 
     var maskClass = function(settings){
         var $input = $(this),
-            onFocusValue,
+            onFocusValue;
             
         settings = $.extend({
             prefix: "",
@@ -408,7 +408,7 @@
             },
 
             checkDecimalAfterDot : function (string){
-                return settings.decimalAfterDot && new RegExp('[.,'+(!/[.,\s]/.test(settings.decimal) ? settings.decimal : '')+'](?:\\d+)?$').test(string);
+                return settings.decimalAfterDot && new RegExp("[.,"+(!/[.,\s]/.test(settings.decimal) ? settings.decimal : "")+"](?:\\d+)?$").test(string);
             }
         };
         
@@ -419,7 +419,7 @@
         if (methods[method]) {
             return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
         } else if (typeof method === "object" || ! method) {
-            return methods.init.apply(this, arguments);S
+            return methods.init.apply(this, arguments);
         } else {
             $.error("Method " +  method + " does not exist on jQuery.maskMoney");
         }
