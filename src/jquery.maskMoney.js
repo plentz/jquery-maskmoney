@@ -412,6 +412,8 @@
             }
         };
         
+        $input.val(handler.maskValue($input.val()));
+        
         return handler;
     };
     
