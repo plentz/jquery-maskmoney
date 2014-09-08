@@ -412,9 +412,9 @@
             }
         };
         
-        if ($input.val() !== '')
+        if ($input.val() !== ""){
             $input.val(handler.maskValue($input.val()));
-        
+        }
         return handler;
     };
     
