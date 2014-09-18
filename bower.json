@@ -5,5 +5,6 @@
     "Diego Plentz"
   ],
   "main": "dist/jquery.maskMoney.js",
-  "license": "MIT"
+  "license": "MIT",
+  "ignore" : []
 }
