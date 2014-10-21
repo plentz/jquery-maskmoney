@@ -55,15 +55,15 @@
 
         init : function (settings) {
             settings = $.extend({
-                prefix: "US$ ",
+                prefix: "",
                 suffix: "",
-                affixesStay: false,
+                affixesStay: true,
                 thousands: ",",
                 decimal: ".",
                 precision: 2,
                 allowZero: false,
                 allowNegative: false,
-                thousandsStay: false
+                thousandsStay: true
             }, settings);
 
             return this.each(function () {
