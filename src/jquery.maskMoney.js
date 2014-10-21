@@ -356,14 +356,14 @@
                             $input.val(setSymbol(getDefaultMask()));
                         }
                     } else {
-						var newValue = $input.val();
+			var newValue = $input.val();
                         if (!settings.affixesStay) {
                             newValue = newValue.replace(settings.prefix, "").replace(settings.suffix, "");
                         }
                         if (!settings.thousandsStay) {
                             newValue = newValue.replace(settings.thousands, "");                            
                         }
-						$input.val(newValue);
+			$input.val(newValue);
                     }
                     if ($input.val() !== onFocusValue) {
                         $input.change();
