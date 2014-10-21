@@ -360,7 +360,7 @@
                         if (!settings.affixesStay) {
                             newValue = $input.val().replace(settings.prefix, "").replace(settings.suffix, "");
                         }
-                        if (settings.thousandsStay == false) {
+                        if (!settings.thousandsStay) {
                             newValue = newValue || $input.val();
                             newValue = newValue.replace(settings.thousands, "");
                         }
