@@ -42,7 +42,7 @@
                     if(element) {
                         decimalPart = element;
                         return false;
-                   }
+                    }
                 });
                 value = value.replace(/\D/g, "");
                 value = value.replace(new RegExp(decimalPart + "$"), "." + decimalPart);
@@ -62,7 +62,8 @@
                 decimal: ".",
                 precision: 2,
                 allowZero: false,
-                allowNegative: false
+                allowNegative: false,
+                thousandsStay: true
             }, settings);
 
             return this.each(function () {
@@ -237,11 +238,11 @@
                         if (key === 45) {
                             $input.val(changeSign());
                             return false;
-                        // +(plus) key
+                            // +(plus) key
                         } else if (key === 43) {
                             $input.val($input.val().replace("-", ""));
                             return false;
-                        // enter key or tab key
+                            // enter key or tab key
                         } else if (key === 13 || key === 9) {
                             return true;
                         } else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
@@ -301,7 +302,7 @@
                                     startPos = value.length - lastNumber - 1;
                                     endPos = startPos + 1;
                                 }
-                            //delete
+                                //delete
                             } else {
                                 endPos += 1;
                             }
@@ -355,10 +356,15 @@
                             $input.val(setSymbol(getDefaultMask()));
                         }
                     } else {
+                        var newValue;
                         if (!settings.affixesStay) {
-                            var newValue = $input.val().replace(settings.prefix, "").replace(settings.suffix, "");
-                            $input.val(newValue);
+                            newValue = $input.val().replace(settings.prefix, "").replace(settings.suffix, "");
                         }
+                        if (settings.thousandsStay == false) {
+                            newValue = newValue || $input.val();
+                            newValue = newValue.replace(settings.thousands, "");
+                        }
+                        $input.val(newValue);
                     }
                     if ($input.val() !== onFocusValue) {
                         $input.change();
