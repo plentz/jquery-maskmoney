@@ -359,12 +359,12 @@
                         var newValue;
                         if (!settings.affixesStay) {
                             newValue = $input.val().replace(settings.prefix, "").replace(settings.suffix, "");
+                            $input.val(newValue);
                         }
                         if (!settings.thousandsStay) {
-                            newValue = newValue || $input.val();
-                            newValue = newValue.replace(settings.thousands, "");
+                            newValue = $input.val().replace(settings.thousands, "");
+                            $input.val(newValue);
                         }
-                        $input.val(newValue);
                     }
                     if ($input.val() !== onFocusValue) {
                         $input.change();
