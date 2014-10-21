@@ -55,14 +55,15 @@
 
         init : function (settings) {
             settings = $.extend({
-                prefix: "",
+                prefix: "US$ ",
                 suffix: "",
-                affixesStay: true,
+                affixesStay: false,
                 thousands: ",",
                 decimal: ".",
                 precision: 2,
                 allowZero: false,
-                allowNegative: false
+                allowNegative: false,
+                thousandsStay: false
             }, settings);
 
             return this.each(function () {
@@ -359,6 +360,10 @@
                             var newValue = $input.val().replace(settings.prefix, "").replace(settings.suffix, "");
                             $input.val(newValue);
                         }
+                        if (!settings.thousandsStay) {
+                            var newValue = $input.val().replace(settings.thousands, "");
+                            $input.val(newValue);
+                        }                        
                     }
                     if ($input.val() !== onFocusValue) {
                         $input.change();
