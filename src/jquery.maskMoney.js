@@ -360,8 +360,8 @@
                         if (!settings.affixesStay) {
                             newValue = newValue.replace(settings.prefix, "").replace(settings.suffix, "");
                         }
-                        if (!settings.thousandsStay) {
-                            newValue = newValue.replace(settings.thousands, "");                            
+                        if (!settings.thousandsStay) {						
+                            newValue = newValue.replace(new RegExp(settings.thousands,"g"), "");                            
                         }
 			$input.val(newValue);
                     }
