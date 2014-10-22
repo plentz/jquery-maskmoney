@@ -361,7 +361,7 @@
                             newValue = newValue.replace(settings.prefix, "").replace(settings.suffix, "");
                         }
                         if (!settings.thousandsStay) {
-                            var thTest = new RegExp(settings.thousands,'g');
+                            var thTest = new RegExp(settings.thousands,"g");
                             newValue = newValue.replace(thTest, "");
                         }
                         $input.val(newValue);
