@@ -356,15 +356,14 @@
                             $input.val(setSymbol(getDefaultMask()));
                         }
                     } else {
-                        var newValue;
+                        var newValue = $input.val();
                         if (!settings.affixesStay) {
-                            newValue = $input.val().replace(settings.prefix, "").replace(settings.suffix, "");
-                            $input.val(newValue);
+                            newValue = newValue.replace(settings.prefix, "").replace(settings.suffix, "");
                         }
                         if (!settings.thousandsStay) {
-                            newValue = $input.val().replace(settings.thousands, "");
-                            $input.val(newValue);
+                            newValue = newValue.replace(settings.thousands, "");
                         }
+                        $input.val(newValue);
                     }
                     if ($input.val() !== onFocusValue) {
                         $input.change();
