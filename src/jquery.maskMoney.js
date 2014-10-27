@@ -117,7 +117,6 @@
                             }
                         }
                     }
-
                     return {
                         start: start,
                         end: end
@@ -180,6 +179,7 @@
                         leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
                         newValue += settings.decimal + leadingZeros + decimalPart;
                     }
+
                     return setSymbol(newValue);
                 }
 
@@ -194,6 +194,9 @@
 
                 function mask() {
                     var value = $input.val();
+                    value = value.replace(/[^0-9\.]/g, '');
+                    value = Number(value).toFixed(settings.precision);
+
                     $input.val(maskValue(value));
                 }
 
@@ -261,6 +264,7 @@
                         selection = getInputSelection();
                         startPos = selection.start;
                         endPos = selection.end;
+
                         value = $input.val();
                         $input.val(value.substring(0, startPos) + keyPressedChar + value.substring(endPos, value.length));
                         maskAndPosition(startPos + 1);
