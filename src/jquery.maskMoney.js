@@ -194,7 +194,7 @@
 
                 function mask() {
                     var value = $input.val();
-                    value = value.replace(/[^\-0-9\.]/g, '');
+                    value = value.replace(/[^\-0-9\.]/g, "");
                     value = Number(value).toFixed(settings.precision);
 
                     $input.val(maskValue(value));
