@@ -62,7 +62,8 @@
                 decimal: ".",
                 precision: 2,
                 allowZero: false,
-                allowNegative: false
+                allowNegative: false,
+                thousandsStay: true
             }, settings);
 
             return this.each(function () {
@@ -355,10 +356,14 @@
                             $input.val(setSymbol(getDefaultMask()));
                         }
                     } else {
+                    	var newValue = $input.val();
                         if (!settings.affixesStay) {
-                            var newValue = $input.val().replace(settings.prefix, "").replace(settings.suffix, "");
-                            $input.val(newValue);
+                            newValue = newValue.replace(settings.prefix, "").replace(settings.suffix, "");
                         }
+                        if (!settings.thousandsStay) {						
+                            newValue = newValue.replace(new RegExp(settings.thousands,"g"), "");                            
+                        }
+                        $input.val(newValue);
                     }
                     if ($input.val() !== onFocusValue) {
                         $input.change();
