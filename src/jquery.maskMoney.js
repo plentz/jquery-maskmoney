@@ -42,7 +42,7 @@
                     if(element) {
                         decimalPart = element;
                         return false;
-                    }
+                   }
                 });
                 value = value.replace(/\D/g, "");
                 value = value.replace(new RegExp(decimalPart + "$"), "." + decimalPart);
@@ -238,11 +238,11 @@
                         if (key === 45) {
                             $input.val(changeSign());
                             return false;
-                            // +(plus) key
+                        // +(plus) key
                         } else if (key === 43) {
                             $input.val($input.val().replace("-", ""));
                             return false;
-                            // enter key or tab key
+                        // enter key or tab key
                         } else if (key === 13 || key === 9) {
                             return true;
                         } else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
@@ -302,7 +302,7 @@
                                     startPos = value.length - lastNumber - 1;
                                     endPos = startPos + 1;
                                 }
-                                //delete
+                            //delete
                             } else {
                                 endPos += 1;
                             }
@@ -356,13 +356,12 @@
                             $input.val(setSymbol(getDefaultMask()));
                         }
                     } else {
-                        var newValue = $input.val();
+                    	var newValue = $input.val();
                         if (!settings.affixesStay) {
                             newValue = newValue.replace(settings.prefix, "").replace(settings.suffix, "");
                         }
-                        if (!settings.thousandsStay) {
-                            var thTest = new RegExp(settings.thousands,"g");
-                            newValue = newValue.replace(thTest, "");
+                        if (!settings.thousandsStay) {						
+                            newValue = newValue.replace(new RegExp(settings.thousands,"g"), "");                            
                         }
                         $input.val(newValue);
                     }
