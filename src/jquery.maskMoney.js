@@ -185,7 +185,9 @@
                 function mask() {
                     var value = $input.val();
                     $input.val(maskValue(value));
-                    $input.data(settings);
+                    //remove inline settings and bind back full settings with jQuery's internal .data()
+                    $input.removeAttr('data-suffix, data-prefix, data-affixes-stay, data-thousands, data-decimal, data-precision, data-allow-zero, data-allow-negative, data-thousands-stay')
+                        .data(settings);
                 }
 
                 function changeSign() {
