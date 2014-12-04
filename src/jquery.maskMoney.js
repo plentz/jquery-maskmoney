@@ -32,12 +32,23 @@
             });
         },
 
-        unmasked: function () {
+        unmasked : function () {
             return this.map(function () {
                 var value = ($(this).val() || "0"),
-                    settings = $.extend(settings, $(this).data()),
-                    re = new RegExp("\\"+settings.prefix+"|\\"+settings.thousands+"|\\"+settings.suffix,"g");
-                value = value.replace(re, "");
+                    isNegative = value.indexOf("-") !== -1,
+                    decimalPart;
+                // get the last position of the array that is a number(coercion makes "" to be evaluated as false)
+                $(value.split(/\D/).reverse()).each(function (index, element) {
+                    if(element) {
+                        decimalPart = element;
+                        return false;
+                   }
+                });
+                value = value.replace(/\D/g, "");
+                value = value.replace(new RegExp(decimalPart + "$"), "." + decimalPart);
+                if (isNegative) {
+                    value = "-" + value;
+                }
                 return parseFloat(value);
             });
         },
