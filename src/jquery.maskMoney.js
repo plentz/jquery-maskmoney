@@ -62,7 +62,8 @@
                 decimal: ".",
                 precision: 2,
                 allowZero: false,
-                allowNegative: false
+                allowNegative: false,
+                thousandsStay: true
             }, settings);
 
             return this.each(function () {
@@ -195,6 +196,9 @@
                 function mask() {
                     var value = $input.val();
                     $input.val(maskValue(value));
+                    //remove inline settings and bind back full settings with jQuery's internal .data()
+                    $input.removeAttr("data-suffix, data-prefix, data-affixes-stay, data-thousands, data-decimal, data-precision, data-allow-zero, data-allow-negative, data-thousands-stay")
+                        .data(settings);
                 }
 
                 function changeSign() {
@@ -355,10 +359,14 @@
                             $input.val(setSymbol(getDefaultMask()));
                         }
                     } else {
+                    	var newValue = $input.val();
                         if (!settings.affixesStay) {
-                            var newValue = $input.val().replace(settings.prefix, "").replace(settings.suffix, "");
-                            $input.val(newValue);
+                            newValue = newValue.replace(settings.prefix, "").replace(settings.suffix, "");
                         }
+                        if (!settings.thousandsStay) {						
+                            newValue = newValue.replace(new RegExp(settings.thousands,"g"), "");                            
+                        }
+                        $input.val(newValue);
                     }
                     if ($input.val() !== onFocusValue) {
                         $input.change();

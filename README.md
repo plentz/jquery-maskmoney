@@ -40,6 +40,7 @@ The options that you can set are:
  * `suffix`: the prefix to be displayed after the value entered by the user(example: "1234.23 €"). default: ''
  * `affixesStay`: set if the prefix and suffix will stay in the field's value after the user exits the field. default: true
  * `thousands`: the thousands separator. default: ','
+ * `thousandsStay`: set if the thousands separator will stay in the field's value after the user exits the field. defualt: true
  * `decimal`: the decimal separator. default: '.'
  * `precision`: how many decimal places are allowed. default: 2
  * `allowZero`: use this setting to prevent users from inputing zero. default: false
