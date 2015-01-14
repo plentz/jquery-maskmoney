@@ -22,6 +22,10 @@
             return this.each(function () {
                 var $this = $(this),
                     decimalSize;
+                if (typeof value === "undefined" && typeof Number($this.val()) === "number")
+                    value = Number($this.val());
+                if (typeof Number(value) === "number")
+                    value = Number(value);
                 if (typeof value === "number") {
                     $this.trigger("mask");
                     decimalSize = $($this.val().split(/\D/)).last()[0].length;
