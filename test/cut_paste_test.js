@@ -7,7 +7,7 @@ module("cut & paste");
 test("when cuting", function() {
     stop();
     var input = $("#input1").maskMoney();
-    input.val("12345678");
+    input.val("123456.78");
     input.trigger("cut");
     setTimeout( function() {
         start();
@@ -18,7 +18,7 @@ test("when cuting", function() {
 test("when pasting", function() {
     stop();
     var input = $("#input1").maskMoney();
-    input.val("12345678");
+    input.val("123456.78");
     input.trigger("paste");
     setTimeout( function() {
         start();
