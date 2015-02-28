@@ -1,0 +1,10 @@
+{
+  "name": "jquery-maskmoney",
+  "version": "3.0.2",
+  "authors": [
+    "Diego Plentz"
+  ],
+  "main": "dist/jquery.maskMoney.js",
+  "license": "MIT",
+  "ignore" : []
+}
