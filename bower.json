@@ -1,10 +1,22 @@
 {
   "name": "jquery-maskmoney",
   "version": "3.0.2",
+  "homepage": "https://github.com/plentz/jquery-maskmoney",
   "authors": [
-    "Diego Plentz"
+    "Diego Plentz <diego@plentz.org>"
   ],
-  "main": "dist/jquery.maskMoney.js",
+  "description": "jQuery plugin to mask data entry in the input text in the form of money (currency).",
+  "main": "dist/jquery.maskMoney.min.js",
+  "keywords": [
+    "form"
+    "money"
+    "jquery"
+  ],
   "license": "MIT",
-  "ignore" : []
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ]
 }
