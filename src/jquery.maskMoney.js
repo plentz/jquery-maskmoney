@@ -59,7 +59,8 @@
                 decimal: ".",
                 precision: 2,
                 allowZero: false,
-                allowNegative: false
+                allowNegative: false,
+                max: undefined
             }, settings);
 
             return this.each(function () {
@@ -121,7 +122,15 @@
                     };
                 } // getInputSelection
 
+                function withinMaximum() {
+                    return $input.val().match(/\d/g).length < settings.max;
+                }
+
                 function canInputMoreNumbers() {
+                    if (settings.max && !withinMaximum()) {
+                        return false;
+                    }
+
                     var haventReachedMaxLength = !($input.val().length >= $input.attr("maxlength") && $input.attr("maxlength") >= 0),
                         selection = getInputSelection(),
                         start = selection.start,
