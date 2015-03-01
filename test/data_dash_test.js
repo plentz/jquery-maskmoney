@@ -5,7 +5,7 @@ test("with field configured using data-* attributes", function() {
     var input = $("#input3").maskMoney();
     input.val("12345678");
     input.trigger("focus");
-    equal(input.val(), "R$123.456,78", "configure maskMoney using data-* attributes");
+    equal(input.val(), "R$12.345.678,00", "configure maskMoney using data-* attributes");
 });
 
 test("configuring a setting that isn't a single word", function() {
