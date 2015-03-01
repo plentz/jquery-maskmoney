@@ -11,7 +11,7 @@ test("when cuting", function() {
     input.trigger("cut");
     setTimeout( function() {
         start();
-        equal(input.val(), "123,456.78", "format the value of the field");
+        equal(input.val(), "12,345,678.00", "format the value of the field");
     }, 1);
 });
 
@@ -22,6 +22,6 @@ test("when pasting", function() {
     input.trigger("paste");
     setTimeout( function() {
         start();
-        equal(input.val(), "123,456.78", "format the value of the field");
+        equal(input.val(), "12,345,678.00", "format the value of the field");
     }, 1);
 });

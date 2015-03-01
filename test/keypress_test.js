@@ -10,5 +10,5 @@ test("format the field value", function() {
     keypress(input, 5);
     keypress(input, 6);
 
-    equal(input.val(), "1,234.56", "format the value of the field on focus");
+    equal(input.val(), "100,234.56", "format the value of the field on focus");
 });

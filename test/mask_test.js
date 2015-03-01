@@ -8,18 +8,18 @@ test("when triggered in a empty field", function() {
     equal(input.val(), "0.00", "set zero as the value");
 });
 
-test("with a lot of leading zeroes", function() {
+test("with a lot of leading zeros", function() {
     var input = $("#input1").maskMoney();
     input.val("000000000123");
     input.maskMoney("mask");
-    equal(input.val(), "1.23", "removes the unecessary zeroes");
+    equal(input.val(), "123.00", "removes the unecessary zeroes");
 });
 
 test("with negative symbol and a field that doesn't allow negative ", function() {
     var input = $("#input1").maskMoney({allowNegative: false});
     input.val("-123");
     input.maskMoney("mask");
-    equal(input.val(), "1.23", "removes negative symbol");
+    equal(input.val(), "123.00", "removes negative symbol");
 });
 
 test("with a number as parameter", function() {
