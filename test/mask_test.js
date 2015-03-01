@@ -42,6 +42,12 @@ test("with a number as parameter", function() {
     equal(input.val(), "123,456.78", "mask method when trigged with a number as parameter correctly formatted input value");
 });
 
+test("with a number as parameter", function() {
+    var input = $("#input1").maskMoney({ precision: 0 });
+    input.maskMoney("mask", 1000);
+    equal(input.val(), "1,000", "mask method when trigged with a number as parameter correctly formatted input value");
+});
+
 test("with a negative number as parameter", function() {
     var input = $("#input1").maskMoney({allowNegative: true});
     input.maskMoney("mask", -123456.78);
