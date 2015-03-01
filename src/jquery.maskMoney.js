@@ -169,12 +169,12 @@
 
                     if(splitedNumbers.indexOf(".") > -1) {
                         // grab just the last part of the splited numbers
-                        decimalPart = splitedNumbers.slice(splitedNumbers.indexOf("."));
+                        decimalPart = splitedNumbers.slice(splitedNumbers.indexOf(".") + 1);
                         // grab just the right ammount of numbers that we need for the precision
                         decimalPart = decimalPart.slice(-settings.precision);
                     }
                     if (decimalPart.length < settings.precision) {
-                        leadingZeros = new Array(settings.precision+1).join(0);
+                        leadingZeros = new Array(settings.precision+1-decimalPart.length).join(0);
                         decimalPart += leadingZeros;
                         splitedNumbers += leadingZeros;
                     }
