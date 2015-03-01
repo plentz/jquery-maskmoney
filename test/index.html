@@ -16,6 +16,7 @@
 	<script src="change_test.js"></script>
 	<script src="keypress_test.js"></script>
 	<script src="cut_paste_test.js"></script>
+    <script src="allowEmpty_test.js"></script>
 </head>
 <body>
     <div id="qunit"></div>
@@ -23,6 +24,8 @@
 		<input type="text" id="input1" class="all"/>
 		<input type="text" id="input2" class="all"/>
 		<input type="text" id="input3" data-prefix="R$" data-thousands="." data-decimal=","/>
+        <input type="text" id="input4" data-prefix="$" data-allow-empty="true" data-allow-zero="false" value="0" />
+        <input type="text" id="input5" data-suffix="$" data-allow-empty="true" data-allow-zero="true" value="0" />
 	</div>
 </body>
 </html>

@@ -59,12 +59,16 @@
                 decimal: ".",
                 precision: 2,
                 allowZero: false,
-                allowNegative: false
+                allowNegative: false,
+                allowEmpty: false,
+                allowEmptyDefault: true
             }, settings);
 
             return this.each(function () {
                 var $input = $(this),
-                    onFocusValue;
+                    onFocusValue,
+                    defaultEmptyValue,
+                    leaveEmpty = false;
 
                 // data-* api
                 settings = $.extend(settings, $input.data());
@@ -190,6 +194,13 @@
                     if (settings.precision > 0) {
                         newValue += settings.decimal + decimalPart;
                     }
+
+                    if (settings.allowEmpty) {
+                        if ( leaveEmpty || value === "" || !settings.allowZero && newValue === getDefaultMask() ) {
+                            return "";
+                        }
+                    }
+
                     return setSymbol(newValue);
                 }
 
@@ -318,6 +329,14 @@
                             }
                         }
 
+                        if (settings.allowEmpty) {
+                            if (defaultEmptyValue === value || value === "") {
+                                leaveEmpty = true;
+                                $input.val("");
+                                return false;
+                            }
+                        }
+
                         $input.val(value.substring(0, startPos) + value.substring(endPos, value.length));
 
                         maskAndPosition(startPos);
@@ -325,6 +344,7 @@
                     } else if (key === 9) { // tab key
                         return true;
                     } else { // any other key
+                        leaveEmpty = false;
                         return true;
                     }
                 }
@@ -358,7 +378,7 @@
                     }
 
                     if ($input.val() === "" || $input.val() === setSymbol(getDefaultMask())) {
-                        if (!settings.allowZero) {
+                        if (!settings.allowZero || settings.allowEmpty && (leaveEmpty || !leaveEmpty && settings.allowEmptyDefault)) {
                             $input.val("");
                         } else if (!settings.affixesStay) {
                             $input.val(getDefaultMask());
@@ -396,6 +416,12 @@
                 $input.bind("cut.maskMoney", cutPasteEvent);
                 $input.bind("paste.maskMoney", cutPasteEvent);
                 $input.bind("mask.maskMoney", mask);
+
+                defaultEmptyValue = getDefaultMask();
+                if (settings.affixesStay) {
+                    defaultEmptyValue = setSymbol( getDefaultMask() );
+                }
+
             });
         }
     };
