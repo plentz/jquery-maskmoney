@@ -45,7 +45,7 @@ The options that you can set are:
  * `allowZero`: use this setting to prevent users from inputing zero. default: false
  * `allowNegative`: use this setting to prevent users from inputing negative values. default: false
  * `allowEmpty`: use this setting to allow for an empty value (no formatting).  default: false
-
+ * `allowEmptyDefault`: allow empty value instead of a mask on default values (Setting this to `false` will mask empty values. To have an empty value you must delete the default mask).  default: true
 __IMPORTANT__: if you try to bind maskMoney to a read only field, nothing will happen, since we ignore completely read only fields. So, if you have a read only field, try to bind maskMoney to it, it will not work. Even if you change the field removing the readonly property, you will need to re-bind maskMoney to make it work.
 
 ***
@@ -81,6 +81,7 @@ You can also configure maskMoney options using the data-* API instead of passing
  * [Daniel Loureiro](https://github.com/loureirorg)
  * [Thiago Silva](http://twitter.com/tafs7/)
  * [Guilherme Nagatomo](https://github.com/guilhermehn)
+ * [Jeremy Simkins](https://github.com/jpSimkins)
 
 ***
 ### License:
