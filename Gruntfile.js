@@ -53,7 +53,7 @@ module.exports = function(grunt) {
                     "download": "https://raw.github.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js",
                     "docs": "http://github.com/plentz/jquery-maskmoney",
                     "demo": "http://plentz.github.com/jquery-maskmoney",
-                    "keywords": ["form", "input", "mask", "money"],
+                    "keywords": ["form", "input", "mask", "money"]
                 }
             }
         },
