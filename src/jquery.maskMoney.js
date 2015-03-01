@@ -20,8 +20,7 @@
 
         mask : function (value) {
             return this.each(function () {
-                var $this = $(this),
-                    decimalSize;
+                var $this = $(this);
                 if (typeof value === "number") {
                     $this.val(value);
                 }
