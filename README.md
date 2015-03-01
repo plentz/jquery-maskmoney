@@ -46,6 +46,7 @@ The options that you can set are:
  * `allowNegative`: use this setting to prevent users from inputing negative values. default: false
  * `allowEmpty`: use this setting to allow for an empty value (no formatting).  default: false
  * `allowEmptyDefault`: allow empty value instead of a mask on default values (Setting this to `false` will mask empty values. To have an empty value you must delete the default mask).  default: true
+
 __IMPORTANT__: if you try to bind maskMoney to a read only field, nothing will happen, since we ignore completely read only fields. So, if you have a read only field, try to bind maskMoney to it, it will not work. Even if you change the field removing the readonly property, you will need to re-bind maskMoney to make it work.
 
 ***
