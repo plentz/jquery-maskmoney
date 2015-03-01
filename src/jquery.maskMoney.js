@@ -162,7 +162,7 @@
                         integerPart,
                         decimalPart = "",
                         // all numbers without extra chars separated by .
-                        splitedNumbers = $.grep(value.split(/[^0-9]/g), function(n){ return(n != "") }).join(".");
+                        splitedNumbers = $.grep(value.split(/[^0-9]/g), function(n){ return(n !== ""); }).join(".");
 
                     if(splitedNumbers.indexOf(".") > -1) {
                         // grab just the last part of the splited numbers
