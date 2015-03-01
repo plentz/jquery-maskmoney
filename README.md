@@ -44,6 +44,7 @@ The options that you can set are:
  * `precision`: how many decimal places are allowed. default: 2
  * `allowZero`: use this setting to prevent users from inputing zero. default: false
  * `allowNegative`: use this setting to prevent users from inputing negative values. default: false
+ * `treatEmptyAsZero`: use this setting to prevent an empty field to mean "0". default: true
 
 __IMPORTANT__: if you try to bind maskMoney to a read only field, nothing will happen, since we ignore completely read only fields. So, if you have a read only field, try to bind maskMoney to it, it will not work. Even if you change the field removing the readonly property, you will need to re-bind maskMoney to make it work.
 
@@ -80,6 +81,7 @@ You can also configure maskMoney options using the data-* API instead of passing
  * [Daniel Loureiro](https://github.com/loureirorg)
  * [Thiago Silva](http://twitter.com/tafs7/)
  * [Guilherme Nagatomo](https://github.com/guilhermehn)
+ * [Eduardo Del Balso](https://github.com/edelbalso)
 
 ***
 ### License:
