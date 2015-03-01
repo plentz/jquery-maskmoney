@@ -15,7 +15,7 @@ test("format the field value", function() {
 });
 
 test("with a suffix", function() {
-    var input = $("#input1").maskMoney({suffix: ' €'});
+    var input = $("#input1").maskMoney({suffix: " €"});
     input.trigger("focus");
     keypress(input, 1);
     keypress(input, 2);
