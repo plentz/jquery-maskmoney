@@ -159,17 +159,28 @@
                 }
 
                 function maskValue(value) {
-                    if (settings.precision > 0 && value.indexOf(settings.decimal) < 0) {
-                        value += settings.decimal + new Array(settings.precision+1).join(0);
+                    var negative = (value.indexOf("-") > -1 && settings.allowNegative) ? "-" : "",
+                        leadingZeros,
+                        newValue,
+                        integerPart,
+                        decimalPart = "",
+                        // all numbers without extra chars separated by .
+                        splitedNumbers = $.grep(value.split(/[^0-9]/g), function(n){ return(n != "") }).join(".");
+
+                    if(splitedNumbers.indexOf(".") > -1) {
+                        // grab just the last part of the splited numbers
+                        decimalPart = splitedNumbers.slice(splitedNumbers.indexOf("."));
+                        // grab just the right ammount of numbers that we need for the precision
+                        decimalPart = decimalPart.slice(-settings.precision);
+                    }
+                    if (decimalPart.length < settings.precision) {
+                        leadingZeros = new Array(settings.precision+1).join(0);
+                        decimalPart += leadingZeros;
+                        splitedNumbers += leadingZeros;
                     }
 
-                    var negative = (value.indexOf("-") > -1 && settings.allowNegative) ? "-" : "",
-                        onlyNumbers = value.replace(/[^0-9]/g, ""),
-                        integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision),
-                        newValue,
-                        decimalPart,
-                        leadingZeros;
-
+                    splitedNumbers = splitedNumbers.replace(/[^0-9]/g, "");
+                    integerPart = splitedNumbers.slice(0, splitedNumbers.length - settings.precision);
                     // remove initial zeros
                     integerPart = integerPart.replace(/^0*/g, "");
                     // put settings.thousands every 3 chars
@@ -180,12 +191,11 @@
                     newValue = negative + integerPart;
 
                     if (settings.precision > 0) {
-                        decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
-                        leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
-                        newValue += settings.decimal + leadingZeros + decimalPart;
+                        newValue += settings.decimal + decimalPart;
                     }
                     return setSymbol(newValue);
                 }
+
 
                 function maskAndPosition(startPos) {
                     var originalLen = $input.val().length,

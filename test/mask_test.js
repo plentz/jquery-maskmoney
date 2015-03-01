@@ -15,6 +15,13 @@ test("with a lot of leading zeros", function() {
     equal(input.val(), "123.00", "removes the unecessary zeroes");
 });
 
+test("with a pre-formatted number", function() {
+    var input = $("#input1").maskMoney();
+    input.val("123,45");
+    input.maskMoney("mask");
+    equal(input.val(), "123.45", "keeps the number precision");
+});
+
 test("with negative symbol and a field that doesn't allow negative ", function() {
     var input = $("#input1").maskMoney({allowNegative: false});
     input.val("-123");
