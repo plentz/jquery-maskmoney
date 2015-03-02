@@ -49,8 +49,8 @@
             });
         },
 
-        init : function (settings) {
-            settings = $.extend({
+        init : function (parameters) {
+            parameters = $.extend({
                 prefix: "",
                 suffix: "",
                 affixesStay: true,
@@ -59,13 +59,14 @@
                 precision: 2,
                 allowZero: false,
                 allowNegative: false
-            }, settings);
+            }, parameters);
 
             return this.each(function () {
-                var $input = $(this),
+                var $input = $(this), settings,
                     onFocusValue;
 
                 // data-* api
+                settings = $.extend({}, parameters);
                 settings = $.extend(settings, $input.data());
 
                 function getInputSelection() {
