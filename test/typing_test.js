@@ -1,7 +1,7 @@
 "use strict";
 
 module("typing");
-test("format the field value", function() {
+test("accepts keys in sequence", function() {
     var input = $("#input1").maskMoney();
     input.trigger("focus");
     keypress(input, 1);
@@ -32,5 +32,5 @@ test("with a pre-set value", function() {
     input.val("1");
     input.trigger("focus");
     keypress(input, 1);
-    equal(input.val(), "0.11", "accept the input and format correctly");
+    equal(input.val(), "10.01", "accept the input and format correctly");
 });
