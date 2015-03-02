@@ -38,24 +38,24 @@ test("with negative symbol and a field that doesn't allow negative ", function()
 
 test("with a number as parameter", function() {
     var input = $("#input1").maskMoney();
-    input.maskMoney("mask", 123456.78);
-    equal(input.val(), "123,456.78", "mask method when trigged with a number as parameter correctly formatted input value");
+    input.maskMoney("mask", 123456.70);
+    equal(input.val(), "123,456.70");
 });
 
 test("with a number as parameter", function() {
     var input = $("#input1").maskMoney({ precision: 0 });
     input.maskMoney("mask", 1000);
-    equal(input.val(), "1,000", "mask method when trigged with a number as parameter correctly formatted input value");
+    equal(input.val(), "1,000");
 });
 
 test("with a negative number as parameter", function() {
     var input = $("#input1").maskMoney({allowNegative: true});
     input.maskMoney("mask", -123456.78);
-    equal(input.val(), "-123,456.78", "mask method when trigged with a negative number as parameter correctly formatted input value");
+    equal(input.val(), "-123,456.78");
 });
 
 test("with a suffix", function() {
     var input = $("#input1").maskMoney({suffix: " €"});
     input.maskMoney("mask", 20316.22);
-    equal(input.val(), "20,316.22 €", "");
+    equal(input.val(), "20,316.22 €");
 });
