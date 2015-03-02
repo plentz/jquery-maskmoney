@@ -31,6 +31,6 @@ test("with a pre-set value", function() {
     var input = $("#input1").maskMoney();
     input.val("1");
     input.trigger("focus");
-    keypress(input, 1);
-    equal(input.val(), "10.01", "accept the input and format correctly");
+    keypress(input, 2);
+    equal(input.val(), "10.02", "accept the input and format correctly");
 });
