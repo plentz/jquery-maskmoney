@@ -18,22 +18,24 @@
     "jquery": ">=1.6"
   },
   "npmName": "jquery-maskmoney",
-  "npmFileMap": [{
-    "basePath": "/dist/",
-    "files": [
-      "jquery.maskMoney.min.js"
-    ]
-  }],
+  "npmFileMap": [
+    {
+      "basePath": "/dist/",
+      "files": [
+        "jquery.maskMoney.min.js"
+      ]
+    }
+  ],
   "devDependencies": {
     "amdefine": "latest",
     "grunt": "latest",
     "grunt-cli": "latest",
     "grunt-contrib-concat": "latest",
     "grunt-contrib-jshint": "latest",
-    "grunt-contrib-uglify": "latest",
     "grunt-contrib-qunit": "latest",
-    "grunt-jquerymanifest": "latest",
-    "grunt-contrib-watch": "latest"
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-watch": "latest",
+    "grunt-jquerymanifest": "latest"
   },
   "licenses": [
     {
@@ -41,7 +43,7 @@
       "url": "https://raw.github.com/plentz/jquery-maskmoney/master/LICENSE"
     }
   ],
-	"scripts": {
-		"test": "grunt test --verbose"
-	}
+  "scripts": {
+    "test": "grunt test --verbose"
+  }
 }
