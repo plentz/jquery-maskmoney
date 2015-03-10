@@ -123,13 +123,34 @@
                 } // getInputSelection
 
                 function canInputMoreNumbers() {
-                    var haventReachedMaxLength = !($input.val().length >= $input.attr("maxlength") && $input.attr("maxlength") >= 0),
+                    var decimalIndex = $input.val().indexOf('.'),
+                        haventReachedMaxLength = !($input.val().length >= $input.attr("maxlength") && $input.attr("maxlength") >= 0),
+                        haventReachedDecimalLimit = (settings.enforceDecimal || $input.val().length - decimalIndex - 1 < settings.precision),
                         selection = getInputSelection(),
                         start = selection.start,
                         end = selection.end,
                         haveNumberSelected = (selection.start !== selection.end && $input.val().substring(start, end).match(/\d/)) ? true : false,
+                        inputtingDecimal = decimalIndex > -1 && selection.start > decimalIndex,
                         startWithZero = ($input.val().substring(0, 1) === "0");
-                    return haventReachedMaxLength || haveNumberSelected || startWithZero;
+                 
+                    return (
+                        haveNumberSelected || // allow number replacement
+                        (inputtingDecimal ? 
+                            haventReachedDecimalLimit && haventReachedMaxLength :
+                            haventReachedMaxLength || startWithZero
+                        )
+                    );
+                }
+
+                function canInputDecimal() {
+                    if(settings.enforceDecimal) {
+                        return false;
+                    }
+
+                    var decimalIndex = $input.val().indexOf('.');
+                    var hasDecimal = decimalIndex > -1;
+
+                    return !hasDecimal;
                 }
 
                 function setCursorPosition(pos) {
@@ -158,11 +179,11 @@
 
                 function maskValue(value) {
                     var negative = (value.indexOf("-") > -1 && settings.allowNegative) ? "-" : "",
-                        onlyNumbers = value.replace(/[^0-9]/g, ""),
-                        integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision),
+                        decimalIndex = settings.enforceDecimal ? settings.precision : value.indexOf('.'),
+                        integerPart = (decimalIndex > -1 ? value.slice(0, decimalIndex) : value).replace(/[^0-9]/g, ""),
+                        decimalPart = (decimalIndex > 0 ? value.slice(decimalIndex + 1) : ''),
                         newValue,
-                        decimalPart,
-                        leadingZeros;
+                        zeroPadding;
 
                     // remove initial zeros
                     integerPart = integerPart.replace(/^0*/g, "");
@@ -174,10 +195,18 @@
                     newValue = negative + integerPart;
 
                     if (settings.precision > 0) {
-                        decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
-                        leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
-                        newValue += settings.decimal + leadingZeros + decimalPart;
+                        // place decimal part if decimals are enforced
+                        if(settings.enforceDecimal) {
+                            zeroPadding = new Array((settings.precision + 1) - decimalPart.length).join(0);
+                            newValue += settings.decimal + zeroPadding + decimalPart;
+                        // else, only replace the decimal part if it exists 
+                        } else if(decimalIndex > 0) {
+                            newValue += settings.decimal;
+                        }
+
+                        newValue += decimalPart;
                     }
+
                     return setSymbol(newValue);
                 }
 
@@ -246,6 +275,9 @@
                         // enter key or tab key
                         } else if (key === 13 || key === 9) {
                             return true;
+                        // accept the decimal key IF enforceDecimal is false
+                        } else if (key === 46) {
+                            return canInputDecimal();
                         } else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
                             // needed for left arrow key or right arrow key with firefox
                             // the charCode part is to avoid allowing "%"(e.charCode 0, e.keyCode 37)
