@@ -147,7 +147,7 @@
                         return false;
                     }
 
-                    var decimalIndex = $input.val().indexOf();
+                    var decimalIndex = $input.val().indexOf(settings.decimal);
                     var hasDecimal = decimalIndex > -1;
 
                     return !hasDecimal;
@@ -299,8 +299,17 @@
                         } else if (key === 13 || key === 9) {
                             return true;
                         // accept the decimal key IF enforceDecimal is false
-                        } else if (key === settings.decimal.codePointAt()) {
-                            return canInputDecimal();
+                        } else if (key === settings.decimal.codePointAt() && canInputDecimal()) {
+                            preventDefault(e);
+
+                            keyPressedChar = String.fromCharCode(key);
+                            selection = getInputSelection();
+                            startPos = selection.start;
+                            endPos = selection.end;
+                            value = $input.val();
+                            $input.val(value.substring(0, startPos) + keyPressedChar + value.substring(endPos, value.length));
+                            maskAndPosition(startPos + 1);
+                            return false;
                         } else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
                             // needed for left arrow key or right arrow key with firefox
                             // the charCode part is to avoid allowing "%"(e.charCode 0, e.keyCode 37)
