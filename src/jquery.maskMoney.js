@@ -123,7 +123,7 @@
                 } // getInputSelection
 
                 function canInputMoreNumbers() {
-                    var decimalIndex = $input.val().indexOf('.'),
+                    var decimalIndex = $input.val().indexOf(settings.decimal),
                         haventReachedMaxLength = !($input.val().length >= $input.attr("maxlength") && $input.attr("maxlength") >= 0),
                         haventReachedDecimalLimit = (settings.enforceDecimal || $input.val().length - decimalIndex - 1 < settings.precision),
                         selection = getInputSelection(),
@@ -147,7 +147,7 @@
                         return false;
                     }
 
-                    var decimalIndex = $input.val().indexOf('.');
+                    var decimalIndex = $input.val().indexOf();
                     var hasDecimal = decimalIndex > -1;
 
                     return !hasDecimal;
@@ -179,33 +179,50 @@
 
                 function maskValue(value) {
                     var negative = (value.indexOf("-") > -1 && settings.allowNegative) ? "-" : "",
-                        decimalIndex = settings.enforceDecimal ? settings.precision : value.indexOf('.'),
-                        integerPart = (decimalIndex > -1 ? value.slice(0, decimalIndex) : value).replace(/[^0-9]/g, ""),
-                        decimalPart = (decimalIndex > 0 ? value.slice(decimalIndex + 1) : ''),
                         newValue,
-                        zeroPadding;
+                        integerPart,
+                        decimalPart;
 
-                    // remove initial zeros
-                    integerPart = integerPart.replace(/^0*/g, "");
-                    // put settings.thousands every 3 chars
-                    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, settings.thousands);
-                    if (integerPart === "") {
-                        integerPart = "0";
-                    }
-                    newValue = negative + integerPart;
+                    var thousandify = function(str) {
+                        return (str
+                            // remove initial zeros
+                            .replace(/^0*/g, "")
+                            // put settings.thousands every 3 chars
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, settings.thousands) 
+                        ) || "0"; // if empty string, return "0" 
+                    };
 
-                    if (settings.precision > 0) {
-                        // place decimal part if decimals are enforced
-                        if(settings.enforceDecimal) {
-                            zeroPadding = new Array((settings.precision + 1) - decimalPart.length).join(0);
-                            newValue += settings.decimal + zeroPadding + decimalPart;
-                        // else, only replace the decimal part if it exists 
-                        } else if(decimalIndex > 0) {
-                            newValue += settings.decimal;
+                    // split the number up according to precision
+                    if(settings.enforceDecimal) {
+                        var onlyNumbers = value.replace(/[^0-9]/g, "");
+
+                        integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision);
+                        decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
+
+                        newValue = thousandify(integerPart);
+
+                        if(settings.precision > 0) {
+                            var leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
+                            newValue += settings.decimal + leadingZeros + decimalPart;
                         }
+                    // use decimal as delimiter, and treat each portion separately
+                    // only handle decimal if required
+                    } else {
+                        var decimalIndex = value.indexOf(settings.decimal);
+                        
+                        integerPart = (decimalIndex > -1 ? value.slice(0, decimalIndex) : value).replace(/[^0-9]/g, "");
+                        decimalPart = (decimalIndex > 0 ? value.slice(decimalIndex) : "");
 
-                        newValue += decimalPart;
+                        newValue = thousandify(integerPart);
+
+                        // only replace the decimal part if it exists 
+                        if(decimalIndex > 0) {
+                            newValue += decimalPart;
+                        }
                     }
+
+                    // tack on the negative
+                    newValue = negative + newValue;
 
                     return setSymbol(newValue);
                 }
@@ -276,7 +293,7 @@
                         } else if (key === 13 || key === 9) {
                             return true;
                         // accept the decimal key IF enforceDecimal is false
-                        } else if (key === 46) {
+                        } else if (key === settings.decimal.codePointAt()) {
                             return canInputDecimal();
                         } else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
                             // needed for left arrow key or right arrow key with firefox
