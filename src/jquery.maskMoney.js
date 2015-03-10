@@ -58,7 +58,8 @@
                 decimal: ".",
                 precision: 2,
                 allowZero: false,
-                allowNegative: false
+                allowNegative: false,
+                enforceDecimal: true
             }, parameters);
 
             return this.each(function () {
