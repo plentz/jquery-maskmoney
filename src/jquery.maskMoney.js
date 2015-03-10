@@ -192,9 +192,13 @@
                         ) || "0"; // if empty string, return "0" 
                     };
 
+                    var normalize = function(str) {
+                        return str.replace(/[^0-9]/g, "");
+                    }
+
                     // split the number up according to precision
                     if(settings.enforceDecimal) {
-                        var onlyNumbers = value.replace(/[^0-9]/g, "");
+                        var onlyNumbers = normalize(value);
 
                         integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision);
                         decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
@@ -210,14 +214,16 @@
                     } else {
                         var decimalIndex = value.indexOf(settings.decimal);
                         
-                        integerPart = (decimalIndex > -1 ? value.slice(0, decimalIndex) : value).replace(/[^0-9]/g, "");
-                        decimalPart = (decimalIndex > 0 ? value.slice(decimalIndex, decimalIndex + settings.precision + 1) : "");
+                        integerPart = (decimalIndex > -1 ? value.slice(0, decimalIndex) : value);
+                        decimalPart = (decimalIndex > -1 ? value.slice(decimalIndex + 1) : "");
+                        integerPart = normalize(integerPart);
+                        decimalPart = normalize(decimalPart).slice(0, settings.precision);
 
                         newValue = thousandify(integerPart);
 
                         // only replace the decimal part if it exists 
                         if(decimalIndex > -1) {
-                            newValue += decimalPart;
+                            newValue += settings.decimal + decimalPart;
                         }
                     }
 
@@ -239,7 +245,7 @@
 
                 function mask() {
                     var value = $input.val();
-                    if (settings.precision > 0 && value.indexOf(settings.decimal) < 0) {
+                    if (settings.enforceDecimal && settings.precision > 0 && value.indexOf(settings.decimal) < 0) {
                         value += settings.decimal + new Array(settings.precision+1).join(0);
                     }
                     $input.val(maskValue(value));
