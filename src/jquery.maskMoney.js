@@ -59,7 +59,7 @@
                 precision: 2,
                 allowZero: false,
                 allowNegative: false,
-                enforceDecimal: true
+                allowNoDecimal: false
             }, parameters);
 
             return this.each(function () {
@@ -125,7 +125,7 @@
                 function canInputMoreNumbers() {
                     var decimalIndex = $input.val().indexOf(settings.decimal),
                         haventReachedMaxLength = !($input.val().length >= $input.attr("maxlength") && $input.attr("maxlength") >= 0),
-                        haventReachedDecimalLimit = (settings.enforceDecimal || $input.val().length - decimalIndex - 1 < settings.precision),
+                        haventReachedDecimalLimit = (!settings.allowNoDecimal || $input.val().length - decimalIndex - 1 < settings.precision),
                         selection = getInputSelection(),
                         start = selection.start,
                         end = selection.end,
@@ -143,14 +143,7 @@
                 }
 
                 function canInputDecimal() {
-                    if(settings.enforceDecimal) {
-                        return false;
-                    }
-
-                    var decimalIndex = $input.val().indexOf(settings.decimal);
-                    var hasDecimal = decimalIndex > -1;
-
-                    return !hasDecimal;
+                    return settings.allowNoDecimal && $input.val().indexOf(settings.decimal) < 0;
                 }
 
                 function setCursorPosition(pos) {
@@ -196,22 +189,9 @@
                         return str.replace(/[^0-9]/g, "");
                     }
 
-                    // split the number up according to precision
-                    if(settings.enforceDecimal) {
-                        var onlyNumbers = normalize(value);
-
-                        integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision);
-                        decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
-
-                        newValue = thousandify(integerPart);
-
-                        if(settings.precision > 0) {
-                            var leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
-                            newValue += settings.decimal + leadingZeros + decimalPart;
-                        }
                     // use decimal as delimiter, and treat each portion separately
                     // only handle decimal if required
-                    } else {
+                    if(settings.allowNoDecimal) {
                         var decimalIndex = value.indexOf(settings.decimal);
                         
                         integerPart = (decimalIndex > -1 ? value.slice(0, decimalIndex) : value);
@@ -224,6 +204,19 @@
                         // only replace the decimal part if it exists 
                         if(decimalIndex > -1) {
                             newValue += settings.decimal + decimalPart;
+                        }
+                        // split the number up according to precision
+                    } else {
+                        var onlyNumbers = normalize(value);
+
+                        integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision);
+                        decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
+
+                        newValue = thousandify(integerPart);
+
+                        if(settings.precision > 0) {
+                            var leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
+                            newValue += settings.decimal + leadingZeros + decimalPart;
                         }
                     }
 
@@ -245,7 +238,7 @@
 
                 function mask() {
                     var value = $input.val();
-                    if (settings.enforceDecimal && settings.precision > 0 && value.indexOf(settings.decimal) < 0) {
+                    if (!settings.allowNoDecimal && settings.precision > 0 && value.indexOf(settings.decimal) < 0) {
                         value += settings.decimal + new Array(settings.precision+1).join(0);
                     }
                     $input.val(maskValue(value));
@@ -285,6 +278,18 @@
                         return false;
                     }
 
+                    var handlePress = function() {
+                        preventDefault(e);
+
+                        keyPressedChar = String.fromCharCode(key);
+                        selection = getInputSelection();
+                        startPos = selection.start;
+                        endPos = selection.end;
+                        value = $input.val();
+                        $input.val(value.substring(0, startPos) + keyPressedChar + value.substring(endPos, value.length));
+                        maskAndPosition(startPos + 1);
+                    };
+
                     // any key except the numbers 0-9
                     if (key < 48 || key > 57) {
                         // -(minus) key
@@ -298,17 +303,9 @@
                         // enter key or tab key
                         } else if (key === 13 || key === 9) {
                             return true;
-                        // accept the decimal key IF enforceDecimal is false
+                        // accept the decimal key IF allowNoDecimal is true
                         } else if (key === settings.decimal.codePointAt() && canInputDecimal()) {
-                            preventDefault(e);
-
-                            keyPressedChar = String.fromCharCode(key);
-                            selection = getInputSelection();
-                            startPos = selection.start;
-                            endPos = selection.end;
-                            value = $input.val();
-                            $input.val(value.substring(0, startPos) + keyPressedChar + value.substring(endPos, value.length));
-                            maskAndPosition(startPos + 1);
+                            handlePress();
                             return false;
                         } else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
                             // needed for left arrow key or right arrow key with firefox
@@ -321,15 +318,7 @@
                     } else if (!canInputMoreNumbers()) {
                         return false;
                     } else {
-                        preventDefault(e);
-
-                        keyPressedChar = String.fromCharCode(key);
-                        selection = getInputSelection();
-                        startPos = selection.start;
-                        endPos = selection.end;
-                        value = $input.val();
-                        $input.val(value.substring(0, startPos) + keyPressedChar + value.substring(endPos, value.length));
-                        maskAndPosition(startPos + 1);
+                        handlePress();
                         return false;
                     }
                 }

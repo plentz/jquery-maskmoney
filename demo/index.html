@@ -60,13 +60,13 @@
 		</pre>
 
 		<input type="text" id="demo9"/>
-		<script type="text/javascript">$("#demo9").maskMoney({ enforceDecimal: false });</script>
-		<pre class="brush: js">$("#demo9").maskMoney({ enforceDecimal: false});</pre>
+		<script type="text/javascript">$("#demo9").maskMoney({ allowNoDecimal: true });</script>
+		<pre class="brush: js">$("#demo9").maskMoney({ allowNoDecimal: false});</pre>
 
-		<input type="text" id="demo10" data-thousands="." data-decimal="," data-prefix="AUD$ " data-enforce-decimal="false" data-precision="4" />
+		<input type="text" id="demo10" data-thousands="." data-decimal="," data-prefix="AUD$ " data-allow-no-decimal="true" data-precision="4" />
 		<script type="text/javascript">$("#demo10").maskMoney();</script>
 		<pre class="brush: js">$("#demo10").maskMoney();</pre>
-		<pre class="brush: html"><input type="text" id="demo10" data-thousands="." data-decimal="," data-prefix="AUD$ " data-enforce-decimal="false" data-precision="4" /></pre>
+		<pre class="brush: html"><input type="text" id="demo10" data-thousands="." data-decimal="," data-prefix="AUD$ " data-allow-no-decimal="false" data-precision="4" /></pre>
 
 	</body>
 	<script type="text/javascript">

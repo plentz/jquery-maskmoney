@@ -4,7 +4,7 @@ module("optional decimals");
 
 test('testing basic entry with unenforced decimals',function() {
     var input = $("#input1").maskMoney({ 
-        enforceDecimal: false
+        allowNoDecimal: true
     });
 
     input.trigger("focus");
@@ -30,7 +30,7 @@ test('testing basic entry with unenforced decimals',function() {
 
 test('testing basic entries with unenforced decimals and variable precision',function() {
     var input = $("#input1").maskMoney({ 
-        enforceDecimal: false,
+        allowNoDecimal: true,
         precision: 3
     });
 
@@ -61,7 +61,7 @@ test('testing basic entries with unenforced decimals and variable precision',fun
 
 test('testing prefilled entries with unenforced decimals',function() {
     var input = $("#input1").maskMoney({ 
-        enforceDecimal: false 
+        allowNoDecimal: true 
     });
 
     input.val("1234567.890");
@@ -72,7 +72,7 @@ test('testing prefilled entries with unenforced decimals',function() {
 
 test('testing prefilled entries with unenforced decimals and variable precision',function() {
     var input = $("#input1").maskMoney({ 
-        enforceDecimal: false,
+        allowNoDecimal: true,
         precision: 3 
     });
 
