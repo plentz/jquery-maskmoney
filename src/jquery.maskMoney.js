@@ -211,12 +211,12 @@
                         var decimalIndex = value.indexOf(settings.decimal);
                         
                         integerPart = (decimalIndex > -1 ? value.slice(0, decimalIndex) : value).replace(/[^0-9]/g, "");
-                        decimalPart = (decimalIndex > 0 ? value.slice(decimalIndex) : "");
+                        decimalPart = (decimalIndex > 0 ? value.slice(decimalIndex, decimalIndex + settings.precision + 1) : "");
 
                         newValue = thousandify(integerPart);
 
                         // only replace the decimal part if it exists 
-                        if(decimalIndex > 0) {
+                        if(decimalIndex > -1) {
                             newValue += decimalPart;
                         }
                     }
