@@ -86,3 +86,26 @@ test("testing prefilled entries with unenforced decimals and variable precision"
 
     equal(input.val(), "1,234,567.890", "accept the input and format correctly");
 });
+
+test("testing unmask of unenforced decimals", function() {
+    var input = $("#input1").maskMoney({ 
+        allowNoDecimal: true
+    });
+
+    input.val("1,234,567");
+    input.maskMoney("mask");
+
+    equal(input.maskMoney("unmasked")[0], 1234567.00, "check appropriate unmasked precision");
+
+
+    input.val("1234567.89");
+    input.maskMoney("mask");
+
+    equal(input.maskMoney("unmasked")[0], 1234567.89);
+
+    input.val("1234567.8901234");
+    input.maskMoney("mask");
+
+    equal(input.maskMoney("unmasked")[0], 1234567.89);
+
+});

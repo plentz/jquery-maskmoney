@@ -31,21 +31,30 @@
         unmasked : function () {
             return this.map(function () {
                 var value = ($(this).val() || "0"),
+                    decimal = $(this).data("decimal"),
+                    precision = $(this).data("precision"),
                     isNegative = value.indexOf("-") !== -1,
+                    integerPart,
                     decimalPart;
-                // get the last position of the array that is a number(coercion makes "" to be evaluated as false)
-                $(value.split(/\D/).reverse()).each(function (index, element) {
-                    if(element) {
-                        decimalPart = element;
-                        return false;
-                   }
-                });
-                value = value.replace(/\D/g, "");
-                value = value.replace(new RegExp(decimalPart + "$"), "." + decimalPart);
+
+                var decimalIndex = value.indexOf(decimal);
+
+                integerPart = (decimalIndex > -1 ? value.slice(0, decimalIndex) : value);
+                decimalPart = (decimalIndex > -1 ? value.slice(decimalIndex + 1) : "");
+                integerPart = integerPart.replace(/[^0-9]/g, "");
+                decimalPart = decimalPart.replace(/[^0-9]/g, "");
+
+                value = integerPart;
+
+                if (decimalIndex > -1) {
+                    value += "." + decimalPart; 
+                }
+                
                 if (isNegative) {
                     value = "-" + value;
                 }
-                return parseFloat(value);
+
+                return parseFloat(parseFloat(value).toFixed(precision));
             });
         },
 
@@ -69,6 +78,11 @@
                 // data-* api
                 settings = $.extend({}, parameters);
                 settings = $.extend(settings, $input.data());
+
+                // need this to track decimal symbol
+                $(this)
+                    .data("decimal", settings.decimal)
+                    .data("precision", settings.precision);
 
                 function getInputSelection() {
                     var el = $input.get(0),
@@ -185,10 +199,6 @@
                         ) || "0"; // if empty string, return "0" 
                     };
 
-                    var normalize = function(str) {
-                        return str.replace(/[^0-9]/g, "");
-                    };
-
                     // use decimal as delimiter, and treat each portion separately
                     // only handle decimal if required
                     if(settings.allowNoDecimal) {
@@ -196,8 +206,8 @@
                         
                         integerPart = (decimalIndex > -1 ? value.slice(0, decimalIndex) : value);
                         decimalPart = (decimalIndex > -1 ? value.slice(decimalIndex + 1) : "");
-                        integerPart = normalize(integerPart);
-                        decimalPart = normalize(decimalPart).slice(0, settings.precision);
+                        integerPart = integerPart.replace(/[^0-9]/g, "");
+                        decimalPart = decimalPart.replace(/[^0-9]/g, "").slice(0, settings.precision);
 
                         newValue = thousandify(integerPart);
 
@@ -207,7 +217,7 @@
                         }
                         // split the number up according to precision
                     } else {
-                        var onlyNumbers = normalize(value);
+                        var onlyNumbers = value.replace(/[^0-9]/g, "");
 
                         integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision);
                         decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
