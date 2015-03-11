@@ -2,7 +2,7 @@
 
 module("optional decimals");
 
-test('testing basic entry with unenforced decimals',function() {
+test("testing basic entry with unenforced decimals",function() {
     var input = $("#input1").maskMoney({ 
         allowNoDecimal: true
     });
@@ -20,7 +20,7 @@ test('testing basic entry with unenforced decimals',function() {
 
     // no idea why this doesn't work. so I'm hacking around it to simulate keypress
     // keypress(input, ".");
-    input.val(input.val() + '.');
+    input.val(input.val() + ".");
     keypress(input, 8);
     keypress(input, 9);
     keypress(input, 0);
@@ -28,7 +28,7 @@ test('testing basic entry with unenforced decimals',function() {
     equal(input.val(), "1,234,567.89", "accept the input and format correctly");
 });
 
-test('testing basic entries with unenforced decimals and variable precision',function() {
+test("testing basic entries with unenforced decimals and variable precision",function() {
     var input = $("#input1").maskMoney({ 
         allowNoDecimal: true,
         precision: 3
@@ -47,7 +47,7 @@ test('testing basic entries with unenforced decimals and variable precision',fun
 
     // no idea why this doesn't work. so I'm hacking around it to simulate keypress
     // keypress(input, ".");
-    input.val(input.val() + '.');
+    input.val(input.val() + ".");
     keypress(input, 8);
     keypress(input, 9);
     keypress(input, 0);
@@ -59,7 +59,7 @@ test('testing basic entries with unenforced decimals and variable precision',fun
     equal(input.val(), "1,234,567.890", "accept the input and format correctly");
 });
 
-test('testing prefilled entries with unenforced decimals',function() {
+test("testing prefilled entries with unenforced decimals",function() {
     var input = $("#input1").maskMoney({ 
         allowNoDecimal: true 
     });
@@ -70,7 +70,7 @@ test('testing prefilled entries with unenforced decimals',function() {
     equal(input.val(), "1,234,567.89", "accept the input and format correctly");
 });
 
-test('testing prefilled entries with unenforced decimals and variable precision',function() {
+test("testing prefilled entries with unenforced decimals and variable precision",function() {
     var input = $("#input1").maskMoney({ 
         allowNoDecimal: true,
         precision: 3 

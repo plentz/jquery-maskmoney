@@ -187,7 +187,7 @@
 
                     var normalize = function(str) {
                         return str.replace(/[^0-9]/g, "");
-                    }
+                    };
 
                     // use decimal as delimiter, and treat each portion separately
                     // only handle decimal if required
