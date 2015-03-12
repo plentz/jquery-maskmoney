@@ -31,8 +31,8 @@
         unmasked : function () {
             return this.map(function () {
                 var value = ($(this).val() || "0"),
-                    decimal = $(this).data("decimal"),
-                    precision = $(this).data("precision"),
+                    decimal = $(this).attr("data-decimal"),
+                    precision = $(this).attr("data-precision"),
                     isNegative = value.indexOf("-") !== -1,
                     integerPart,
                     decimalPart;
@@ -81,8 +81,8 @@
 
                 // need this to track decimal symbol
                 $(this)
-                    .data("decimal", settings.decimal)
-                    .data("precision", settings.precision);
+                    .attr("data-decimal", settings.decimal)
+                    .attr("data-precision", settings.precision);
 
                 function getInputSelection() {
                     var el = $input.get(0),
