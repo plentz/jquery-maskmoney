@@ -6,7 +6,7 @@
     "Diego Plentz <diego@plentz.org>"
   ],
   "description": "jQuery plugin to mask data entry in the input text in the form of money (currency).",
-  "main": "dist/jquery.maskMoney.min.js",
+  "main": "dist/jquery.maskMoney.js",
   "keywords": [
     "form",
     "money",
