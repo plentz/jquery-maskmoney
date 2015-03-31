@@ -341,7 +341,6 @@
                 function focusEvent() {
                     //Verify readyonly
                     if(isReadOnly()){
-                        preventDefault(e);
                         return false;
                     }
 
