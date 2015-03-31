@@ -219,14 +219,15 @@
                     }
                 }
 
-                function isReadyOnly(){
-                    return $input.attr('readonly');
+                function isReadOnly(){
+                    var attr = $input.attr('readonly');
+                    return (typeof attr !== typeof undefined && attr !== false);
                 }
 
                 function keypressEvent(e) {
 
                     //Verify readyonly
-                    if(!isReadyOnly()){
+                    if(isReadOnly()){
                         preventDefault(e);
                         return false;
                     }
@@ -283,7 +284,7 @@
                 function keydownEvent(e) {
 
                     //Verify readyonly
-                    if(!isReadyOnly()){
+                    if(isReadOnly()){
                         preventDefault(e);
                         return false;
                     }
@@ -339,11 +340,11 @@
 
                 function focusEvent() {
                     //Verify readyonly
-                    if(!isReadyOnly()){
+                    if(isReadOnly()){
                         preventDefault(e);
                         return false;
                     }
-                    
+
                     onFocusValue = $input.val();
                     mask();
                     var input = $input.get(0),
@@ -357,7 +358,7 @@
 
                 function cutPasteEvent() {
                     //Verify readyonly
-                    if(!isReadyOnly()){
+                    if(isReadOnly()){
                         preventDefault(e);
                         return false;
                     }
