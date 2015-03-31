@@ -219,7 +219,18 @@
                     }
                 }
 
+                function isReadyOnly(){
+                    return $input.attr('readonly');
+                }
+
                 function keypressEvent(e) {
+
+                    //Verify readyonly
+                    if(!isReadyOnly()){
+                        preventDefault(e);
+                        return false;
+                    }
+
                     e = e || window.event;
                     var key = e.which || e.charCode || e.keyCode,
                         keyPressedChar,
@@ -270,6 +281,13 @@
                 }
 
                 function keydownEvent(e) {
+
+                    //Verify readyonly
+                    if(!isReadyOnly()){
+                        preventDefault(e);
+                        return false;
+                    }
+
                     e = e || window.event;
                     var key = e.which || e.charCode || e.keyCode,
                         selection,
@@ -320,6 +338,12 @@
                 }
 
                 function focusEvent() {
+                    //Verify readyonly
+                    if(!isReadyOnly()){
+                        preventDefault(e);
+                        return false;
+                    }
+                    
                     onFocusValue = $input.val();
                     mask();
                     var input = $input.get(0),
@@ -332,6 +356,12 @@
                 }
 
                 function cutPasteEvent() {
+                    //Verify readyonly
+                    if(!isReadyOnly()){
+                        preventDefault(e);
+                        return false;
+                    }
+
                     setTimeout(function() {
                         mask();
                     }, 0);

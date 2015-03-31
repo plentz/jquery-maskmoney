@@ -58,6 +58,12 @@
 			var num = $('#demo8').maskMoney('unmasked')[0];
 			alert('type: '+ typeof(num) + ', value: ' + num)
 		</pre>
+
+		<input type="text" id="demo9" value="R$ 1.231.231,23"/>
+		<script type="text/javascript">$("#demo9").attr('readyonly', 'readyonly').maskMoney();</script>
+		<pre class="brush: js">
+			$("#demo9").attr('readyonly', 'readyonly').maskMoney();
+		</pre>
 	</body>
 	<script type="text/javascript">
 		SyntaxHighlighter.all()
