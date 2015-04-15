@@ -367,7 +367,7 @@
                     }
 
                     if ($input.val() === "" || $input.val() === setSymbol(getDefaultMask())) {
-                        if (!settings.allowZero || settings.allowEmpty && (leaveEmpty || !leaveEmpty && settings.allowEmptyDefault)) {
+                        if (!settings.allowZero || settings.allowEmpty && (leaveEmpty || !leaveEmpty && (settings.allowEmptyDefault && "" == $input.val()))) {
                             $input.val("");
                         } else if (!settings.affixesStay) {
                             $input.val(getDefaultMask());
