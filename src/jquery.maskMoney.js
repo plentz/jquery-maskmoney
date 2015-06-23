@@ -36,7 +36,7 @@
             return this.map(function () {
                 var value = ($(this).val() || "0"),
                     settings = $.extend(settings, $(this).data()),
-                    re = new RegExp("\\"+settings.prefix+"|\\"+settings.thousands+"|\\"+settings.suffix,"g");
+                    re = new RegExp("\\"+settings.prefix+"|\\"+settings.thousands,"g");
                 value = value.replace(re, "");
                 return parseFloat(value);
             });
