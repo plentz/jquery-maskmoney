@@ -252,8 +252,8 @@
                         // enter key or tab key
                         } else if (key === 13 || key === 9) {
                             return true;
-                        } else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
-                            // needed for left arrow key or right arrow key with firefox
+                        } else if ($.browser.mozilla && (key >= 35 && key <= 39) && e.charCode === 0) {
+                            // needed for left arrow key, or right arrow key, or home key or end key with firefox
                             // the charCode part is to avoid allowing "%"(e.charCode 0, e.keyCode 37)
                             return true;
                         } else { // any other key with keycode less than 48 and greater than 57
