@@ -37,7 +37,7 @@ To view a complete demonstration of it's features and usage, access our [example
 The options that you can set are:
 
  * `prefix`: the prefix to be displayed before(aha!) the value entered by the user(example: "US$ 1234.23"). default: ''
- * `suffix`: the prefix to be displayed after the value entered by the user(example: "1234.23 €"). default: ''
+ * `suffix`: the suffix to be displayed after the value entered by the user(example: "1234.23 €"). default: ''
  * `affixesStay`: set if the prefix and suffix will stay in the field's value after the user exits the field. default: true
  * `thousands`: the thousands separator. default: ','
  * `decimal`: the decimal separator. default: '.'
