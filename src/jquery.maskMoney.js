@@ -198,7 +198,7 @@
                     if (settings.allowZero || $.isNumeric(value)) {
                         $input.val(maskValue(value));
                     } else {
-                        $input.val('');
+                        $input.val("");
                     }
                 }
 
