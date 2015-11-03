@@ -65,6 +65,15 @@ You can also configure maskMoney options using the data-* API instead of passing
  And when you bind maskMoney to that field, we will read those options. **ATTENTION**: for settings that isn't entirely lowercase, you will need to use dashes instead of capital letters. For example, to set `allowZero`, you will need to add a attribute called `data-allow-zero`.
 
 ***
+### Tests:
+
+To run lol_dba tests, just clone the repo and run:
+
+```
+npm install && grunt test
+```
+
+***
 ### Contributors:
 
  * [Aurélio Saraiva](mailto:aureliosaraiva@gmail.com)
