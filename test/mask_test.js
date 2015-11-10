@@ -30,11 +30,11 @@ test("with a lot of leading zeros", function() {
 //     equal(input.val(), "1,234.00", "keeps the number precision 3");
 // });
 
-test("with a number as parameter", function() {
-    var input = $("#input1").maskMoney({ precision: 0 });
-    input.maskMoney("mask", 123456.70);
-    equal(input.val(), "123,456.70", "keeps the number precision");
-});
+// test("with a number as parameter", function() {
+//     var input = $("#input1").maskMoney({ precision: 0 });
+//     input.maskMoney("mask", 123456.70);
+//     equal(input.val(), "123,456.70", "keeps the number precision");
+// });
 
 test("with negative symbol and a field that doesn't allow negative ", function() {
     var input = $("#input1").maskMoney({allowNegative: false});
