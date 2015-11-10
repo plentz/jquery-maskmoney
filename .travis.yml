@@ -6,6 +6,7 @@ before_script:
   - npm install grunt-cli -g
 env:
   global:
+    - SAUCE_USERNAME="fasseter"
     - secure: idFq/Nu32BJDwZoeELlUsL/LG4FWaj2MTRtDJw+oI5JTHr3BPa4jqoJb+Y1AP5gIPwTUBicCpKRLpcnH4GFqyPO5jtOvdS344eaE9x9A/IYZZ7B3F5fBG7XvcR6zZh8OkavvXViKTEzKcS+mM8dJAiYOPOs+hqtkYTr0nLxwM/zlXZJJQqUX/h2E8re1DMzK46U1rpUlkVoZKZ/V+ZdHpahvz5xilhRyOvNQtXhzf/l0DlwHZN0jbX+Akg2aaRxwsF5JyWZeCs6pMTpXKhP3Jup2hZFsx5LJM05uWZ3kdAV0bjPpN8rQy/JAjWZe9+34KCGnogatYYRaBnfauXkFPCKprluv3fpYzhwBffdkPMTGpbfBK4Y6ldBE5RGakM0an9IqRSJTjcPAfXo9vwaOhpWGAMnOzPMyHiANAH+az8mylAGnfZVPlrDzxtBKPD4qbosHj7/FRl9yLgcbW63fvX6r9TI7w+eRPVHx5aOqvqV/a9ug5b5TaNO4fVcneobJq5dBcm/DkvxJNNWMS3emDNV8L4Pg05Oii/MahdGFZLSwxwqhvO9Or8IxMk6J3QCA8nqC7vVve5HUYc+2BWQPa/FGSU/eB00MjjXHuFnbOko4GAcWf90d2w6QNnOgkxWOwqiVGRsSbwmNr2zmhtIhLqdRhYedQKy2G8YK19gxA2Y=
     - secure: cpaUiKKcdlfrn4IAYhmzevKXLGwSyBhkrJnnwJF1ijbzLmKzuRUaeEnuBIVXoDvQ6BM2vRLHFdK7Dq/0qjrGHfe7Q+Yk7KniwVJw5eK3QtWhS
   email: false
