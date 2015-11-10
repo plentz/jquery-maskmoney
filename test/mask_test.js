@@ -26,7 +26,7 @@ test("with a pre-formatted number smaller than the set precision", function() {
     var input = $("#input1").maskMoney();
     input.val("123,4");
     input.maskMoney("mask");
-    equal(input.val(), "123.40", "keeps the number precision");
+    equal(input.val(), "1,234.00", "keeps the number precision");
 });
 
 test("with negative symbol and a field that doesn't allow negative ", function() {
