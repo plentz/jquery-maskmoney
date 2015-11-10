@@ -19,14 +19,20 @@ test("with a pre-formatted number", function() {
     var input = $("#input1").maskMoney();
     input.val("123,45");
     input.maskMoney("mask");
-    equal(input.val(), "12,345.00", "keeps the number precision");
+    equal(input.val(), "12,345.00", "keeps the number precision 1");
 });
 
-test("with a pre-formatted number smaller than the set precision", function() {
+test("with a pre-formatted number smaller than the set precision 2", function() {
     var input = $("#input1").maskMoney();
     input.val("123,4");
     input.maskMoney("mask");
-    equal(input.val(), "1,234.00", "keeps the number precision");
+    equal(input.val(), "1,234.00", "keeps the number precision 3");
+});
+
+test("with a number as parameter", function() {
+    var input = $("#input1").maskMoney({ precision: 0 });
+    input.maskMoney("mask", 123456.70);
+    equal(input.val(), "123,456.70", "keeps the number precision");
 });
 
 test("with negative symbol and a field that doesn't allow negative ", function() {
@@ -34,12 +40,6 @@ test("with negative symbol and a field that doesn't allow negative ", function()
     input.val("-123");
     input.maskMoney("mask");
     equal(input.val(), "123.00", "removes negative symbol");
-});
-
-test("with a number as parameter", function() {
-    var input = $("#input1").maskMoney();
-    input.maskMoney("mask", 123456.70);
-    equal(input.val(), "123,456.70");
 });
 
 test("with a number as parameter", function() {
