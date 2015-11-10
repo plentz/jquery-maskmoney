@@ -19,7 +19,7 @@ test("with a pre-formatted number", function() {
     var input = $("#input1").maskMoney();
     input.val("123,45");
     input.maskMoney("mask");
-    equal(input.val(), "123.45", "keeps the number precision");
+    equal(input.val(), "12,345.00", "keeps the number precision");
 });
 
 test("with a pre-formatted number smaller than the set precision", function() {
