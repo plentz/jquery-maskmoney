@@ -16,16 +16,7 @@
   },
   "dependencies": {
     "jquery": ">=1.6"
-  },
-  "npmName": "jquery-maskmoney",
-  "npmFileMap": [
-    {
-      "basePath": "/dist/",
-      "files": [
-        "jquery.maskMoney.min.js"
-      ]
-    }
-  ],
+  },  
   "devDependencies": {
     "amdefine": "latest",
     "grunt": "latest",
@@ -35,7 +26,9 @@
     "grunt-contrib-qunit": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-contrib-watch": "latest",
-    "grunt-jquerymanifest": "latest"
+    "grunt-jquerymanifest": "latest",
+	"grunt-saucelabs": "^8.3.2",
+	"grunt-contrib-connect": "~0.5.0"
   },
   "licenses": [
     {
