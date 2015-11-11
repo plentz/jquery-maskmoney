@@ -96,4 +96,5 @@ npm install && grunt test
 ***
 ### License:
 
+
 __jQuery-maskMoney__ is released under the MIT license.
