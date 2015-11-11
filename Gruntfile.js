@@ -161,5 +161,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-watch");
 
     grunt.registerTask("test", ["jshint", "qunit"]);
+	grunt.registerTask('saucelabs', ['connect', 'saucelabs-qunit']);
+    grunt.registerTask('ci', ['jshint', 'connect', 'qunit', 'saucelabs-qunit']);
     grunt.registerTask("default", ["jshint", "qunit", "concat", "uglify", "jquerymanifest"]);
 };
