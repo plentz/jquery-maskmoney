@@ -61,6 +61,14 @@ module.exports = function (grunt) {
             files: ["test/*.html", "test/*.js", "src/*.js"],
             tasks: ["jshint", "qunit"]
         },
+		connect: {
+		  tests: {
+			options: {
+			  hostname: "*",
+			  port: 9000
+			}
+		  }
+		},
         "saucelabs-qunit": {
             all: {
                 options: {
@@ -158,10 +166,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-jquerymanifest");
     grunt.loadNpmTasks("grunt-contrib-qunit");
-    grunt.loadNpmTasks("grunt-contrib-watch");
+    grunt.loadNpmTasks("grunt-contrib-watch");	
+	grunt.loadNpmTasks("grunt-contrib-connect");
+	grunt.loadNpmTasks("grunt-saucelabs");	
 
     grunt.registerTask("test", ["jshint", "qunit"]);
-	grunt.registerTask('saucelabs', ['connect', 'saucelabs-qunit']);
-    grunt.registerTask('ci', ['jshint', 'connect', 'qunit', 'saucelabs-qunit']);
+	grunt.registerTask("saucelabs", ["connect", "saucelabs-qunit"]);
+    grunt.registerTask("ci", ["jshint", "connect", "qunit", "saucelabs-qunit"]);
     grunt.registerTask("default", ["jshint", "qunit", "concat", "uglify", "jquerymanifest"]);
 };
