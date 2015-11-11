@@ -42,8 +42,15 @@ module.exports = function (grunt) {
             }
         },
         qunit: {
-            all: ["test/*.html"]
-        },
+		  all: {
+			options: {
+			  urls: ["http://localhost:4444/test/<%= pkg.name %>.html"],
+			  page : {
+				viewportSize : { width: 1280, height: 800 }
+			  }
+			}
+		  }
+		},
         jquerymanifest: {
             options: {
                 source: grunt.file.readJSON("package.json"),
