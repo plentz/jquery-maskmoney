@@ -1,5 +1,6 @@
 # jQuery maskMoney
 [![Build Status](https://travis-ci.org/fassetar/jquery-maskmoney.svg?branch=master)](https://travis-ci.org/fassetar/jquery-maskmoney)
+[![devDependency Status](https://david-dm.org/fassetar/jquery-maskmoney/dev-status.svg)](https://david-dm.org/fassetar/jquery-maskmoney#info=devDependencies)
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/fassetar2.svg)](https://saucelabs.com/u/fassetar2)
 
