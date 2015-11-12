@@ -44,7 +44,7 @@ module.exports = function (grunt) {
         qunit: {
 		  all: {
 			options: {
-			  urls: ["http://localhost:4444/test/<%= pkg.name %>.html"],
+			  urls: ["http://localhost:9000/test/<%= pkg.name %>.html"],
 			  page : {
 				viewportSize : { width: 1280, height: 800 }
 			  }
@@ -72,14 +72,14 @@ module.exports = function (grunt) {
 		  tests: {
 			options: {
 			  hostname: "*",
-			  port: 4444
+			  port: 9000
 			}
 		  }
 		},
         "saucelabs-qunit": {
             all: {
                 options: {
-                    urls: ["http://localhost:4444/test/jquery-maskmoney.html"],
+                    urls: ["http://localhost:9000/test/jquery-maskmoney.html"],
                     build: process.env.TRAVIS_JOB_ID,
                     browsers: [
                       // iOS
