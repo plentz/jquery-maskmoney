@@ -37,12 +37,15 @@ module.exports = function (grunt) {
             },
             build: {
                 files: [
-                { src: "src/jquery.maskMoney.js", dest: "dist/jquery.maskMoney.min.js" },
+					{ src: "src/jquery.maskMoney.js", dest: "dist/jquery.maskMoney.min.js" },
                 ]
             }
         },
         qunit: {
-            all: ["test/*.html"]
+            all: 
+			 options: {
+			  urls: ['http://localhost:4444/test/<%= pkg.name %>.html']			  
+			}
         },
         jquerymanifest: {
             options: {
@@ -72,7 +75,7 @@ module.exports = function (grunt) {
         "saucelabs-qunit": {
             all: {
                 options: {
-                    urls: ["http://localhost:4444/test/<%= pkg.name %>.html"],
+                    urls: ["http://localhost:4444/test/jquery-maskmoney.html"],
                     build: process.env.TRAVIS_JOB_ID,
                     browsers: [
                       // iOS
