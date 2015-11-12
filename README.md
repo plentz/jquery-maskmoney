@@ -1,6 +1,8 @@
 # jQuery maskMoney
 [![Build Status](https://travis-ci.org/fassetar/jquery-maskmoney.svg?branch=master)](https://travis-ci.org/fassetar/jquery-maskmoney)
 
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/fassetar2.svg)](https://saucelabs.com/u/fassetar2)
+
 Just a simple way to create masks to your currency form fields with [jQuery](http://jquery.com/).
 
 ***
@@ -93,5 +95,6 @@ npm install && grunt test
 
 ***
 ### License:
+
 
 __jQuery-maskMoney__ is released under the MIT license.
