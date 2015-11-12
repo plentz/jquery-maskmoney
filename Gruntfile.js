@@ -178,7 +178,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks("grunt-contrib-connect");
 	grunt.loadNpmTasks("grunt-saucelabs");	
 
-    grunt.registerTask('test', ['server', 'saucelabs-qunit']);
+    grunt.registerTask('test', ["server", "saucelabs-qunit"]);
 	grunt.registerTask("saucelabs", ["connect", "saucelabs-qunit"]);
     grunt.registerTask("ci", ["jshint", "connect", "qunit", "saucelabs-qunit"]);
     grunt.registerTask("default", ["jshint", "qunit", "concat", "uglify", "jquerymanifest"]);
