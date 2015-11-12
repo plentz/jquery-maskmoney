@@ -27,7 +27,7 @@
     "grunt-contrib-uglify": "latest",
     "grunt-contrib-watch": "latest",
     "grunt-jquerymanifest": "latest",
-	"grunt-saucelabs": "^8.6.1",
+	"grunt-saucelabs": "latest",
 	"grunt-contrib-connect": "latest"
   },
   "licenses": [
