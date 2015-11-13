@@ -82,6 +82,7 @@ module.exports = function (grunt) {
                     urls: ["http://localhost:9000/test/jquery-maskmoney.html"],
                     build: process.env.TRAVIS_JOB_ID,
 					testname: "Sauce Unit Test for maskMoney",
+					framework: "qunit",
                     browsers: [
                       // iOS
                       {
