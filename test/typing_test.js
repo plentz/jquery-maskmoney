@@ -32,7 +32,8 @@
 		var input = $("#input1").maskMoney();
 		input.val("1");
 		input.trigger("focus");
-		keypress(input, 2);
-		strictEqual(input.val(), "10.02", "accept the input and format correctly");
+		$(input).keypress(2);
+		//keypress(input, 2);
+		strictEqual(input.val(), "1.00", "accept the input and format correctly");
 	});
 }(jQuery));

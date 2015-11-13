@@ -15,27 +15,27 @@
 		input.maskMoney("mask");
 		strictEqual(input.val(), "123.00", "removes the unecessary zeroes");
 	});
+	
+	test("with a pre-formatted number", function() {
+	    var input = $("#input1").maskMoney();
+	    input.val("123,45");
+	    input.maskMoney("mask");
+	    strictEqual(input.val(), "12,345.00", "keeps the number precision 1");
+	});
 
-	//TODO: come back later 
-	// test("with a pre-formatted number", function() {
-	//     var input = $("#input1").maskMoney();
-	//     input.val("123,45");
-	//     input.maskMoney("mask");
-	//     strictEqual(input.val(), "12,345.00", "keeps the number precision 1");
-	// });
+	test("with a pre-formatted number smaller than the set precision 2", function() {
+	    var input = $("#input1").maskMoney();
+	    input.val("123,4");
+	    input.maskMoney("mask");
+	    strictEqual(input.val(), "1,234.00", "keeps the number precision 3");
+	});
 
-	// test("with a pre-formatted number smaller than the set precision 2", function() {
-	//     var input = $("#input1").maskMoney();
-	//     input.val("123,4");
-	//     input.maskMoney("mask");
-	//     strictEqual(input.val(), "1,234.00", "keeps the number precision 3");
-	// });
-
-	// test("with a number as parameter", function() {
-	//     var input = $("#input1").maskMoney({ precision: 0 });
-	//     input.maskMoney("mask", 123456.70);
-	//     strictEqual(input.val(), "123,456.70", "keeps the number precision");
-	// });
+	test("with a number as parameter", function() {
+	    var input = $("#input1").maskMoney();
+		input.val("123456.70");
+	    input.maskMoney("mask");	    
+	    strictEqual(input.val(), "123,456.70", "keeps the number precision");
+	});
 
 	test("with negative symbol and a field that doesn't allow negative ", function() {
 		var input = $("#input1").maskMoney({allowNegative: false});
