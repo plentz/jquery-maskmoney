@@ -81,7 +81,7 @@ module.exports = function (grunt) {
                 options: {
                     urls: ["http://localhost:9000/test/jquery-maskmoney.html"],
                     build: process.env.TRAVIS_JOB_ID,
-					testname: 'Sauce Unit Test for maskMoney',
+					testname: "Sauce Unit Test for maskMoney",
                     browsers: [
                       // iOS
                       {
@@ -178,7 +178,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks("grunt-contrib-connect");
 	grunt.loadNpmTasks("grunt-saucelabs");	
 
-    grunt.registerTask('test', ["server", "saucelabs-qunit"]);
+    grunt.registerTask("test", ["server", "saucelabs-qunit"]);
 	grunt.registerTask("saucelabs", ["connect", "saucelabs-qunit"]);
     grunt.registerTask("ci", ["jshint", "connect", "qunit", "saucelabs-qunit"]);
     grunt.registerTask("default", ["jshint", "qunit", "concat", "uglify", "jquerymanifest"]);
