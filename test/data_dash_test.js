@@ -1,15 +1,13 @@
 (function($) {
 	"use strict";
 
-	module("data-dash api");
-	test("with field configured using data-* attributes", function() {
-		var input = $("#input3").maskMoney();
-		input.val("12345678");
-		input.trigger("focus");
+	QUnit.module("data-dash api");
+	QUnit.test("with field configured using data-* attributes", function() {
+		var input = $("#input3").val("12345678").maskMoney();		
 		strictEqual(input.val(), "R$12.345.678,00", "configure maskMoney using data-* attributes");
 	});
 
-	test("configuring a setting that isn't a single word", function() {
+	QUnit.test("configuring a setting that isn't a single word", function() {
 		var input = $("#input3");
 		input.attr("data-allow-zero", "true");
 		input.maskMoney();
@@ -18,7 +16,7 @@
 		strictEqual(input.val(), "R$0,00", "it works by using dashes-strictEqual instead of camelCase");
 	});
 
-	test("allow to configure multiple fields using data-* attributes", function() {
+	QUnit.test("allow to configure multiple fields using data-* attributes", function() {
 		var input = $(".multiple-dash").maskMoney();
 		input.val("12345678");
 		input.trigger("focus");

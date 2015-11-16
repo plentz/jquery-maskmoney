@@ -1,20 +1,13 @@
 (function ($) {
     "use strict";
-    if (!$.browser) {
-        $.browser = {};
-        $.browser.mozilla = /mozilla/.test(navigator.userAgent.toLowerCase()) && !/webkit/.test(navigator.userAgent.toLowerCase());
-        $.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
-        $.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
-        $.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
-    }
-
     var methods = {
         destroy : function () {
             $(this).unbind(".maskMoney");
 
-            if ($.browser.msie) {
-                this.onpaste = null;
-            }
+			//DOCS: DONT USE
+            // if ($.browser.msie) {
+                // this.onpaste = null;
+            // }
             return this;
         },
 
@@ -245,11 +238,13 @@
                         // enter key or tab key
                         } else if (key === 13 || key === 9) {
                             return true;
-                        } else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
-                            // needed for left arrow key or right arrow key with firefox
-                            // the charCode part is to avoid allowing "%"(e.charCode 0, e.keyCode 37)
-                            return true;
-                        } else { // any other key with keycode less than 48 and greater than 57
+                        } 
+						// else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
+                            // // needed for left arrow key or right arrow key with firefox
+                            // // the charCode part is to avoid allowing "%"(e.charCode 0, e.keyCode 37)
+                            // return true;
+                        // } 
+						else { // any other key with keycode less than 48 and greater than 57
                             preventDefault(e);
                             return true;
                         }
@@ -343,9 +338,9 @@
                 }
 
                 function blurEvent(e) {
-                    if ($.browser.msie) {
-                        keypressEvent(e);
-                    }
+                    // if ($.browser.msie) {
+                        // keypressEvent(e);
+                    // }
 
                     if ($input.val() === "" || $input.val() === setSymbol(getDefaultMask())) {
                         if (!settings.allowZero) {
