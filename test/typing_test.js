@@ -1,8 +1,8 @@
-(function($) {
+//$(document).ready(function(){
 	"use strict";
 	
 	module("typing");
-	test("accepts keys in sequence", function() {
+	QUnit.test("accepts keys in sequence", function() {
 		var input = $("#input1").maskMoney();
 		input.trigger("focus");
 		keypress(input, 1);
@@ -15,7 +15,7 @@
 		strictEqual(input.val(), "1,234.56", "accept the input and format correctly");
 	});
 
-	test("with a suffix", function() {
+	QUnit.test("with a suffix", function() {
 		var input = $("#input1").maskMoney({suffix: " €"});
 		input.trigger("focus");
 		keypress(input, 1);
@@ -26,9 +26,8 @@
 
 		strictEqual(input.val(), "123.45 €", "accept the input and format correctly");
 	});
-
-
-	test("with a pre-set value", function() {
+	
+	Qunit.test("with a pre-set value", function() {
 		var input = $("#input1").maskMoney();
 		input.val("1");
 		input.trigger("focus");
@@ -36,4 +35,4 @@
 		//keypress(input, 2);
 		strictEqual(input.val(), "1.00", "accept the input and format correctly");
 	});
-}(jQuery));
+//});

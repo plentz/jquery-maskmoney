@@ -9,7 +9,7 @@
 		input.change(function() {
 			changeWasCalled = true;
 		});
-		input.val("0.01");
+		input.val("0.01");		
 		input.trigger("focus");
 		keypress(input, 1);
 		input.trigger("blur");
