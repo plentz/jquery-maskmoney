@@ -30,8 +30,7 @@
 		ok(!changeWasCalled, "change was not called");
 		strictEqual(input.val(), "0.01", "changed value");
 	});
-
-	module("change");
+	
 	test("it calls the change event when the field's value is changed", function() {
 		var input = $("#input1").maskMoney(),
 			changeWasCalled = false;

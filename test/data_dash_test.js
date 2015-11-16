@@ -3,7 +3,7 @@
 
 	QUnit.module("data-dash api");
 	QUnit.test("with field configured using data-* attributes", function() {
-		var input = $("#input3").val("12345678").maskMoney();		
+		var input = $("#input3").val("12345678").maskMoney().trigger("mask");		
 		strictEqual(input.val(), "R$12.345.678,00", "configure maskMoney using data-* attributes");
 	});
 
@@ -19,7 +19,7 @@
 	QUnit.test("allow to configure multiple fields using data-* attributes", function() {
 		var input = $(".multiple-dash").maskMoney();
 		input.val("12345678");
-		input.trigger("focus");
+		input.trigger("mask");
 		strictEqual($("#input3").val(), "R$12.345.678,00", "configure maskMoney using data-* attributes");
 		strictEqual($("#input4").val(), "U$12,345,678.00", "configure maskMoney using data-* attributes");
 	});
