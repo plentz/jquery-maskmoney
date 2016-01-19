@@ -9,7 +9,7 @@
     }
 
     var methods = {
-        destroy : function () {
+	   destroy : function () {
             $(this).unbind(".maskMoney");
 
             if ($.browser.msie) {
@@ -21,7 +21,8 @@
         mask : function (value) {
             return this.each(function () {
                 var $this = $(this);
-                if (typeof value === "number") {
+				
+				if (typeof value === "number") {
                     $this.val(value);
                 }
                 return $this.trigger("mask");
@@ -192,10 +193,30 @@
 
                 function mask() {
                     var value = $input.val();
-                    if (settings.precision > 0 && value.indexOf(settings.decimal) < 0) {
+					
+					/**
+					* HTML Support
+					* Added by Tiago Morais
+					* Check if .html() have some number in case of value returns undefined or ""
+					**/
+					if(value==undefined || value==""){
+					var try2=Number($(this).html());				
+						if (typeof try2 === "number") {
+							 $input.val(String(try2));
+							 value=try2;
+						}
+					}
+					
+					if (settings.precision > 0 && String(value).indexOf(settings.decimal) < 0) { 
                         value += settings.decimal + new Array(settings.precision+1).join(0);
                     }
                     $input.val(maskValue(value));
+					$input.html(maskValue(value));
+					/*
+					*Changed value.indexOf to String(value).indexOf after End HTML Support
+					*Added $input.html(maskValue(value));
+					*END HTML Support
+					*/
                 }
 
                 function changeSign() {

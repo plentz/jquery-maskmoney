@@ -38,26 +38,44 @@
 
 		<input type="text" id="demo5" value="1234567.89"/>
 		<script type="text/javascript">$("#demo5").maskMoney({prefix:'R$ ', thousands:'.', decimal:',', affixesStay: true});</script>
-		<input type="button" onclick="$('#demo5').maskMoney('mask')" value="trigger mask event at demo5"/>
+		<input type="button" onClick="$('#demo5').maskMoney('mask')" value="trigger mask event at demo5"/>
 		<pre class="brush: js">$("#demo5").maskMoney('mask');</pre>
 
 		<input type="text" id="demo6"/>
 		<script type="text/javascript">$("#demo6").maskMoney({prefix:'R$ ', thousands:'.', decimal:',', affixesStay: true});</script>
-		<input type="button" onclick="$('#demo6').maskMoney('mask', 1999.99)" value="trigger mask event at demo6, passing a float value as parameter"/>
+		<input type="button" onClick="$('#demo6').maskMoney('mask', 1999.99)" value="trigger mask event at demo6, passing a float value as parameter"/>
 		<pre class="brush: js">$("#demo6").maskMoney('mask', 1999.99);</pre>
 
 		<input type="text" id="demo7"/>
 		<script type="text/javascript">$("#demo7").maskMoney();</script>
-		<input type="button" onclick="$('#demo7').maskMoney('destroy')" value="remove maskmoney from demo7"/>
+		<input type="button" onClick="$('#demo7').maskMoney('destroy')" value="remove maskmoney from demo7"/>
 		<pre class="brush: js">$("#demo6").maskMoney('destroy');</pre>
 
 		<input type="text" id="demo8" value="R$ 1.231.231,23"/>
 		<script type="text/javascript">$("#demo8").maskMoney();</script>
-		<input type="button" onclick="var num = $('#demo8').maskMoney('unmasked')[0];alert('type: '+typeof(num) + ', value: ' + num)" value="alert unmasked value and type from demo7"/>
+		<input type="button" onClick="var num = $('#demo8').maskMoney('unmasked')[0];alert('type: '+typeof(num) + ', value: ' + num)" value="alert unmasked value and type from demo7"/>
 		<pre class="brush: js">
 			var num = $('#demo8').maskMoney('unmasked')[0];
 			alert('type: '+ typeof(num) + ', value: ' + num)
 		</pre>
+		
+		<br>
+		
+		<h2>TABLE HTML</h2>
+		<p><strong>Ex</strong>:R$ 9999,00 after click</p>
+		<div class="demo9">
+		  <div class="input-wrap input-s1 input-white">
+			<input type="button" name="button" id="button" value="Submit" onclick="$('#demo9').maskMoney();$('#demo9').maskMoney('mask');"/>
+			<table>
+				<tr>
+			<td>VALUE</td>
+			<td id="demo9" class="valor" data-thousands="." data-decimal="," data-prefix="R$ ">9999</td>
+			</tr>
+		</table>
+		  </div>
+		</div>
+		
+		
 	</body>
 	<script type="text/javascript">
 		SyntaxHighlighter.all()
