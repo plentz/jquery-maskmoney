@@ -200,7 +200,7 @@
                     var value = $input.val();
                     var type;
 
-                    if (value==undefined || value==""){
+                    if (value===undefined || value===""){
                         value = Number($input.html());
                         type="OTHER";
                     }else{
