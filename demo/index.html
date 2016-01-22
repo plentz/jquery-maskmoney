@@ -60,16 +60,26 @@
 		</pre>
 		
 		<br>
-		
+
+
 		<h2>TABLE HTML</h2>
 		<p><strong>Ex</strong>:R$ 9999,00 after click</p>
-		<div class="demo9">
+		<div>
 		  <div class="input-wrap input-s1 input-white">
-			<input type="button" name="button" id="button" value="Submit" onclick="$('#demo9').maskMoney();$('#demo9').maskMoney('mask');"/>
-			<table>
+			<input type="button" name="button" id="button" value="Submit" onclick="$('#demo9,#demo10,#demo11,#demo12').maskMoney().maskMoney('mask');"/>
+			  <pre class="brush: js">$('#demo9,#demo10,#demo11,#demo12').maskMoney().maskMoney('mask');</pre>
+			  <pre class="brush: js">"< td id="demo9" data-thousands="." data-decimal="," data-prefix="R$ ">9999< /td>"</pre>
+			  <table>
 				<tr>
-			<td>VALUE</td>
-			<td id="demo9" class="valor" data-thousands="." data-decimal="," data-prefix="R$ ">9999</td>
+			<td>VALUES</td>
+				</tr><tr>
+				<td><li></li></td><td id="demo9" data-thousands="." data-decimal="," data-prefix="R$ ">9999</td>
+				</tr><tr>
+				<td><li></li></td><td id="demo10" data-thousands="." data-decimal="," data-prefix="R$ ">0</td>
+				</tr><tr>
+				<td><li></li></td><td id="demo11" data-thousands="." data-decimal="," data-prefix="R$ ">A9</td>
+				</tr><tr>
+				<td><li></li></td><td id="demo12" data-thousands="." data-decimal="," data-prefix="R$ ">A9B8</td>
 			</tr>
 		</table>
 		  </div>
