@@ -332,7 +332,7 @@
 					return (n.toFixed(settings.precision)).replace(new RegExp("\\.", "g"), settings.decimal);
 				}
 
-				function blurEvent(e) {					 						 		
+				function blurEvent() {					 						 		
 					if ($input.val() === "" || $input.val() === setSymbol(getDefaultMask())) {
 						if (!settings.allowZero) {
 							$input.val("");

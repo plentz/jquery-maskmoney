@@ -192,5 +192,5 @@ module.exports = function (grunt) {
 
     grunt.registerTask("test", ["connect", "saucelabs-qunit"]);	
     grunt.registerTask("ci", ["jshint", "connect", "qunit", "saucelabs-qunit"]);
-    grunt.registerTask("default", ["jshint", "qunit", "concat", "uglify", "jquerymanifest"]);
+    grunt.registerTask("default", ["jshint", "connect", "qunit", "concat", "uglify", "jquerymanifest"]);
 };

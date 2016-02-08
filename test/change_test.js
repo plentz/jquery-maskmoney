@@ -9,10 +9,10 @@
 		input.change(function() {
 			changeWasCalled = true;
 		});
-		input.val("0.01");		
-		input.trigger("focus");
-		keypress(input, 1);
-		input.trigger("blur");
+		input.focus().val("0.01");				
+		input.trigger("focus");	
+		keypress(input, 1);		
+		//input.trigger("blur");
 		ok(changeWasCalled, "change was called");
 		strictEqual(input.val(), "0.11", "changed value");
 	});
@@ -35,10 +35,10 @@
 		var input = $("#input1").maskMoney(),
 			changeWasCalled = false;
 
-		input.change(function() {
+		$("#input1").change(function() {
 			changeWasCalled = true;
 		});
-		input.val("0.01");
+		//input.val("0.01");
 		input.trigger("focus");
 		keypress(input, 1);
 		input.trigger("blur");
