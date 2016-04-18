@@ -37,12 +37,7 @@
     "grunt-contrib-watch": "latest",
     "grunt-jquerymanifest": "latest"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://raw.github.com/plentz/jquery-maskmoney/master/LICENSE"
-    }
-  ],
+  "license": "MIT",
   "scripts": {
     "test": "grunt test --verbose"
   }
