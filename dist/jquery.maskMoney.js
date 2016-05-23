@@ -44,14 +44,11 @@
             return this.map(function () {
                 var value = ($(this).val() || "0"),
                     isNegative = value.indexOf("-") !== -1,
-                    decimalPart;
+                    decimalPart, settings = $(this).data("settings");
                 // get the last position of the array that is a number(coercion makes "" to be evaluated as false)
-                $(value.split(/\D/).reverse()).each(function (index, element) {
-                    if(element) {
-                        decimalPart = element;
-                        return false;
-                   }
-                });
+                if (settings.precision > 0) {
+                    decimalPart = value.split(settings.decimal).reverse()[0].substring(0, settings.precision);
+                }
                 value = value.replace(/\D/g, "");
                 value = value.replace(new RegExp(decimalPart + "$"), "." + decimalPart);
                 if (isNegative) {
@@ -72,6 +69,7 @@
                 allowZero: false,
                 allowNegative: false
             }, settings);
+            $(this).data("settings", parameters);
 
             return this.each(function () {
                 var $input = $(this),
@@ -251,6 +249,7 @@
                             return false;
                         // enter key or tab key
                         } else if (key === 13 || key === 9) {
+                            blurEvent(e);
                             return true;
                         } else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
                             // needed for left arrow key or right arrow key with firefox
