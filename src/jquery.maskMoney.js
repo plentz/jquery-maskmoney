@@ -58,7 +58,8 @@
                 decimal: ".",
                 precision: 2,
                 allowZero: false,
-                allowNegative: false
+                allowNegative: false,
+				numeralMaxLength: false
             }, parameters);
 
             return this.each(function () {
@@ -122,13 +123,22 @@
                 } // getInputSelection
 
                 function canInputMoreNumbers() {
-                    var haventReachedMaxLength = !($input.val().length >= $input.attr("maxlength") && $input.attr("maxlength") >= 0),
-                        selection = getInputSelection(),
-                        start = selection.start,
-                        end = selection.end,
-                        haveNumberSelected = (selection.start !== selection.end && $input.val().substring(start, end).match(/\d/)) ? true : false,
-                        startWithZero = ($input.val().substring(0, 1) === "0");
+					var integerValue = $input.val().match(/\d+/g).join('');
+
+					var haventReachedMaxLength = false;
+					if (settings.numeralMaxLength) {
+						haventReachedMaxLength = $input.attr("maxlength") ? integerValue.length < $input.attr("maxlength") : true;
+					} else {
+						haventReachedMaxLength = !($input.val().length >= $input.attr("maxlength") && $input.attr("maxlength") >= 0);
+					}
+					
+					var selection = getInputSelection();
+                    var haveNumberSelected = $input.val().substring(selection.start, selection.end).match(/\d/g) != null;
+					
+                    var startWithZero = (integerValue.substring(0, 1) === "0");
+						
                     return haventReachedMaxLength || haveNumberSelected || startWithZero;
+					
                 }
 
                 function setCursorPosition(pos) {
