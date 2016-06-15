@@ -123,7 +123,7 @@
                 } // getInputSelection
 
                 function canInputMoreNumbers() {
-					var integerValue = $input.val().match(/\d+/g).join('');
+					var integerValue = $input.val().match(/\d+/g).join("");
 
 					var haventReachedMaxLength = false;
 					if (settings.numeralMaxLength) {
