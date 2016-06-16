@@ -59,7 +59,7 @@
                 precision: 2,
                 allowZero: false,
                 allowNegative: false,
-				numeralMaxLength: false
+				maxLength: undefined
             }, parameters);
 
             return this.each(function () {
@@ -126,8 +126,8 @@
 					var integerValue = $input.val().match(/\d+/g).join("");
 
 					var haventReachedMaxLength = false;
-					if (settings.numeralMaxLength) {
-						haventReachedMaxLength = $input.attr("maxlength") ? integerValue.length < $input.attr("maxlength") : true;
+					if (settings.maxLength) {
+						haventReachedMaxLength = integerValue.length < settings.maxLength;
 					} else {
 						haventReachedMaxLength = !($input.val().length >= $input.attr("maxlength") && $input.attr("maxlength") >= 0);
 					}
