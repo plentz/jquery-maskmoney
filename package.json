@@ -28,14 +28,16 @@
   ],
   "devDependencies": {
     "amdefine": "latest",
-    "grunt": "latest",
+    "grunt": "^1.0.1",
     "grunt-cli": "latest",
     "grunt-contrib-concat": "latest",
+    "grunt-contrib-connect": "^1.0.2",
     "grunt-contrib-jshint": "latest",
     "grunt-contrib-qunit": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-contrib-watch": "latest",
-    "grunt-jquerymanifest": "latest"
+    "grunt-jquerymanifest": "latest",
+    "grunt-saucelabs": "^9.0.0"
   },
   "license": "MIT",
   "scripts": {
