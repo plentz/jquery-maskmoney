@@ -60,4 +60,4 @@
         input.maskMoney("mask", 20316.22);
         equal(input.val(), "20,316.22 €");
     });
-});
+} (jQuery));

@@ -26,4 +26,4 @@
             strictEqual(input.val(), "12,345,678.00", "format the value of the field");
         }, 1);
     });
-});
+} (jQuery));
