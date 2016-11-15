@@ -5,7 +5,7 @@ node_js:
 before_script:
   - npm install -g grunt-cli
   - git submodule update --init --recursive
-script: grunt ci --verbose
+script: grunt ci --verbose --force
 env:
   global:
     - secure: FHiyRNrKylif4yenVMMBqINzVofH0zB7AlYDjpUpQ9rsnHG3jdyLFdUyJjM9CWo/EOQyc8KnxRs/RApt+Gr+XDlgeEp4KillRsthkW1FZGJymm9jksRGEMK/91P3Ubl6AtdfWdIFptvBpigiDLhpzeZAy4h+1MnATebeFnke8nEmRA1CEJE6N6ksD+e5UJejlzc+XjSFK63WR1J0SsYIzTYsX2qxTV7/cJAk43MNZwfjqyTjgWZ1K5zrXU+zioypBO/UIOZ8Q94qtrPVD0pww7BK0OUcU6MHORIv36nwTBFmJxPBVgxt/vIOLFrMj5d5zNnUyu2L1kPvD+jdD4iMWE5YkkZAHNkQsarTFZOLEkMt0HmW/Kh+rf6x1jTV/OPw8gI6Cs7Gz8880FwR8E1NPcrBQkMSr2nRwBvizAXCXpe0pdyD6oqYYzGMx4lDEnAGJvu783uTatYwKtpOP1rlz1dyDRubjHXNpvEfiI5a45Sq67ImJstAGdhqy9PJy/ioGymUfGJOOAswyh0AeIMlGvWJcPL08+5f4kZJSvDuzcfV5fDaVDoh2IMM7wuG1o4I7AXq9bDuOAwvUH4Uf3+sic8d18PFUeNsHOYXd2HNYnzO+cVA9iQn77FRHFAds72cWUPHzcKDiW6xpJdxTschPpayFz4UL0LC/2Q3Vl9HGng=
