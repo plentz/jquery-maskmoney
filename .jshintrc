@@ -20,6 +20,7 @@
     "$": true,
     "devel": true,
     // QUnit
+    "QUnit": true,
     "test": true,
     "module": true,
     "expect": true,

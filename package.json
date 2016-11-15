@@ -15,8 +15,17 @@
     "url": "http://plentz.org"
   },
   "dependencies": {
-    "jquery": ">=1.6"
-  },  
+    "jquery": "latest"
+  },
+  "npmName": "jquery-maskmoney",
+  "npmFileMap": [
+    {
+      "basePath": "/dist/",
+      "files": [
+        "jquery.maskMoney.min.js"
+      ]
+    }
+  ],
   "devDependencies": {
     "amdefine": "latest",
     "grunt": "latest",
@@ -26,16 +35,9 @@
     "grunt-contrib-qunit": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-contrib-watch": "latest",
-    "grunt-jquerymanifest": "latest",
-	"grunt-saucelabs": "latest",
-	"grunt-contrib-connect": "latest"
+    "grunt-jquerymanifest": "latest"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://raw.github.com/plentz/jquery-maskmoney/master/LICENSE"
-    }
-  ],
+  "license": "MIT",
   "scripts": {
     "test": "grunt test --verbose"
   }
