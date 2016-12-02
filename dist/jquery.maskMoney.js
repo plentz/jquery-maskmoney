@@ -45,9 +45,9 @@ var MoneyMask = {
     },
 
     decode: function(value){
-        Number($(this).val().replace('.', '').replace(',', '.'));
+        return Number($(this).val().replace('.', '').replace(',', '.')).toFixed(2);
     }
-}
+};
 
 (function ($) {
     "use strict";
