@@ -1,11 +1,54 @@
 /*
- *  jquery-maskmoney - v3.0.2
- *  jQuery plugin to mask data entry in the input text in the form of money (currency)
- *  https://github.com/plentz/jquery-maskmoney
- *
- *  Made by Diego Plentz
- *  Under MIT License (https://raw.github.com/plentz/jquery-maskmoney/master/LICENSE)
- */
+
+    jQuery Mask Money Plugin
+    Original: https://github.com/plentz/jquery-maskmoney
+    Fork: https://github.com/Dudu197/jquery-maskmoney
+
+    MoneyMask functions works only for Brazilian style (thousands: '.' and decimal: ',')
+
+*/
+
+var MoneyMask = {
+    encode: function(value, settings){
+        settings = {
+            prefix: "",
+            suffix: "",
+            affixesStay: true,
+            thousands: ".",
+            decimal: ",",
+            precision: 2,
+            allowZero: false,
+            allowNegative: false
+        };
+        var negative = (value.indexOf("-") > -1 && settings.allowNegative) ? "-" : "",
+            onlyNumbers = value.replace(/[^0-9]/g, ""),
+            integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision),
+            newValue,
+            decimalPart,
+            leadingZeros;
+
+        // remove initial zeros
+        integerPart = integerPart.replace(/^0*/g, "");
+        // put settings.thousands every 3 chars
+        integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, settings.thousands);
+        if (integerPart === "") {
+            integerPart = "0";
+        }
+        newValue = negative + integerPart;
+
+        if (settings.precision > 0) {
+            decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
+            leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
+            newValue += settings.decimal + leadingZeros + decimalPart;
+        }
+        return setSymbol(newValue);
+    },
+
+    decode: function(value){
+        Number($(this).val().replace('.', '').replace(',', '.'));
+    }
+}
+
 (function ($) {
     "use strict";
     if (!$.browser) {
@@ -28,12 +71,8 @@
 
         mask : function (value) {
             return this.each(function () {
-                var $this = $(this),
-                    decimalSize;
+                var $this = $(this);
                 if (typeof value === "number") {
-                    $this.trigger("mask");
-                    decimalSize = $($this.val().split(/\D/)).last()[0].length;
-                    value = value.toFixed(decimalSize);
                     $this.val(value);
                 }
                 return $this.trigger("mask");
@@ -61,8 +100,8 @@
             });
         },
 
-        init : function (settings) {
-            settings = $.extend({
+        init : function (parameters) {
+            parameters = $.extend({
                 prefix: "",
                 suffix: "",
                 affixesStay: true,
@@ -71,13 +110,14 @@
                 precision: 2,
                 allowZero: false,
                 allowNegative: false
-            }, settings);
+            }, parameters);
 
             return this.each(function () {
-                var $input = $(this),
+                var $input = $(this), settings,
                     onFocusValue;
 
                 // data-* api
+                settings = $.extend({}, parameters);
                 settings = $.extend(settings, $input.data());
 
                 function getInputSelection() {
@@ -191,6 +231,7 @@
                     return setSymbol(newValue);
                 }
 
+
                 function maskAndPosition(startPos) {
                     var originalLen = $input.val().length,
                         newLen;
@@ -202,6 +243,9 @@
 
                 function mask() {
                     var value = $input.val();
+                    if (settings.precision > 0 && value.indexOf(settings.decimal) < 0) {
+                        value += settings.decimal + new Array(settings.precision+1).join(0);
+                    }
                     $input.val(maskValue(value));
                 }
 
