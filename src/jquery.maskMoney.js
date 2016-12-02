@@ -9,7 +9,7 @@
 */
 
 var MoneyMask = {
-    encode: function(value, settings){
+    encode: function(value){
         settings = {
             prefix: "",
             suffix: "",
@@ -41,11 +41,11 @@ var MoneyMask = {
             leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
             newValue += settings.decimal + leadingZeros + decimalPart;
         }
-        return setSymbol(newValue);
+        return newValue;
     },
 
     decode: function(value){
-        return Number($(this).val().replace('.', '').replace(',', '.')).toFixed(2);
+        return Number(value.replace('.', '').replace(',', '.')).toFixed(2);
     }
 };
 
