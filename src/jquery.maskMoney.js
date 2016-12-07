@@ -45,7 +45,7 @@ var MoneyMask = {
     },
 
     decode: function(value){
-        return Number(value.replace('.', '').replace(',', '.')).toFixed(2);
+        return Number(value.replace(/\./g, '').replace(',', '.')).toFixed(2);
     }
 };
 
