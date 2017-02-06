@@ -32,14 +32,12 @@
             return this.map(function () {
                 var value = ($(this).val() || "0"),
                     isNegative = value.indexOf("-") !== -1,
-                    decimalPart;
-                // get the last position of the array that is a number(coercion makes "" to be evaluated as false)
-                $(value.split(/\D/).reverse()).each(function (index, element) {
-                    if(element) {
-                        decimalPart = element;
-                        return false;
-                   }
-                });
+                    decimalPart,
+                    settings = $(this).data("settings");
+
+                if (settings.precision > 0) {
+                    decimalPart = value.split(settings.decimal).reverse()[0].substring(0, settings.precision);
+                }
                 value = value.replace(/\D/g, "");
                 value = value.replace(new RegExp(decimalPart + "$"), "." + decimalPart);
                 if (isNegative) {
@@ -60,6 +58,7 @@
                 allowZero: false,
                 allowNegative: false
             }, parameters);
+            $(this).data("settings", parameters);
 
             return this.each(function () {
                 var $input = $(this), settings,
