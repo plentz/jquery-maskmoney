@@ -17,6 +17,7 @@
   "dependencies": {
     "jquery": "latest"
   },
+  "main": "dist/jquery.maskMoney.js",
   "npmName": "jquery-maskmoney",
   "npmFileMap": [
     {
