@@ -67,6 +67,7 @@
                 // data-* api
                 settings = $.extend({}, parameters);
                 settings = $.extend(settings, $input.data());
+				$(this).data("settings", settings);
 
                 function getInputSelection() {
                     var el = $input.get(0),
