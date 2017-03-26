@@ -4,7 +4,7 @@
  *  https://github.com/plentz/jquery-maskmoney
  *
  *  Made by Diego Plentz
- *  Under MIT License (https://raw.github.com/plentz/jquery-maskmoney/master/LICENSE)
+ *  Under MIT License
  */
 (function ($) {
     "use strict";
@@ -28,12 +28,8 @@
 
         mask : function (value) {
             return this.each(function () {
-                var $this = $(this),
-                    decimalSize;
+                var $this = $(this);
                 if (typeof value === "number") {
-                    $this.trigger("mask");
-                    decimalSize = $($this.val().split(/\D/)).last()[0].length;
-                    value = value.toFixed(decimalSize);
                     $this.val(value);
                 }
                 return $this.trigger("mask");
@@ -61,8 +57,8 @@
             });
         },
 
-        init : function (settings) {
-            settings = $.extend({
+        init : function (parameters) {
+            parameters = $.extend({
                 prefix: "",
                 suffix: "",
                 affixesStay: true,
@@ -71,13 +67,14 @@
                 precision: 2,
                 allowZero: false,
                 allowNegative: false
-            }, settings);
+            }, parameters);
 
             return this.each(function () {
-                var $input = $(this),
+                var $input = $(this), settings,
                     onFocusValue;
 
                 // data-* api
+                settings = $.extend({}, parameters);
                 settings = $.extend(settings, $input.data());
 
                 function getInputSelection() {
@@ -163,10 +160,24 @@
                         value = value.replace("-", "");
                         operator = "-";
                     }
+                    if (value.indexOf(settings.prefix) > -1) {
+                        value = value.replace(settings.prefix, "");
+                    }
+                    if (value.indexOf(settings.suffix) > -1) {
+                        value = value.replace(settings.suffix, "");
+                    }
                     return operator + settings.prefix + value + settings.suffix;
                 }
 
                 function maskValue(value) {
+                    if (!!settings.reverse) {
+                        return maskValueReverse(value);
+                    }
+
+                    return maskValueStandard(value);
+                }
+
+                function maskValueStandard(value) {
                     var negative = (value.indexOf("-") > -1 && settings.allowNegative) ? "-" : "",
                         onlyNumbers = value.replace(/[^0-9]/g, ""),
                         integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision),
@@ -174,14 +185,7 @@
                         decimalPart,
                         leadingZeros;
 
-                    // remove initial zeros
-                    integerPart = integerPart.replace(/^0*/g, "");
-                    // put settings.thousands every 3 chars
-                    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, settings.thousands);
-                    if (integerPart === "") {
-                        integerPart = "0";
-                    }
-                    newValue = negative + integerPart;
+                    newValue = buildIntegerPart(integerPart, negative);
 
                     if (settings.precision > 0) {
                         decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
@@ -191,17 +195,58 @@
                     return setSymbol(newValue);
                 }
 
+                function maskValueReverse(value) {
+                    var negative = (value.indexOf("-") > -1 && settings.allowNegative) ? "-" : "",
+                        valueWithoutSymbol = value.replace(settings.prefix, "").replace(settings.suffix, ""),
+                        integerPart = valueWithoutSymbol.split(settings.decimal)[0],
+                        newValue,
+                        decimalPart = "";
+
+                    newValue = buildIntegerPart(integerPart, negative);
+
+                    if (settings.precision > 0) {
+                        var arr = value.split(settings.decimal);
+                        if (arr.length > 1) {
+                            decimalPart = arr[1];
+                        }
+                        newValue += settings.decimal + decimalPart;
+                    }
+
+                    newValue = (+newValue).toFixed(settings.precision);
+                    return setSymbol(newValue);
+                }
+
+                function buildIntegerPart(integerPart, negative) {
+                    // remove initial zeros
+                    integerPart = integerPart.replace(/^0*/g, "");
+
+                    // put settings.thousands every 3 chars
+                    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, settings.thousands);
+                    if (integerPart === "") {
+                        integerPart = "0";
+                    }
+                    return negative + integerPart;
+                }
+
+
                 function maskAndPosition(startPos) {
                     var originalLen = $input.val().length,
                         newLen;
                     $input.val(maskValue($input.val()));
                     newLen = $input.val().length;
-                    startPos = startPos - (originalLen - newLen);
+                    if (!!settings.reverse) {
+                        startPos += 1;
+                    } else {
+                        startPos = startPos - (originalLen - newLen);
+                    }
                     setCursorPosition(startPos);
                 }
 
                 function mask() {
                     var value = $input.val();
+                    if (settings.precision > 0 && value.indexOf(settings.decimal) < 0) {
+                        value += settings.decimal + new Array(settings.precision+1).join(0);
+                    }
                     $input.val(maskValue(value));
                 }
 
@@ -229,50 +274,73 @@
                 function keypressEvent(e) {
                     e = e || window.event;
                     var key = e.which || e.charCode || e.keyCode,
-                        keyPressedChar,
-                        selection,
-                        startPos,
-                        endPos,
-                        value;
+                        decimalKeyCode = settings.decimal.charCodeAt(0);
                     //added to handle an IE "special" event
                     if (key === undefined) {
                         return false;
                     }
 
-                    // any key except the numbers 0-9
-                    if (key < 48 || key > 57) {
-                        // -(minus) key
-                        if (key === 45) {
-                            $input.val(changeSign());
-                            return false;
-                        // +(plus) key
-                        } else if (key === 43) {
-                            $input.val($input.val().replace("-", ""));
-                            return false;
-                        // enter key or tab key
-                        } else if (key === 13 || key === 9) {
-                            return true;
-                        } else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
-                            // needed for left arrow key or right arrow key with firefox
-                            // the charCode part is to avoid allowing "%"(e.charCode 0, e.keyCode 37)
-                            return true;
-                        } else { // any other key with keycode less than 48 and greater than 57
-                            preventDefault(e);
-                            return true;
-                        }
+                    // any key except the numbers 0-9. if we're using settings.reverse,
+                    // allow the user to input the decimal key
+                    if ((key < 48 || key > 57) && (key !== decimalKeyCode || !settings.reverse)) {
+                        return handleAllKeysExceptNumericalDigits(key, e);
                     } else if (!canInputMoreNumbers()) {
                         return false;
                     } else {
+                        if (key === decimalKeyCode && alreadyContainsDecimal()) {
+                            return false;
+                        }
+                        if (settings.formatOnBlur) {
+                            return true;
+                        }
                         preventDefault(e);
-
-                        keyPressedChar = String.fromCharCode(key);
-                        selection = getInputSelection();
-                        startPos = selection.start;
-                        endPos = selection.end;
-                        value = $input.val();
-                        $input.val(value.substring(0, startPos) + keyPressedChar + value.substring(endPos, value.length));
-                        maskAndPosition(startPos + 1);
+                        applyMask(e);
                         return false;
+                    }
+                }
+
+                function alreadyContainsDecimal() {
+                    return $input.val().indexOf(settings.decimal) > -1;
+                }
+
+                function applyMask(e) {
+                    e = e || window.event;
+                    var key = e.which || e.charCode || e.keyCode,
+                        keyPressedChar = "",
+                        selection,
+                        startPos,
+                        endPos,
+                        value;
+                    if (key >= 48 && key <= 57) {
+                        keyPressedChar = String.fromCharCode(key);
+                    }
+                    selection = getInputSelection();
+                    startPos = selection.start;
+                    endPos = selection.end;
+                    value = $input.val();
+                    $input.val(value.substring(0, startPos) + keyPressedChar + value.substring(endPos, value.length));
+                    maskAndPosition(startPos + 1);
+                }
+
+                function handleAllKeysExceptNumericalDigits(key, e) {
+                    // -(minus) key
+                    if (key === 45) {
+                        $input.val(changeSign());
+                        return false;
+                        // +(plus) key
+                    } else if (key === 43) {
+                        $input.val($input.val().replace("-", ""));
+                        return false;
+                        // enter key or tab key
+                    } else if (key === 13 || key === 9) {
+                        return true;
+                    } else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
+                        // needed for left arrow key or right arrow key with firefox
+                        // the charCode part is to avoid allowing "%"(e.charCode 0, e.keyCode 37)
+                        return true;
+                    } else { // any other key with keycode less than 48 and greater than 57
+                        preventDefault(e);
+                        return true;
                     }
                 }
 
@@ -352,6 +420,13 @@
                 function blurEvent(e) {
                     if ($.browser.msie) {
                         keypressEvent(e);
+                    }
+
+                    if (!!settings.formatOnBlur && $input.val() !== onFocusValue) {
+                        applyMask(e);
+                        $input.unbind("blur.maskMoney", blurEvent);
+                        $input.blur();
+                        $input.bind("blur.maskMoney", blurEvent);
                     }
 
                     if ($input.val() === "" || $input.val() === setSymbol(getDefaultMask())) {

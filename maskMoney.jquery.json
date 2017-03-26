@@ -10,11 +10,11 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://raw.github.com/plentz/jquery-maskmoney/master/LICENSE"
+      "url": "http://opensource.org/licenses/MIT"
     }
   ],
   "dependencies": {
-    "jquery": ">=1.6"
+    "jquery": "latest"
   },
   "description": "jQuery plugin to mask data entry in the input text in the form of money (currency)",
   "keywords": [

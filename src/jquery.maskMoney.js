@@ -132,6 +132,15 @@
                 }
 
                 function setCursorPosition(pos) {
+                    // Do not set the position if
+                    // the we're formatting on blur.
+                    // This is because we do not want
+                    // to refocus on the control after
+                    // the blur.
+                    if(!!settings.formatOnBlur) {
+                        return;
+                    }
+
                     $input.each(function (index, elem) {
                         if (elem.setSelectionRange) {
                             elem.focus();
@@ -152,10 +161,24 @@
                         value = value.replace("-", "");
                         operator = "-";
                     }
+                    if (value.indexOf(settings.prefix) > -1) {
+                        value = value.replace(settings.prefix, "");
+                    }
+                    if (value.indexOf(settings.suffix) > -1) {
+                        value = value.replace(settings.suffix, "");
+                    }
                     return operator + settings.prefix + value + settings.suffix;
                 }
 
                 function maskValue(value) {
+                    if (!!settings.reverse) {
+                        return maskValueReverse(value);
+                    }
+
+                    return maskValueStandard(value);
+                }
+
+                function maskValueStandard(value) {
                     var negative = (value.indexOf("-") > -1 && settings.allowNegative) ? "-" : "",
                         onlyNumbers = value.replace(/[^0-9]/g, ""),
                         integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision),
@@ -163,14 +186,7 @@
                         decimalPart,
                         leadingZeros;
 
-                    // remove initial zeros
-                    integerPart = integerPart.replace(/^0*/g, "");
-                    // put settings.thousands every 3 chars
-                    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, settings.thousands);
-                    if (integerPart === "") {
-                        integerPart = "0";
-                    }
-                    newValue = negative + integerPart;
+                    newValue = buildIntegerPart(integerPart, negative);
 
                     if (settings.precision > 0) {
                         decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
@@ -180,13 +196,54 @@
                     return setSymbol(newValue);
                 }
 
+                function maskValueReverse(value) {
+                    var negative = (value.indexOf("-") > -1 && settings.allowNegative) ? "-" : "",
+                        valueWithoutSymbol = value.replace(settings.prefix, "").replace(settings.suffix, ""),
+                        integerPart = valueWithoutSymbol.split(settings.decimal)[0],
+                        newValue,
+                        decimalPart = "";
+
+                    newValue = buildIntegerPart(integerPart, negative);
+
+                    if (settings.precision > 0) {
+                        var arr = valueWithoutSymbol.split(settings.decimal);
+                        if (arr.length > 1) {
+                            decimalPart = arr[1];
+                        }
+                        newValue += settings.decimal + decimalPart;
+                    }
+
+                    newValue = (+newValue).toFixed(settings.precision);
+                    return setSymbol(newValue);
+                }
+
+                function buildIntegerPart(integerPart, negative) {
+                    // remove initial zeros
+                    integerPart = integerPart.replace(/^0*/g, "");
+
+                    // put settings.thousands every 3 chars
+                    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, settings.thousands);
+                    if (integerPart === "") {
+                        integerPart = "0";
+                    }
+                    return negative + integerPart;
+                }
+
 
                 function maskAndPosition(startPos) {
                     var originalLen = $input.val().length,
                         newLen;
                     $input.val(maskValue($input.val()));
                     newLen = $input.val().length;
-                    startPos = startPos - (originalLen - newLen);
+                    // If the we're using the reverse option,
+                    // do not put the cursor at the end of
+                    // the input. The reverse option allows 
+                    // the user to input text from left to right.
+                    if (!!settings.reverse) {
+                        // startPos += 1;
+                    } else {
+                        startPos = startPos - (originalLen - newLen);
+                    }
                     setCursorPosition(startPos);
                 }
 
@@ -222,50 +279,73 @@
                 function keypressEvent(e) {
                     e = e || window.event;
                     var key = e.which || e.charCode || e.keyCode,
-                        keyPressedChar,
-                        selection,
-                        startPos,
-                        endPos,
-                        value;
+                        decimalKeyCode = settings.decimal.charCodeAt(0);
                     //added to handle an IE "special" event
                     if (key === undefined) {
                         return false;
                     }
 
-                    // any key except the numbers 0-9
-                    if (key < 48 || key > 57) {
-                        // -(minus) key
-                        if (key === 45) {
-                            $input.val(changeSign());
-                            return false;
-                        // +(plus) key
-                        } else if (key === 43) {
-                            $input.val($input.val().replace("-", ""));
-                            return false;
-                        // enter key or tab key
-                        } else if (key === 13 || key === 9) {
-                            return true;
-                        } else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
-                            // needed for left arrow key or right arrow key with firefox
-                            // the charCode part is to avoid allowing "%"(e.charCode 0, e.keyCode 37)
-                            return true;
-                        } else { // any other key with keycode less than 48 and greater than 57
-                            preventDefault(e);
-                            return true;
-                        }
+                    // any key except the numbers 0-9. if we're using settings.reverse,
+                    // allow the user to input the decimal key
+                    if ((key < 48 || key > 57) && (key !== decimalKeyCode || !settings.reverse)) {
+                        return handleAllKeysExceptNumericalDigits(key, e);
                     } else if (!canInputMoreNumbers()) {
                         return false;
                     } else {
+                        if (key === decimalKeyCode && alreadyContainsDecimal()) {
+                            return false;
+                        }
+                        if (settings.formatOnBlur) {
+                            return true;
+                        }
                         preventDefault(e);
-
-                        keyPressedChar = String.fromCharCode(key);
-                        selection = getInputSelection();
-                        startPos = selection.start;
-                        endPos = selection.end;
-                        value = $input.val();
-                        $input.val(value.substring(0, startPos) + keyPressedChar + value.substring(endPos, value.length));
-                        maskAndPosition(startPos + 1);
+                        applyMask(e);
                         return false;
+                    }
+                }
+
+                function alreadyContainsDecimal() {
+                    return $input.val().indexOf(settings.decimal) > -1;
+                }
+
+                function applyMask(e) {
+                    e = e || window.event;
+                    var key = e.which || e.charCode || e.keyCode,
+                        keyPressedChar = "",
+                        selection,
+                        startPos,
+                        endPos,
+                        value;
+                    if (key >= 48 && key <= 57) {
+                        keyPressedChar = String.fromCharCode(key);
+                    }
+                    selection = getInputSelection();
+                    startPos = selection.start;
+                    endPos = selection.end;
+                    value = $input.val();
+                    $input.val(value.substring(0, startPos) + keyPressedChar + value.substring(endPos, value.length));
+                    maskAndPosition(startPos + 1);
+                }
+
+                function handleAllKeysExceptNumericalDigits(key, e) {
+                    // -(minus) key
+                    if (key === 45) {
+                        $input.val(changeSign());
+                        return false;
+                        // +(plus) key
+                    } else if (key === 43) {
+                        $input.val($input.val().replace("-", ""));
+                        return false;
+                        // enter key or tab key
+                    } else if (key === 13 || key === 9) {
+                        return true;
+                    } else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
+                        // needed for left arrow key or right arrow key with firefox
+                        // the charCode part is to avoid allowing "%"(e.charCode 0, e.keyCode 37)
+                        return true;
+                    } else { // any other key with keycode less than 48 and greater than 57
+                        preventDefault(e);
+                        return true;
                     }
                 }
 
@@ -324,7 +404,10 @@
                     mask();
                     var input = $input.get(0),
                         textRange;
-                    if (input.createTextRange) {
+
+                    if(!!settings.selectAllOnFocus) {
+                        input.select();
+                    } else if (input.createTextRange) {
                         textRange = input.createTextRange();
                         textRange.collapse(false); // set the cursor at the end of the input
                         textRange.select();
@@ -345,6 +428,10 @@
                 function blurEvent(e) {
                     if ($.browser.msie) {
                         keypressEvent(e);
+                    }
+
+                    if (!!settings.formatOnBlur && $input.val() !== onFocusValue) {
+                        applyMask(e);
                     }
 
                     if ($input.val() === "" || $input.val() === setSymbol(getDefaultMask())) {
@@ -369,7 +456,12 @@
                 function clickEvent() {
                     var input = $input.get(0),
                         length;
-                    if (input.setSelectionRange) {
+                    if(!!settings.selectAllOnFocus) {
+                        // selectAllOnFocus will be handled by 
+                        // the focus event. The focus event is
+                        // also fired when the input is clicked.
+                        return;
+                    } else if (input.setSelectionRange) {
                         length = $input.val().length;
                         input.setSelectionRange(length, length);
                     } else {
