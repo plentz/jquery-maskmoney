@@ -140,6 +140,15 @@
                 }
 
                 function setCursorPosition(pos) {
+                    // Do not set the position if
+                    // the we're formatting on blur.
+                    // This is because we do not want
+                    // to refocus on the control after
+                    // the blur.
+                    if(!!settings.formatOnBlur) {
+                        return;
+                    }
+
                     $input.each(function (index, elem) {
                         if (elem.setSelectionRange) {
                             elem.focus();
@@ -205,7 +214,7 @@
                     newValue = buildIntegerPart(integerPart, negative);
 
                     if (settings.precision > 0) {
-                        var arr = value.split(settings.decimal);
+                        var arr = valueWithoutSymbol.split(settings.decimal);
                         if (arr.length > 1) {
                             decimalPart = arr[1];
                         }
@@ -234,8 +243,12 @@
                         newLen;
                     $input.val(maskValue($input.val()));
                     newLen = $input.val().length;
+                    // If the we're using the reverse option,
+                    // do not put the cursor at the end of
+                    // the input. The reverse option allows 
+                    // the user to input text from left to right.
                     if (!!settings.reverse) {
-                        startPos += 1;
+                        // startPos += 1;
                     } else {
                         startPos = startPos - (originalLen - newLen);
                     }
@@ -399,7 +412,10 @@
                     mask();
                     var input = $input.get(0),
                         textRange;
-                    if (input.createTextRange) {
+
+                    if(!!settings.selectAllOnFocus) {
+                        input.select();
+                    } else if (input.createTextRange) {
                         textRange = input.createTextRange();
                         textRange.collapse(false); // set the cursor at the end of the input
                         textRange.select();
@@ -424,9 +440,6 @@
 
                     if (!!settings.formatOnBlur && $input.val() !== onFocusValue) {
                         applyMask(e);
-                        $input.unbind("blur.maskMoney", blurEvent);
-                        $input.blur();
-                        $input.bind("blur.maskMoney", blurEvent);
                     }
 
                     if ($input.val() === "" || $input.val() === setSymbol(getDefaultMask())) {
@@ -451,7 +464,12 @@
                 function clickEvent() {
                     var input = $input.get(0),
                         length;
-                    if (input.setSelectionRange) {
+                    if(!!settings.selectAllOnFocus) {
+                        // selectAllOnFocus will be handled by 
+                        // the focus event. The focus event is
+                        // also fired when the input is clicked.
+                        return;
+                    } else if (input.setSelectionRange) {
                         length = $input.val().length;
                         input.setSelectionRange(length, length);
                     } else {
