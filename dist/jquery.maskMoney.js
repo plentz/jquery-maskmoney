@@ -182,7 +182,6 @@
                     if (!!settings.reverse) {
                         return maskValueReverse(value);
                     }
-
                     return maskValueStandard(value);
                 }
 
@@ -221,7 +220,9 @@
                         newValue += settings.decimal + decimalPart;
                     }
 
-                    newValue = (+newValue).toFixed(settings.precision);
+                    var rounded = Number.parseFloat((integerPart + "." + decimalPart)).toFixed(settings.precision);
+                    var roundedDecimalPart = rounded.toString().split(settings.decimal)[1];
+                    newValue = newValue.split(settings.decimal)[0] + "." + roundedDecimalPart;
                     return setSymbol(newValue);
                 }
 
