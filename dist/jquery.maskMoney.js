@@ -472,7 +472,7 @@
             newValue,
             decimalPart = "";
 
-        if(integerPart === "") {
+        if (integerPart === "") {
             integerPart = "0";
         }
         newValue = buildIntegerPart(integerPart, negative, settings);
@@ -483,11 +483,11 @@
                 decimalPart = arr[1];
             }
             newValue += settings.decimal + decimalPart;
+            var rounded = Number.parseFloat((integerPart + "." + decimalPart)).toFixed(settings.precision);
+            var roundedDecimalPart = rounded.toString().split(settings.decimal)[1];
+            newValue = newValue.split(settings.decimal)[0] + "." + roundedDecimalPart;
         }
 
-        var rounded = Number.parseFloat((integerPart + "." + decimalPart)).toFixed(settings.precision);
-        var roundedDecimalPart = rounded.toString().split(settings.decimal)[1];
-        newValue = newValue.split(settings.decimal)[0] + "." + roundedDecimalPart;
         return setSymbol(newValue, settings);
     }
 

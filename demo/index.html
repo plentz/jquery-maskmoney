@@ -90,6 +90,12 @@
 			var num = $('#demo12').maskMoney('applyMask', $('#demo12').val());
 			alert('Mask applied '+ num);
 		</pre>
+
+		<input type="text" id="demo13" value="45" />
+		<script type="text/javascript">
+			$("#demo13").maskMoney({ formatOnBlur: true, reverse: true, prefix: '$', selectAllOnFocus: true, precision: 0 });
+		</script>
+		<pre class="brush: js">$("#demo13").maskMoney({ formatOnBlur: true, reverse: true, prefix: '$', selectAllOnFocus: true, precision: 0 });</pre>
 	</body>
 	<script type="text/javascript">
 		SyntaxHighlighter.all()
