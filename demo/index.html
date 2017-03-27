@@ -60,6 +60,7 @@
 			var num = $('#demo8').maskMoney('unmasked')[0];
 			alert('type: '+ typeof(num) + ', value: ' + num)
 		</pre>
+
 		<input type="text" id="demo9" value="$15.45" />
 		<script type="text/javascript">
 			$("#demo9").maskMoney({ formatOnBlur: true, prefix: '$' });
@@ -74,11 +75,21 @@
 		<pre class="brush: js">
 			$("#demo10").maskMoney({ formatOnBlur: true, reverse: true, prefix: '$' });
 		</pre>
+
 		<input type="text" id="demo11" value="45.55" />
 		<script type="text/javascript">
 			$("#demo11").maskMoney({ selectAllOnFocus: true });
 		</script>
 		<pre class="brush: js">$("#demo11").maskMoney({ selectAllOnFocus: true });</pre>
+		
+		<input type="text" id="demo12" value=""/>
+		<script type="text/javascript">$("#demo12").maskMoney({ formatOnBlur: true, reverse: true, prefix: '$', selectAllOnFocus: true });</script>
+		<input type="button" onclick="var num = $('#demo12').maskMoney('applyMask', $('#demo12').val());alert('Mask applied '+ num)" value="alert masked value from demo12"/>
+		<pre class="brush: js">
+			$("#demo12").maskMoney({ formatOnBlur: true, reverse: true, prefix: '$', selectAllOnFocus: true });
+			var num = $('#demo12').maskMoney('applyMask', $('#demo12').val());
+			alert('Mask applied '+ num);
+		</pre>
 	</body>
 	<script type="text/javascript">
 		SyntaxHighlighter.all()

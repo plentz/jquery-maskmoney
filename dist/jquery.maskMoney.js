@@ -17,7 +17,7 @@
     }
 
     var methods = {
-        destroy : function () {
+        destroy: function () {
             $(this).unbind(".maskMoney");
 
             if ($.browser.msie) {
@@ -26,7 +26,14 @@
             return this;
         },
 
-        mask : function (value) {
+        applyMask: function (value) {
+            var $input = $(this);
+            // data-* api
+            var settings = $input.data("settings");
+            return maskValue(value, settings);
+        },
+
+        mask: function (value) {
             return this.each(function () {
                 var $this = $(this);
                 if (typeof value === "number") {
@@ -36,17 +43,17 @@
             });
         },
 
-        unmasked : function () {
+        unmasked: function () {
             return this.map(function () {
                 var value = ($(this).val() || "0"),
                     isNegative = value.indexOf("-") !== -1,
                     decimalPart;
                 // get the last position of the array that is a number(coercion makes "" to be evaluated as false)
                 $(value.split(/\D/).reverse()).each(function (index, element) {
-                    if(element) {
+                    if (element) {
                         decimalPart = element;
                         return false;
-                   }
+                    }
                 });
                 value = value.replace(/\D/g, "");
                 value = value.replace(new RegExp(decimalPart + "$"), "." + decimalPart);
@@ -57,7 +64,7 @@
             });
         },
 
-        init : function (parameters) {
+        init: function (parameters) {
             parameters = $.extend({
                 prefix: "",
                 suffix: "",
@@ -76,6 +83,10 @@
                 // data-* api
                 settings = $.extend({}, parameters);
                 settings = $.extend(settings, $input.data());
+
+                // Store settings for use with the applyMask method.
+                $input.data("settings", settings);
+
 
                 function getInputSelection() {
                     var el = $input.get(0),
@@ -145,7 +156,7 @@
                     // This is because we do not want
                     // to refocus on the control after
                     // the blur.
-                    if(!!settings.formatOnBlur) {
+                    if (!!settings.formatOnBlur) {
                         return;
                     }
 
@@ -163,94 +174,16 @@
                     });
                 }
 
-                function setSymbol(value) {
-                    var operator = "";
-                    if (value.indexOf("-") > -1) {
-                        value = value.replace("-", "");
-                        operator = "-";
-                    }
-                    if (value.indexOf(settings.prefix) > -1) {
-                        value = value.replace(settings.prefix, "");
-                    }
-                    if (value.indexOf(settings.suffix) > -1) {
-                        value = value.replace(settings.suffix, "");
-                    }
-                    return operator + settings.prefix + value + settings.suffix;
-                }
-
-                function maskValue(value) {
-                    if (!!settings.reverse) {
-                        return maskValueReverse(value);
-                    }
-                    return maskValueStandard(value);
-                }
-
-                function maskValueStandard(value) {
-                    var negative = (value.indexOf("-") > -1 && settings.allowNegative) ? "-" : "",
-                        onlyNumbers = value.replace(/[^0-9]/g, ""),
-                        integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision),
-                        newValue,
-                        decimalPart,
-                        leadingZeros;
-
-                    newValue = buildIntegerPart(integerPart, negative);
-
-                    if (settings.precision > 0) {
-                        decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
-                        leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
-                        newValue += settings.decimal + leadingZeros + decimalPart;
-                    }
-                    return setSymbol(newValue);
-                }
-
-                function maskValueReverse(value) {
-                    var negative = (value.indexOf("-") > -1 && settings.allowNegative) ? "-" : "",
-                        valueWithoutSymbol = value.replace(settings.prefix, "").replace(settings.suffix, ""),
-                        integerPart = valueWithoutSymbol.split(settings.decimal)[0],
-                        newValue,
-                        decimalPart = "";
-
-                    newValue = buildIntegerPart(integerPart, negative);
-
-                    if (settings.precision > 0) {
-                        var arr = valueWithoutSymbol.split(settings.decimal);
-                        if (arr.length > 1) {
-                            decimalPart = arr[1];
-                        }
-                        newValue += settings.decimal + decimalPart;
-                    }
-
-                    var rounded = Number.parseFloat((integerPart + "." + decimalPart)).toFixed(settings.precision);
-                    var roundedDecimalPart = rounded.toString().split(settings.decimal)[1];
-                    newValue = newValue.split(settings.decimal)[0] + "." + roundedDecimalPart;
-                    return setSymbol(newValue);
-                }
-
-                function buildIntegerPart(integerPart, negative) {
-                    // remove initial zeros
-                    integerPart = integerPart.replace(/^0*/g, "");
-
-                    // put settings.thousands every 3 chars
-                    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, settings.thousands);
-                    if (integerPart === "") {
-                        integerPart = "0";
-                    }
-                    return negative + integerPart;
-                }
-
-
                 function maskAndPosition(startPos) {
                     var originalLen = $input.val().length,
                         newLen;
-                    $input.val(maskValue($input.val()));
+                    $input.val(maskValue($input.val(), settings));
                     newLen = $input.val().length;
                     // If the we're using the reverse option,
                     // do not put the cursor at the end of
                     // the input. The reverse option allows 
                     // the user to input text from left to right.
-                    if (!!settings.reverse) {
-                        // startPos += 1;
-                    } else {
+                    if (!settings.reverse) {
                         startPos = startPos - (originalLen - newLen);
                     }
                     setCursorPosition(startPos);
@@ -259,9 +192,9 @@
                 function mask() {
                     var value = $input.val();
                     if (settings.precision > 0 && value.indexOf(settings.decimal) < 0) {
-                        value += settings.decimal + new Array(settings.precision+1).join(0);
+                        value += settings.decimal + new Array(settings.precision + 1).join(0);
                     }
-                    $input.val(maskValue(value));
+                    $input.val(maskValue(value, settings));
                 }
 
                 function changeSign() {
@@ -379,6 +312,7 @@
                         preventDefault(e);
 
                         value = $input.val();
+
                         // not a selection
                         if (startPos === endPos) {
                             // backspace
@@ -391,7 +325,7 @@
                                     startPos = value.length - lastNumber - 1;
                                     endPos = startPos + 1;
                                 }
-                            //delete
+                                //delete
                             } else {
                                 endPos += 1;
                             }
@@ -414,7 +348,7 @@
                     var input = $input.get(0),
                         textRange;
 
-                    if(!!settings.selectAllOnFocus) {
+                    if (!!settings.selectAllOnFocus) {
                         input.select();
                     } else if (input.createTextRange) {
                         textRange = input.createTextRange();
@@ -424,7 +358,7 @@
                 }
 
                 function cutPasteEvent() {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         mask();
                     }, 0);
                 }
@@ -443,13 +377,13 @@
                         applyMask(e);
                     }
 
-                    if ($input.val() === "" || $input.val() === setSymbol(getDefaultMask())) {
+                    if ($input.val() === "" || $input.val() === setSymbol(getDefaultMask(), settings)) {
                         if (!settings.allowZero) {
                             $input.val("");
                         } else if (!settings.affixesStay) {
                             $input.val(getDefaultMask());
                         } else {
-                            $input.val(setSymbol(getDefaultMask()));
+                            $input.val(setSymbol(getDefaultMask(), settings));
                         }
                     } else {
                         if (!settings.affixesStay) {
@@ -465,7 +399,7 @@
                 function clickEvent() {
                     var input = $input.get(0),
                         length;
-                    if(!!settings.selectAllOnFocus) {
+                    if (!!settings.selectAllOnFocus) {
                         // selectAllOnFocus will be handled by 
                         // the focus event. The focus event is
                         // also fired when the input is clicked.
@@ -491,13 +425,91 @@
         }
     };
 
+    function setSymbol(value, settings) {
+        var operator = "";
+        if (value.indexOf("-") > -1) {
+            value = value.replace("-", "");
+            operator = "-";
+        }
+        if (value.indexOf(settings.prefix) > -1) {
+            value = value.replace(settings.prefix, "");
+        }
+        if (value.indexOf(settings.suffix) > -1) {
+            value = value.replace(settings.suffix, "");
+        }
+        return operator + settings.prefix + value + settings.suffix;
+    }
+
+    function maskValue(value, settings) {
+        if (!!settings.reverse) {
+            return maskValueReverse(value, settings);
+        }
+        return maskValueStandard(value, settings);
+    }
+
+    function maskValueStandard(value, settings) {
+        var negative = (value.indexOf("-") > -1 && settings.allowNegative) ? "-" : "",
+            onlyNumbers = value.replace(/[^0-9]/g, ""),
+            integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision),
+            newValue,
+            decimalPart,
+            leadingZeros;
+
+        newValue = buildIntegerPart(integerPart, negative, settings);
+
+        if (settings.precision > 0) {
+            decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
+            leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
+            newValue += settings.decimal + leadingZeros + decimalPart;
+        }
+        return setSymbol(newValue, settings);
+    }
+
+    function maskValueReverse(value, settings) {
+        var negative = (value.indexOf("-") > -1 && settings.allowNegative) ? "-" : "",
+            valueWithoutSymbol = value.replace(settings.prefix, "").replace(settings.suffix, ""),
+            integerPart = valueWithoutSymbol.split(settings.decimal)[0],
+            newValue,
+            decimalPart = "";
+
+        if(integerPart === "") {
+            integerPart = "0";
+        }
+        newValue = buildIntegerPart(integerPart, negative, settings);
+
+        if (settings.precision > 0) {
+            var arr = valueWithoutSymbol.split(settings.decimal);
+            if (arr.length > 1) {
+                decimalPart = arr[1];
+            }
+            newValue += settings.decimal + decimalPart;
+        }
+
+        var rounded = Number.parseFloat((integerPart + "." + decimalPart)).toFixed(settings.precision);
+        var roundedDecimalPart = rounded.toString().split(settings.decimal)[1];
+        newValue = newValue.split(settings.decimal)[0] + "." + roundedDecimalPart;
+        return setSymbol(newValue, settings);
+    }
+
+    function buildIntegerPart(integerPart, negative, settings) {
+        // remove initial zeros
+        integerPart = integerPart.replace(/^0*/g, "");
+
+        // put settings.thousands every 3 chars
+        integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, settings.thousands);
+        if (integerPart === "") {
+            integerPart = "0";
+        }
+        return negative + integerPart;
+    }
+
     $.fn.maskMoney = function (method) {
         if (methods[method]) {
             return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-        } else if (typeof method === "object" || ! method) {
+        } else if (typeof method === "object" || !method) {
             return methods.init.apply(this, arguments);
         } else {
-            $.error("Method " +  method + " does not exist on jQuery.maskMoney");
+            $.error("Method " + method + " does not exist on jQuery.maskMoney");
         }
     };
 })(window.jQuery || window.Zepto);
