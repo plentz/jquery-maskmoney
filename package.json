@@ -39,6 +39,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "test": "grunt test --verbose"
+    "test": "grunt test --verbose",
+    "build": "grunt"
   }
 }

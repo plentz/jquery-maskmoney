@@ -73,7 +73,8 @@
                 decimal: ".",
                 precision: 2,
                 allowZero: false,
-                allowNegative: false
+                allowNegative: false,
+                allowEmpty: false
             }, parameters);
 
             return this.each(function () {
@@ -191,6 +192,9 @@
 
                 function mask() {
                     var value = $input.val();
+                    if (settings.allowEmpty && value === "") {
+                        return;
+                    }
                     if (settings.precision > 0 && value.indexOf(settings.decimal) < 0) {
                         value += settings.decimal + new Array(settings.precision + 1).join(0);
                     }
@@ -441,6 +445,9 @@
     }
 
     function maskValue(value, settings) {
+        if (settings.allowEmpty && value === "") {
+            return "";
+        }
         if (!!settings.reverse) {
             return maskValueReverse(value, settings);
         }
