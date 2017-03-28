@@ -381,7 +381,9 @@
                         applyMask(e);
                     }
 
-                    if ($input.val() === "" || $input.val() === setSymbol(getDefaultMask(), settings)) {
+                    if ($input.val() === "" && settings.allowEmpty) {
+                        $input.val("");
+                    } else if ($input.val() === "" || $input.val() === setSymbol(getDefaultMask(), settings)) {
                         if (!settings.allowZero) {
                             $input.val("");
                         } else if (!settings.affixesStay) {
