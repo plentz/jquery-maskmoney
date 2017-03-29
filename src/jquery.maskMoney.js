@@ -66,6 +66,7 @@
                 precision: 2,
                 allowZero: false,
                 allowNegative: false,
+                doubleClickSelection: true,
                 allowEmpty: false
             }, parameters);
 
@@ -428,12 +429,26 @@
                     }
                 }
 
+                function doubleClickEvent() {
+                    var input = $input.get(0),
+                        start,
+                        length;
+                    if (input.setSelectionRange) {
+                        length = $input.val().length;
+                        start = settings.doubleClickSelection ? 0 : length;
+                        input.setSelectionRange(start, length);
+                    } else {
+                        $input.val($input.val());
+                    }
+                }
+
                 $input.unbind(".maskMoney");
                 $input.bind("keypress.maskMoney", keypressEvent);
                 $input.bind("keydown.maskMoney", keydownEvent);
                 $input.bind("blur.maskMoney", blurEvent);
                 $input.bind("focus.maskMoney", focusEvent);
                 $input.bind("click.maskMoney", clickEvent);
+                $input.bind("dblclick.maskMoney", doubleClickEvent);
                 $input.bind("cut.maskMoney", cutPasteEvent);
                 $input.bind("paste.maskMoney", cutPasteEvent);
                 $input.bind("mask.maskMoney", mask);

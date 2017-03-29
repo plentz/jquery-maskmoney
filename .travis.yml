@@ -1,3 +1,8 @@
 language: node_js
 node_js:
-  - 0.10
+  - 4
+install:
+  - npm install grunt-cli -g
+  - npm install -g bower
+  - npm install
+  - bower install

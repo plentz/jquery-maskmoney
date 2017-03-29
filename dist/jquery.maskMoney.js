@@ -1,5 +1,5 @@
 /*
- *  jquery-maskmoney - v3.0.2
+ *  jquery-maskmoney - v3.1.0
  *  jQuery plugin to mask data entry in the input text in the form of money (currency)
  *  https://github.com/plentz/jquery-maskmoney
  *
@@ -74,6 +74,7 @@
                 precision: 2,
                 allowZero: false,
                 allowNegative: false,
+                doubleClickSelection: true,
                 allowEmpty: false
             }, parameters);
 
@@ -436,12 +437,26 @@
                     }
                 }
 
+                function doubleClickEvent() {
+                    var input = $input.get(0),
+                        start,
+                        length;
+                    if (input.setSelectionRange) {
+                        length = $input.val().length;
+                        start = settings.doubleClickSelection ? 0 : length;
+                        input.setSelectionRange(start, length);
+                    } else {
+                        $input.val($input.val());
+                    }
+                }
+
                 $input.unbind(".maskMoney");
                 $input.bind("keypress.maskMoney", keypressEvent);
                 $input.bind("keydown.maskMoney", keydownEvent);
                 $input.bind("blur.maskMoney", blurEvent);
                 $input.bind("focus.maskMoney", focusEvent);
                 $input.bind("click.maskMoney", clickEvent);
+                $input.bind("dblclick.maskMoney", doubleClickEvent);
                 $input.bind("cut.maskMoney", cutPasteEvent);
                 $input.bind("paste.maskMoney", cutPasteEvent);
                 $input.bind("mask.maskMoney", mask);

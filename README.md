@@ -74,13 +74,15 @@ You can also configure maskMoney options using the data-* API instead of passing
 To run our test suite, just clone the repo and open `test/index.html`. If you want to run it using nodejs, clone the repo and run:
 
 ```
-npm install && grunt test
+npm install
+bower install
+grunt test
 ```
 
 ***
 ### Contributors:
 
- * [Aurélio Saraiva](mailto:aureliosaraiva@gmail.com)
+ * [Aurélio Saraiva](http://github.com/aureliosaraiva)
  * [Raul Pereira da Silva](http://raulpereira.com)
  * [Diego Plentz](http://plentz.org)
  * [Otávio Ribeiro Medeiros](http://github.com/otaviomedeiros)
