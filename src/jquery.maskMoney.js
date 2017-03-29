@@ -31,21 +31,30 @@
         unmasked : function () {
             return this.map(function () {
                 var value = ($(this).val() || "0"),
+                    decimal = $(this).attr("data-decimal"),
+                    precision = $(this).attr("data-precision"),
                     isNegative = value.indexOf("-") !== -1,
+                    integerPart,
                     decimalPart;
-                // get the last position of the array that is a number(coercion makes "" to be evaluated as false)
-                $(value.split(/\D/).reverse()).each(function (index, element) {
-                    if(element) {
-                        decimalPart = element;
-                        return false;
-                   }
-                });
-                value = value.replace(/\D/g, "");
-                value = value.replace(new RegExp(decimalPart + "$"), "." + decimalPart);
+
+                var decimalIndex = value.indexOf(decimal);
+
+                integerPart = (decimalIndex > -1 ? value.slice(0, decimalIndex) : value);
+                decimalPart = (decimalIndex > -1 ? value.slice(decimalIndex + 1) : "");
+                integerPart = integerPart.replace(/[^0-9]/g, "");
+                decimalPart = decimalPart.replace(/[^0-9]/g, "");
+
+                value = integerPart;
+
+                if (decimalIndex > -1) {
+                    value += "." + decimalPart; 
+                }
+                
                 if (isNegative) {
                     value = "-" + value;
                 }
-                return parseFloat(value);
+
+                return parseFloat(parseFloat(value).toFixed(precision));
             });
         },
 
@@ -58,7 +67,8 @@
                 decimal: ".",
                 precision: 2,
                 allowZero: false,
-                allowNegative: false
+                allowNegative: false,
+                allowNoDecimal: false
             }, parameters);
 
             return this.each(function () {
@@ -68,6 +78,11 @@
                 // data-* api
                 settings = $.extend({}, parameters);
                 settings = $.extend(settings, $input.data());
+
+                // need this to track decimal symbol
+                $(this)
+                    .attr("data-decimal", settings.decimal)
+                    .attr("data-precision", settings.precision);
 
                 function getInputSelection() {
                     var el = $input.get(0),
@@ -122,13 +137,27 @@
                 } // getInputSelection
 
                 function canInputMoreNumbers() {
-                    var haventReachedMaxLength = !($input.val().length >= $input.attr("maxlength") && $input.attr("maxlength") >= 0),
+                    var decimalIndex = $input.val().indexOf(settings.decimal),
+                        haventReachedMaxLength = !($input.val().length >= $input.attr("maxlength") && $input.attr("maxlength") >= 0),
+                        haventReachedDecimalLimit = (!settings.allowNoDecimal || $input.val().length - decimalIndex - 1 < settings.precision),
                         selection = getInputSelection(),
                         start = selection.start,
                         end = selection.end,
                         haveNumberSelected = (selection.start !== selection.end && $input.val().substring(start, end).match(/\d/)) ? true : false,
+                        inputtingDecimal = decimalIndex > -1 && selection.start > decimalIndex,
                         startWithZero = ($input.val().substring(0, 1) === "0");
-                    return haventReachedMaxLength || haveNumberSelected || startWithZero;
+                 
+                    return (
+                        haveNumberSelected || // allow number replacement
+                        (inputtingDecimal ? 
+                            haventReachedDecimalLimit && haventReachedMaxLength :
+                            haventReachedMaxLength || startWithZero
+                        )
+                    );
+                }
+
+                function canInputDecimal() {
+                    return settings.allowNoDecimal && $input.val().indexOf(settings.decimal) < 0;
                 }
 
                 function setCursorPosition(pos) {
@@ -157,26 +186,53 @@
 
                 function maskValue(value) {
                     var negative = (value.indexOf("-") > -1 && settings.allowNegative) ? "-" : "",
-                        onlyNumbers = value.replace(/[^0-9]/g, ""),
-                        integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision),
                         newValue,
-                        decimalPart,
-                        leadingZeros;
+                        integerPart,
+                        decimalPart;
 
-                    // remove initial zeros
-                    integerPart = integerPart.replace(/^0*/g, "");
-                    // put settings.thousands every 3 chars
-                    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, settings.thousands);
-                    if (integerPart === "") {
-                        integerPart = "0";
-                    }
-                    newValue = negative + integerPart;
+                    var thousandify = function(str) {
+                        return (str
+                            // remove initial zeros
+                            .replace(/^0*/g, "")
+                            // put settings.thousands every 3 chars
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, settings.thousands) 
+                        ) || "0"; // if empty string, return "0" 
+                    };
 
-                    if (settings.precision > 0) {
+                    // use decimal as delimiter, and treat each portion separately
+                    // only handle decimal if required
+                    if(settings.allowNoDecimal) {
+                        var decimalIndex = value.indexOf(settings.decimal);
+                        
+                        integerPart = (decimalIndex > -1 ? value.slice(0, decimalIndex) : value);
+                        decimalPart = (decimalIndex > -1 ? value.slice(decimalIndex + 1) : "");
+                        integerPart = integerPart.replace(/[^0-9]/g, "");
+                        decimalPart = decimalPart.replace(/[^0-9]/g, "").slice(0, settings.precision);
+
+                        newValue = thousandify(integerPart);
+
+                        // only replace the decimal part if it exists 
+                        if(decimalIndex > -1) {
+                            newValue += settings.decimal + decimalPart;
+                        }
+                        // split the number up according to precision
+                    } else {
+                        var onlyNumbers = value.replace(/[^0-9]/g, "");
+
+                        integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision);
                         decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
-                        leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
-                        newValue += settings.decimal + leadingZeros + decimalPart;
+
+                        newValue = thousandify(integerPart);
+
+                        if(settings.precision > 0) {
+                            var leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
+                            newValue += settings.decimal + leadingZeros + decimalPart;
+                        }
                     }
+
+                    // tack on the negative
+                    newValue = negative + newValue;
+
                     return setSymbol(newValue);
                 }
 
@@ -192,7 +248,7 @@
 
                 function mask() {
                     var value = $input.val();
-                    if (settings.precision > 0 && value.indexOf(settings.decimal) < 0) {
+                    if (!settings.allowNoDecimal && settings.precision > 0 && value.indexOf(settings.decimal) < 0) {
                         value += settings.decimal + new Array(settings.precision+1).join(0);
                     }
                     $input.val(maskValue(value));
@@ -232,6 +288,18 @@
                         return false;
                     }
 
+                    var handlePress = function() {
+                        preventDefault(e);
+
+                        keyPressedChar = String.fromCharCode(key);
+                        selection = getInputSelection();
+                        startPos = selection.start;
+                        endPos = selection.end;
+                        value = $input.val();
+                        $input.val(value.substring(0, startPos) + keyPressedChar + value.substring(endPos, value.length));
+                        maskAndPosition(startPos + 1);
+                    };
+
                     // any key except the numbers 0-9
                     if (key < 48 || key > 57) {
                         // -(minus) key
@@ -245,6 +313,10 @@
                         // enter key or tab key
                         } else if (key === 13 || key === 9) {
                             return true;
+                        // accept the decimal key IF allowNoDecimal is true
+                        } else if (key === settings.decimal.codePointAt() && canInputDecimal()) {
+                            handlePress();
+                            return false;
                         } else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
                             // needed for left arrow key or right arrow key with firefox
                             // the charCode part is to avoid allowing "%"(e.charCode 0, e.keyCode 37)
@@ -256,15 +328,7 @@
                     } else if (!canInputMoreNumbers()) {
                         return false;
                     } else {
-                        preventDefault(e);
-
-                        keyPressedChar = String.fromCharCode(key);
-                        selection = getInputSelection();
-                        startPos = selection.start;
-                        endPos = selection.end;
-                        value = $input.val();
-                        $input.val(value.substring(0, startPos) + keyPressedChar + value.substring(endPos, value.length));
-                        maskAndPosition(startPos + 1);
+                        handlePress();
                         return false;
                     }
                 }
