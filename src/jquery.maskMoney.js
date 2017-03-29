@@ -195,7 +195,11 @@
                     if (settings.precision > 0 && value.indexOf(settings.decimal) < 0) {
                         value += settings.decimal + new Array(settings.precision+1).join(0);
                     }
-                    $input.val(maskValue(value));
+                    if (settings.allowZero || $.isNumeric(value)) {
+                        $input.val(maskValue(value));
+                    } else {
+                        $input.val("");
+                    }
                 }
 
                 function changeSign() {
