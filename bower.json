@@ -1,6 +1,6 @@
 {
   "name": "jquery-maskmoney",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "homepage": "https://github.com/plentz/jquery-maskmoney",
   "authors": [
     "Diego Plentz <diego@plentz.org>"
@@ -18,5 +18,8 @@
     "node_modules",
     "bower_components",
     "test"
-  ]
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
 }
