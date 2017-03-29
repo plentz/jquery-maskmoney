@@ -4,7 +4,7 @@
  *  https://github.com/plentz/jquery-maskmoney
  *
  *  Made by Diego Plentz
- *  Under MIT License (https://raw.github.com/plentz/jquery-maskmoney/master/LICENSE)
+ *  Under MIT License
  */
 (function ($) {
     "use strict";
@@ -28,12 +28,8 @@
 
         mask : function (value) {
             return this.each(function () {
-                var $this = $(this),
-                    decimalSize;
+                var $this = $(this);
                 if (typeof value === "number") {
-                    $this.trigger("mask");
-                    decimalSize = $($this.val().split(/\D/)).last()[0].length;
-                    value = value.toFixed(decimalSize);
                     $this.val(value);
                 }
                 return $this.trigger("mask");
@@ -44,14 +40,12 @@
             return this.map(function () {
                 var value = ($(this).val() || "0"),
                     isNegative = value.indexOf("-") !== -1,
-                    decimalPart;
-                // get the last position of the array that is a number(coercion makes "" to be evaluated as false)
-                $(value.split(/\D/).reverse()).each(function (index, element) {
-                    if(element) {
-                        decimalPart = element;
-                        return false;
-                   }
-                });
+                    decimalPart,
+                    settings = $(this).data("settings");
+
+                if (settings.precision > 0) {
+                    decimalPart = value.split(settings.decimal).reverse()[0].substring(0, settings.precision);
+                }
                 value = value.replace(/\D/g, "");
                 value = value.replace(new RegExp(decimalPart + "$"), "." + decimalPart);
                 if (isNegative) {
@@ -61,8 +55,8 @@
             });
         },
 
-        init : function (settings) {
-            settings = $.extend({
+        init : function (parameters) {
+            parameters = $.extend({
                 prefix: "",
                 suffix: "",
                 affixesStay: true,
@@ -71,13 +65,15 @@
                 precision: 2,
                 allowZero: false,
                 allowNegative: false
-            }, settings);
+            }, parameters);
+            $(this).data("settings", parameters);
 
             return this.each(function () {
-                var $input = $(this),
+                var $input = $(this), settings,
                     onFocusValue;
 
                 // data-* api
+                settings = $.extend({}, parameters);
                 settings = $.extend(settings, $input.data());
 
                 function getInputSelection() {
@@ -191,6 +187,7 @@
                     return setSymbol(newValue);
                 }
 
+
                 function maskAndPosition(startPos) {
                     var originalLen = $input.val().length,
                         newLen;
@@ -202,6 +199,9 @@
 
                 function mask() {
                     var value = $input.val();
+                    if (settings.precision > 0 && value.indexOf(settings.decimal) < 0) {
+                        value += settings.decimal + new Array(settings.precision+1).join(0);
+                    }
                     $input.val(maskValue(value));
                 }
 

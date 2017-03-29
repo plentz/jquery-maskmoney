@@ -10,7 +10,7 @@ module.exports = function(grunt) {
             " *  <%= pkg.homepage %>\n" +
             " *\n" +
             " *  Made by <%= pkg.author.name %>\n" +
-            " *  Under <%= pkg.licenses[0].type %> License (<%= pkg.licenses[0].url %>)\n" +
+            " *  Under <%= pkg.license %> License\n" +
             " */\n"
         },
         jshint: {
