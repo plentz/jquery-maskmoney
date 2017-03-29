@@ -1,4 +1,15 @@
-(function ($) {
+(function (factory) {
+    if (typeof define === "function" && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(["jquery"], factory);
+    } else if (typeof module === "object" && module.exports) {
+        // Node/CommonJS
+        module.exports = factory(require("jquery"));
+    } else {
+        // Browser globals
+        factory(window.jQuery || window.Zepto);
+    }
+}(function ($) {
     "use strict";
     if (!$.browser) {
         $.browser = {};
@@ -399,4 +410,4 @@
             $.error("Method " +  method + " does not exist on jQuery.maskMoney");
         }
     };
-})(window.jQuery || window.Zepto);
+}));
