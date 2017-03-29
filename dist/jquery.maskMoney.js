@@ -238,7 +238,7 @@
                     } else if (!canInputMoreNumbers()) {
                         return false;
                     } else {
-                        if (key === decimalKeyCode && alreadyContainsDecimal()) {
+                        if (key === decimalKeyCode && shouldPreventDecimalKey()) {
                             return false;
                         }
                         if (settings.formatOnBlur) {
@@ -248,6 +248,22 @@
                         applyMask(e);
                         return false;
                     }
+                }
+
+                function shouldPreventDecimalKey() {
+                    // If all text is selected, we can accept the decimal
+                    // key because it will replace everything.
+                    if (isAllTextSelected()) {
+                        return false;
+                    }
+
+                    return alreadyContainsDecimal();
+                }
+
+                function isAllTextSelected() {
+                    var length = $input.val().length;
+                    var selection = getInputSelection();
+                    return selection.start === 0 && selection.end === length;
                 }
 
                 function alreadyContainsDecimal() {
