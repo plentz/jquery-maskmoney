@@ -20,6 +20,7 @@
   "engines": {
     "node": ">=4"
   },
+  "main": "dist/jquery.maskMoney.js",
   "npmName": "jquery-maskmoney",
   "npmFileMap": [
     {
