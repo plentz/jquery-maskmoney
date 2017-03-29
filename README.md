@@ -76,7 +76,7 @@ npm install && grunt test
 ***
 ### Contributors:
 
- * [Aurélio Saraiva](mailto:aureliosaraiva@gmail.com)
+ * [Aurélio Saraiva](http://github.com/aureliosaraiva)
  * [Raul Pereira da Silva](http://raulpereira.com)
  * [Diego Plentz](http://plentz.org)
  * [Otávio Ribeiro Medeiros](http://github.com/otaviomedeiros)
