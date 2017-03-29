@@ -17,6 +17,9 @@
   "dependencies": {
     "jquery": "latest"
   },
+  "engines": {
+    "node": ">=4"
+  },
   "npmName": "jquery-maskmoney",
   "npmFileMap": [
     {
