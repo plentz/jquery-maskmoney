@@ -44,6 +44,10 @@ The options that you can set are:
  * `precision`: how many decimal places are allowed. default: 2
  * `allowZero`: use this setting to prevent users from inputing zero. default: false
  * `allowNegative`: use this setting to prevent users from inputing negative values. default: false
+ * `formatOnBlur`: delay formatting of text field until focus leaves the field. default: false
+ * `reverse`: by default, `maskMoney` applies keystrokes from right to left. use this setting to apply keystrokes from left to right. 
+ * `selectAllOnFocus`: select all text in the input when the element fires the focus event. default :false
+ * `allowEmpty`: allow empty input values, so that when you delete the number it doesn't reset to 0.00.  default: false
 
 __IMPORTANT__: if you try to bind maskMoney to a read only field, nothing will happen, since we ignore completely read only fields. So, if you have a read only field, try to bind maskMoney to it, it will not work. Even if you change the field removing the readonly property, you will need to re-bind maskMoney to make it work.
 
@@ -91,6 +95,7 @@ grunt test
  * [Daniel Loureiro](https://github.com/loureirorg)
  * [Thiago Silva](http://twitter.com/tafs7/)
  * [Guilherme Nagatomo](https://github.com/guilhermehn)
+ * [Andrew Duncan](https://github.com/abduncan)
 
 ***
 ### License:
