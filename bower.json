@@ -7,6 +7,9 @@
   ],
   "description": "jQuery plugin to mask data entry in the input text in the form of money (currency).",
   "main": "dist/jquery.maskMoney.js",
+  "dependencies": {
+    "jquery": "latest"
+  },
   "keywords": [
     "form",
     "money",
