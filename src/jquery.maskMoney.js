@@ -188,8 +188,18 @@
                     if (settings.allowEmpty && value === "") {
                         return;
                     }
-                    if (settings.precision > 0 && value.indexOf(settings.decimal) < 0) {
-                        value += settings.decimal + new Array(settings.precision + 1).join(0);
+                    if (settings.precision > 0) {
+						var decimalPointIndex = value.indexOf(settings.decimal);
+						if(decimalPointIndex < 0){
+							value += settings.decimal + new Array(settings.precision + 1).join(0);
+						}
+						else {
+							// If the following decimal part dosen't have enough length against the precision, it needs to be filled with zeros.
+							var integerPart = value.slice(0, decimalPointIndex)
+							, decimalPart = value.slice(decimalPointIndex + 1);
+							value = integerPart + settings.decimal + decimalPart + 
+									new Array((settings.precision + 1) - decimalPart.length).join(0);
+						}
                     }
                     $input.val(maskValue(value, settings));
                 }
