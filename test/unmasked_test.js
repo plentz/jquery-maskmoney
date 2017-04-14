@@ -62,7 +62,7 @@ test("with options specified", function() {
     var input = $("#input1"),
         unmasked;
 	input.val("123.456");
-    input.maskMoney({ thousands : '.' });
+    input.maskMoney({ thousands : "." });
     unmasked = input.maskMoney("unmaskedWithOptions")[0];
     equal(unmasked, 123456, "unmask method return the correct number when options are set");
 });
