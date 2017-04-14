@@ -39,6 +39,7 @@
             return this.map(function () {
                 var value = ($(this).val() || "0"),
                     isNegative = value.indexOf("-") !== -1,
+					settings = $(this).data('settings'),
                     decimalPart;
                 // get the last position of the array that is a number(coercion makes "" to be evaluated as false)
                 $(value.split(/\D/).reverse()).each(function (index, element) {
@@ -48,7 +49,11 @@
                     }
                 });
                 value = value.replace(/\D/g, "");
-                value = value.replace(new RegExp(decimalPart + "$"), "." + decimalPart);
+                
+				// if the precision setting is none or higher than 0, add the decimal part
+                if (!settings || !settings.precision || settings.precision > 0) {
+                    value = value.replace(new RegExp(decimalPart + "$"), "." + decimalPart);
+                }
                 if (isNegative) {
                     value = "-" + value;
                 }
@@ -195,11 +200,14 @@
 						}
 						else {
 							// If the following decimal part dosen't have enough length against the precision, it needs to be filled with zeros.
-							var integerPart = value.slice(0, decimalPointIndex)
-							, decimalPart = value.slice(decimalPointIndex + 1);
+							var integerPart = value.slice(0, decimalPointIndex), 
+								decimalPart = value.slice(decimalPointIndex + 1);
 							value = integerPart + settings.decimal + decimalPart + 
 									new Array((settings.precision + 1) - decimalPart.length).join(0);
 						}
+                    } else if (decimalPointIndex > 0) {
+                        // if the precision is 0, discard the decimal part
+                        value = value.slice(0, decimalPointIndex);
                     }
                     $input.val(maskValue(value, settings));
                 }
