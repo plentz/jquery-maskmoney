@@ -39,7 +39,7 @@
             return this.map(function () {
                 var value = ($(this).val() || "0"),
                     isNegative = value.indexOf("-") !== -1,
-					settings = $(this).data('settings'),
+					settings = $(this).data("settings"),
                     decimalPart;
                 // get the last position of the array that is a number(coercion makes "" to be evaluated as false)
                 $(value.split(/\D/).reverse()).each(function (index, element) {
@@ -193,8 +193,8 @@
                     if (settings.allowEmpty && value === "") {
                         return;
                     }
+					var decimalPointIndex = value.indexOf(settings.decimal);
                     if (settings.precision > 0) {
-						var decimalPointIndex = value.indexOf(settings.decimal);
 						if(decimalPointIndex < 0){
 							value += settings.decimal + new Array(settings.precision + 1).join(0);
 						}
