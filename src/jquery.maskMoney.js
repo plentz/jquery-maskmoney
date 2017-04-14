@@ -8,7 +8,19 @@
         $.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
     }
 
-    var methods = {
+    var defaultOptions = {
+                prefix: "",
+                suffix: "",
+                affixesStay: true,
+                thousands: ",",
+                decimal: ".",
+                precision: 2,
+                allowZero: false,
+                allowNegative: false,
+                doubleClickSelection: true,
+                allowEmpty: false
+            },
+		methods = {
         destroy: function () {
             $(this).unbind(".maskMoney");
 
@@ -59,42 +71,16 @@
 		unmaskedWithOptions: function () {
             return this.map(function () {
                 var value = ($(this).val() || "0"),
-                    isNegative = value.indexOf("-") !== -1,
-					settings = $(this).data("settings"),
-                    decimalPart;
-                // get the last position of the array that is a number(coercion makes "" to be evaluated as false)
-                $(value.split(settings.decimal).reverse()).each(function (index, element) {
-                    if (element) {
-                        decimalPart = element;
-                        return false;
-                    }
-                });
-                value = value.replace(/\D/g, "");
-                
-				// if the precision setting is none or higher than 0, add the decimal part
-                if (!settings || settings.precision > 0) {
-                    value = value.replace(new RegExp(decimalPart + "$"), "." + decimalPart);
-                }
-                if (isNegative) {
-                    value = "-" + value;
-                }
+					settings = $(this).data("settings") || defaultOptions,
+					regExp = new RegExp("\\" + settings.thousands, "g");
+                value = value.replace(regExp, "");                
                 return parseFloat(value);
             });
         },
 
         init: function (parameters) {
-            parameters = $.extend({
-                prefix: "",
-                suffix: "",
-                affixesStay: true,
-                thousands: ",",
-                decimal: ".",
-                precision: 2,
-                allowZero: false,
-                allowNegative: false,
-                doubleClickSelection: true,
-                allowEmpty: false
-            }, parameters);
+			// the default options should not be shared with others
+            parameters = $.extend($.extend({}, defaultOptions), parameters);
 
             return this.each(function () {
                 var $input = $(this), settings,
