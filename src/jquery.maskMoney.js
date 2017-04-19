@@ -18,7 +18,8 @@
                 allowZero: false,
                 allowNegative: false,
                 doubleClickSelection: true,
-                allowEmpty: false
+                allowEmpty: false,
+                bringCaretAtEndOnFocus: true
             },
 		methods = {
         destroy: function () {
@@ -72,7 +73,7 @@
             return this.map(function () {
                 var value = ($(this).val() || "0"),
 					settings = $(this).data("settings") || defaultOptions,
-					regExp = new RegExp("\\" + settings.thousands, "g");
+					regExp = new RegExp((settings.thousandsForUnmasked || settings.thousands), "g");
                 value = value.replace(regExp, "");                
                 return parseFloat(value);
             });
@@ -390,7 +391,7 @@
 
                     if (!!settings.selectAllOnFocus) {
                         input.select();
-                    } else if (input.createTextRange) {
+                    } else if (input.createTextRange && settings.bringCaretAtEndOnFocus) {
                         textRange = input.createTextRange();
                         textRange.collapse(false); // set the cursor at the end of the input
                         textRange.select();
@@ -446,7 +447,7 @@
                         // the focus event. The focus event is
                         // also fired when the input is clicked.
                         return;
-                    } else if (input.setSelectionRange) {
+                    } else if (input.setSelectionRange && settings.bringCaretAtEndOnFocus) {
                         length = $input.val().length;
                         input.setSelectionRange(length, length);
                     } else {
@@ -458,7 +459,7 @@
                     var input = $input.get(0),
                         start,
                         length;
-                    if (input.setSelectionRange) {
+                    if (input.setSelectionRange && settings.bringCaretAtEndOnFocus) {
                         length = $input.val().length;
                         start = settings.doubleClickSelection ? 0 : length;
                         input.setSelectionRange(start, length);
