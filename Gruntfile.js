@@ -51,6 +51,7 @@ module.exports = function (grunt) {
 			}
 		  }
 		},
+        
         jquerymanifest: {
             options: {
                 source: grunt.file.readJSON("package.json"),
