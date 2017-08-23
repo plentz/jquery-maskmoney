@@ -188,7 +188,8 @@
                     if (settings.allowEmpty && value === "") {
                         return;
                     }
-                    if (settings.precision > 0 && value.indexOf(settings.decimal) < 0) {
+                    var isNumber = !isNaN(value);
+                    if (settings.precision > 0 && ((isNumber && value.indexOf(".") < 0) ||( !isNumber && value.indexOf(settings.decimal) < 0))) {
                         value += settings.decimal + new Array(settings.precision + 1).join(0);
                     }
                     $input.val(maskValue(value, settings));
