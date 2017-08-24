@@ -493,9 +493,15 @@
         newValue = buildIntegerPart(integerPart, negative, settings);
 
         if (settings.precision > 0) {
-            decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
-            leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
-            newValue += settings.decimal + leadingZeros + decimalPart;
+            if(!isNaN(value) && value.indexOf('.') > -1){
+                decimalPart = value.substr(value.indexOf('.') + 1);
+                leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
+                newValue += settings.decimal + decimalPart + leadingZeros;
+            } else {
+                decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
+                leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
+                newValue += settings.decimal + leadingZeros + decimalPart;
+            }
         }
         return setSymbol(newValue, settings);
     }
