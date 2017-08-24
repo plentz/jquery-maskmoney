@@ -55,6 +55,19 @@ test("with a decimal number as parameter", function() {
     equal(input.val(), "1.10");
 });
 
+test("with a decimal number as parameter and different symbol", function() {
+    var input = $("#input1").maskMoney({thousands: ".", decimal: ","});
+    input.maskMoney("mask", 2001.1);
+    equal(input.val(), "2.001,10");
+});
+
+test("without a decimal number as parameter and different symbol", function() {
+    var input = $("#input1").maskMoney({thousands: ".", decimal: ","});
+    input.maskMoney("mask", 2001);
+    equal(input.val(), "2.001,00");
+});
+
+
 
 test("with a negative number as parameter", function() {
     var input = $("#input1").maskMoney({allowNegative: true});
