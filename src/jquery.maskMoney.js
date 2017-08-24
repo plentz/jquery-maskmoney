@@ -175,7 +175,7 @@
                     newLen = $input.val().length;
                     // If the we're using the reverse option,
                     // do not put the cursor at the end of
-                    // the input. The reverse option allows 
+                    // the input. The reverse option allows
                     // the user to input text from left to right.
                     if (!settings.reverse) {
                         startPos = startPos - (originalLen - newLen);
@@ -418,7 +418,7 @@
                     var input = $input.get(0),
                         length;
                     if (!!settings.selectAllOnFocus) {
-                        // selectAllOnFocus will be handled by 
+                        // selectAllOnFocus will be handled by
                         // the focus event. The focus event is
                         // also fired when the input is clicked.
                         return;
@@ -493,15 +493,16 @@
         newValue = buildIntegerPart(integerPart, negative, settings);
 
         if (settings.precision > 0) {
-            if(!isNaN(value) && value.indexOf('.') > -1){
-                decimalPart = value.substr(value.indexOf('.') + 1);
-                leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
-                newValue += settings.decimal + decimalPart + leadingZeros;
-            } else {
-                decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
-                leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
-                newValue += settings.decimal + leadingZeros + decimalPart;
+            if(!isNaN(value) && value.indexOf(".")){
+                var precision = value.substr(value.indexOf(".") + 1);
+                onlyNumbers += new Array((settings.precision + 1) - precision.length).join(0);
+                integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision);
+                newValue = buildIntegerPart(integerPart, negative, settings);
             }
+
+            decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
+            leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
+            newValue += settings.decimal + leadingZeros + decimalPart;
         }
         return setSymbol(newValue, settings);
     }

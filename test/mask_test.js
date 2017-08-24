@@ -48,6 +48,14 @@ test("with a number as parameter", function() {
     equal(input.val(), "1,000");
 });
 
+
+test("with a decimal number as parameter", function() {
+    var input = $("#input1").maskMoney();
+    input.maskMoney("mask", 1.1);
+    equal(input.val(), "1.10");
+});
+
+
 test("with a negative number as parameter", function() {
     var input = $("#input1").maskMoney({allowNegative: true});
     input.maskMoney("mask", -123456.78);
