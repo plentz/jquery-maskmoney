@@ -41,3 +41,28 @@ test("with collection of fields", function() {
     unmaskedCollection = input.maskMoney("unmasked").get();
     deepEqual(unmaskedCollection, [123456.78, 876543.21], "unmask method return the correct number when the field value has prefix and suffix");
 });
+
+test("without options", function() {
+    var input = $("#input1"),
+        unmasked;
+	input.val("123,456");
+    unmasked = input.maskMoney("unmaskedWithOptions")[0];
+    equal(unmasked, 123456, "unmask method return the correct number even when options are not passed");
+});
+
+test("with decimal part", function() {
+    var input = $("#input1"),
+        unmasked;
+	input.val("123,456.01");
+    unmasked = input.maskMoney("unmaskedWithOptions")[0];
+    equal(unmasked, 123456.01, "unmask method return the correct number when the field value has a decimal part");
+});
+
+test("with options specified", function() {
+    var input = $("#input1"),
+        unmasked;
+	input.val("123.456");
+    input.maskMoney({ thousandsForUnmasked : "\\.", thousands:"." });
+    unmasked = input.maskMoney("unmaskedWithOptions")[0];
+    equal(unmasked, 123456, "unmask method return the correct number when options are set");
+});

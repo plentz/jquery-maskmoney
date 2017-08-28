@@ -8,7 +8,20 @@
         $.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
     }
 
-    var methods = {
+    var defaultOptions = {
+                prefix: "",
+                suffix: "",
+                affixesStay: true,
+                thousands: ",",
+                decimal: ".",
+                precision: 2,
+                allowZero: false,
+                allowNegative: false,
+                doubleClickSelection: true,
+                allowEmpty: false,
+                bringCaretAtEndOnFocus: true
+            },
+		methods = {
         destroy: function () {
             $(this).unbind(".maskMoney");
 
@@ -55,20 +68,20 @@
                 return parseFloat(value);
             });
         },
+		
+		unmaskedWithOptions: function () {
+            return this.map(function () {
+                var value = ($(this).val() || "0"),
+					settings = $(this).data("settings") || defaultOptions,
+					regExp = new RegExp((settings.thousandsForUnmasked || settings.thousands), "g");
+                value = value.replace(regExp, "");                
+                return parseFloat(value);
+            });
+        },
 
         init: function (parameters) {
-            parameters = $.extend({
-                prefix: "",
-                suffix: "",
-                affixesStay: true,
-                thousands: ",",
-                decimal: ".",
-                precision: 2,
-                allowZero: false,
-                allowNegative: false,
-                doubleClickSelection: true,
-                allowEmpty: false
-            }, parameters);
+			// the default options should not be shared with others
+            parameters = $.extend($.extend({}, defaultOptions), parameters);
 
             return this.each(function () {
                 var $input = $(this), settings,
@@ -188,8 +201,21 @@
                     if (settings.allowEmpty && value === "") {
                         return;
                     }
-                    if (settings.precision > 0 && value.indexOf(settings.decimal) < 0) {
-                        value += settings.decimal + new Array(settings.precision + 1).join(0);
+					var decimalPointIndex = value.indexOf(settings.decimal);
+                    if (settings.precision > 0) {
+						if(decimalPointIndex < 0){
+							value += settings.decimal + new Array(settings.precision + 1).join(0);
+						}
+						else {
+							// If the following decimal part dosen't have enough length against the precision, it needs to be filled with zeros.
+							var integerPart = value.slice(0, decimalPointIndex), 
+								decimalPart = value.slice(decimalPointIndex + 1);
+							value = integerPart + settings.decimal + decimalPart + 
+									new Array((settings.precision + 1) - decimalPart.length).join(0);
+						}
+                    } else if (decimalPointIndex > 0) {
+                        // if the precision is 0, discard the decimal part
+                        value = value.slice(0, decimalPointIndex);
                     }
                     $input.val(maskValue(value, settings));
                 }
@@ -365,7 +391,7 @@
 
                     if (!!settings.selectAllOnFocus) {
                         input.select();
-                    } else if (input.createTextRange) {
+                    } else if (input.createTextRange && settings.bringCaretAtEndOnFocus) {
                         textRange = input.createTextRange();
                         textRange.collapse(false); // set the cursor at the end of the input
                         textRange.select();
@@ -421,7 +447,7 @@
                         // the focus event. The focus event is
                         // also fired when the input is clicked.
                         return;
-                    } else if (input.setSelectionRange) {
+                    } else if (input.setSelectionRange && settings.bringCaretAtEndOnFocus) {
                         length = $input.val().length;
                         input.setSelectionRange(length, length);
                     } else {
@@ -433,7 +459,7 @@
                     var input = $input.get(0),
                         start,
                         length;
-                    if (input.setSelectionRange) {
+                    if (input.setSelectionRange && settings.bringCaretAtEndOnFocus) {
                         length = $input.val().length;
                         start = settings.doubleClickSelection ? 0 : length;
                         input.setSelectionRange(start, length);
