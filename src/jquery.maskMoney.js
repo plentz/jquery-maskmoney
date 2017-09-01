@@ -6,6 +6,7 @@
         $.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
         $.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
         $.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
+        $.browser.device = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase());
     }
 
     var defaultOptions = {
@@ -68,13 +69,13 @@
                 return parseFloat(value);
             });
         },
-		
+
 		unmaskedWithOptions: function () {
             return this.map(function () {
                 var value = ($(this).val() || "0"),
 					settings = $(this).data("settings") || defaultOptions,
 					regExp = new RegExp((settings.thousandsForUnmasked || settings.thousands), "g");
-                value = value.replace(regExp, "");                
+                value = value.replace(regExp, "");
                 return parseFloat(value);
             });
         },
@@ -188,7 +189,7 @@
                     newLen = $input.val().length;
                     // If the we're using the reverse option,
                     // do not put the cursor at the end of
-                    // the input. The reverse option allows 
+                    // the input. The reverse option allows
                     // the user to input text from left to right.
                     if (!settings.reverse) {
                         startPos = startPos - (originalLen - newLen);
@@ -208,9 +209,9 @@
 						}
 						else {
 							// If the following decimal part dosen't have enough length against the precision, it needs to be filled with zeros.
-							var integerPart = value.slice(0, decimalPointIndex), 
+							var integerPart = value.slice(0, decimalPointIndex),
 								decimalPart = value.slice(decimalPointIndex + 1);
-							value = integerPart + settings.decimal + decimalPart + 
+							value = integerPart + settings.decimal + decimalPart +
 									new Array((settings.precision + 1) - decimalPart.length).join(0);
 						}
                     } else if (decimalPointIndex > 0) {
@@ -238,6 +239,12 @@
                         e.preventDefault();
                     } else { // old internet explorer
                         e.returnValue = false;
+                    }
+                }
+
+                function fixMobile() {
+                    if ($.browser.device) {
+                        $input.attr("type", "tel");
                     }
                 }
 
@@ -443,7 +450,7 @@
                     var input = $input.get(0),
                         length;
                     if (!!settings.selectAllOnFocus) {
-                        // selectAllOnFocus will be handled by 
+                        // selectAllOnFocus will be handled by
                         // the focus event. The focus event is
                         // also fired when the input is clicked.
                         return;
@@ -468,6 +475,7 @@
                     }
                 }
 
+                fixMobile();
                 $input.unbind(".maskMoney");
                 $input.bind("keypress.maskMoney", keypressEvent);
                 $input.bind("keydown.maskMoney", keydownEvent);
