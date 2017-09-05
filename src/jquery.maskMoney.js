@@ -202,7 +202,8 @@
                     if (settings.allowEmpty && value === "") {
                         return;
                     }
-					var decimalPointIndex = value.indexOf(settings.decimal);
+                    var isNumber = !isNaN(value);
+					var decimalPointIndex = isNumber? value.indexOf("."): value.indexOf(settings.decimal);
                     if (settings.precision > 0) {
 						if(decimalPointIndex < 0){
 							value += settings.decimal + new Array(settings.precision + 1).join(0);
@@ -526,6 +527,13 @@
         newValue = buildIntegerPart(integerPart, negative, settings);
 
         if (settings.precision > 0) {
+            if(!isNaN(value) && value.indexOf(".")){
+                var precision = value.substr(value.indexOf(".") + 1);
+                onlyNumbers += new Array((settings.precision + 1) - precision.length).join(0);
+                integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision);
+                newValue = buildIntegerPart(integerPart, negative, settings);
+            }
+
             decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
             leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
             newValue += settings.decimal + leadingZeros + decimalPart;
