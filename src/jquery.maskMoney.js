@@ -6,6 +6,7 @@
         $.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
         $.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
         $.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
+        $.browser.device = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase());
     }
 
     var defaultOptions = {
@@ -208,7 +209,7 @@
 							value += settings.decimal + new Array(settings.precision + 1).join(0);
 						}
 						else {
-							// If the following decimal part dosen"t have enough length against the precision, it needs to be filled with zeros.
+							// If the following decimal part dosen't have enough length against the precision, it needs to be filled with zeros.
 							var integerPart = value.slice(0, decimalPointIndex),
 								decimalPart = value.slice(decimalPointIndex + 1);
 							value = integerPart + settings.decimal + decimalPart +
@@ -239,6 +240,12 @@
                         e.preventDefault();
                     } else { // old internet explorer
                         e.returnValue = false;
+                    }
+                }
+
+                function fixMobile() {
+                    if ($.browser.device) {
+                        $input.attr("type", "tel");
                     }
                 }
 
@@ -469,6 +476,7 @@
                     }
                 }
 
+                fixMobile();
                 $input.unbind(".maskMoney");
                 $input.bind("keypress.maskMoney", keypressEvent);
                 $input.bind("keydown.maskMoney", keydownEvent);

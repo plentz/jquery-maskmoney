@@ -32,7 +32,7 @@ module.exports = function(grunt) {
             options: {
                 banner: "<%= meta.banner %>",
                 mangle: {
-                    except: ["jQuery", "$"]
+                    reserved: ["jQuery", "$"]
                 }
             },
             build: {
