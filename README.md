@@ -41,7 +41,7 @@ The options that you can set are:
  * `affixesStay`: set if the prefix and suffix will stay in the field's value after the user exits the field. default: true
  * `thousands`: the thousands separator. default: ','
  * `decimal`: the decimal separator. default: '.'
- * `precision`: how many decimal places are allowed. default: 2
+ * `precision`: how many decimal places are allowed. use 'auto' for get the precision from the value or 'custom' for no limitations. default: 2
  * `allowZero`: use this setting to prevent users from inputing zero. default: false
  * `allowNegative`: use this setting to prevent users from inputing negative values. default: false
 
@@ -89,6 +89,7 @@ npm install && grunt test
  * [Daniel Loureiro](https://github.com/loureirorg)
  * [Thiago Silva](http://twitter.com/tafs7/)
  * [Guilherme Nagatomo](https://github.com/guilhermehn)
+ * [Carlos Eduardo](https://github.com/Dudu197)
 
 ***
 ### License:
