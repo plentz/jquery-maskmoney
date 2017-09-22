@@ -1,53 +1,11 @@
 /*
-
-jQuery Mask Money Plugin
-Original: https://github.com/plentz/jquery-maskmoney
-Fork: https://github.com/Dudu197/jquery-maskmoney
-
-MoneyMask functions works only for Brazilian style (thousands: '.' and decimal: ',')
-
-*/
-
-var MoneyMask = {
-    encode: function (value) {
-        settings = {
-            prefix: "",
-            suffix: "",
-            affixesStay: true,
-            thousands: ".",
-            decimal: ",",
-            precision: 2,
-            allowZero: false,
-            allowNegative: false
-        };
-        var negative = (value.indexOf("-") > -1 && settings.allowNegative) ? "-" : "",
-            onlyNumbers = value.replace(/[^0-9]/g, ""),
-            integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision),
-            newValue,
-            decimalPart,
-            leadingZeros;
-
-        // remove initial zeros
-        integerPart = integerPart.replace(/^0*/g, "");
-        // put settings.thousands every 3 chars
-        integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, settings.thousands);
-        if (integerPart === "") {
-            integerPart = "0";
-        }
-        newValue = negative + integerPart;
-
-        if (settings.precision > 0) {
-            decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
-            leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
-            newValue += settings.decimal + leadingZeros + decimalPart;
-        }
-        return newValue;
-    },
-
-    decode: function (value) {
-        return Number(value.replace(/\./g, '').replace(',', '.')).toFixed(2);
-    }
-};
+ *  jquery-maskmoney - v3.1.1
+ *  jQuery plugin to mask data entry in the input text in the form of money (currency)
+ *  https://github.com/plentz/jquery-maskmoney
+ *
+ *  Made by Diego Plentz
+ *  Under MIT License
+ */
 
 (function ($) {
     "use strict";
