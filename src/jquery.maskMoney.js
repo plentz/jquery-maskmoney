@@ -1,15 +1,15 @@
 /*
 
-    jQuery Mask Money Plugin
-    Original: https://github.com/plentz/jquery-maskmoney
-    Fork: https://github.com/Dudu197/jquery-maskmoney
+jQuery Mask Money Plugin
+Original: https://github.com/plentz/jquery-maskmoney
+Fork: https://github.com/Dudu197/jquery-maskmoney
 
-    MoneyMask functions works only for Brazilian style (thousands: '.' and decimal: ',')
+MoneyMask functions works only for Brazilian style (thousands: '.' and decimal: ',')
 
 */
 
 var MoneyMask = {
-    encode: function(value){
+    encode: function (value) {
         settings = {
             prefix: "",
             suffix: "",
@@ -44,7 +44,7 @@ var MoneyMask = {
         return newValue;
     },
 
-    decode: function(value){
+    decode: function (value) {
         return Number(value.replace(/\./g, '').replace(',', '.')).toFixed(2);
     }
 };
@@ -60,7 +60,7 @@ var MoneyMask = {
     }
 
     var methods = {
-        destroy : function () {
+        destroy: function () {
             $(this).unbind(".maskMoney");
 
             if ($.browser.msie) {
@@ -69,7 +69,7 @@ var MoneyMask = {
             return this;
         },
 
-        mask : function (value) {
+        mask: function (value) {
             return this.each(function () {
                 var $this = $(this);
                 if (typeof value === "number") {
@@ -79,17 +79,35 @@ var MoneyMask = {
             });
         },
 
-        unmasked : function () {
+        getPrecision: function($item, settings) {
+            var precision = 0;
+            if (settings.precision == "auto" || settings.precision == "custom") {
+                if (settings.precision == "auto" && $item.attr("precision") != undefined) {
+                    return parseInt($item.attr("precision"));
+                }
+                var value = $item.val();
+                var split = value.split(settings.decimal);
+                if (split.length == 2) {
+                    precision = split[1].length;
+                }
+                $item.attr("precision", precision);
+            } else {
+                precision = settings.precision
+            }
+            return precision;
+        },
+
+        unmasked: function () {
             return this.map(function () {
                 var value = ($(this).val() || "0"),
                     isNegative = value.indexOf("-") !== -1,
                     decimalPart;
                 // get the last position of the array that is a number(coercion makes "" to be evaluated as false)
                 $(value.split(/\D/).reverse()).each(function (index, element) {
-                    if(element) {
+                    if (element) {
                         decimalPart = element;
                         return false;
-                   }
+                    }
                 });
                 value = value.replace(/\D/g, "");
                 value = value.replace(new RegExp(decimalPart + "$"), "." + decimalPart);
@@ -100,14 +118,14 @@ var MoneyMask = {
             });
         },
 
-        init : function (parameters) {
+        init: function (parameters) {
             parameters = $.extend({
                 prefix: "",
                 suffix: "",
                 affixesStay: true,
                 thousands: ",",
                 decimal: ".",
-                precision: 2,
+                precision: "auto",
                 allowZero: false,
                 allowNegative: false
             }, parameters);
@@ -209,7 +227,8 @@ var MoneyMask = {
                 function maskValue(value) {
                     var negative = (value.indexOf("-") > -1 && settings.allowNegative) ? "-" : "",
                         onlyNumbers = value.replace(/[^0-9]/g, ""),
-                        integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision),
+                        precision = methods.getPrecision($input, settings),
+                        integerPart = onlyNumbers.slice(0, onlyNumbers.length - precision),
                         newValue,
                         decimalPart,
                         leadingZeros;
@@ -223,9 +242,9 @@ var MoneyMask = {
                     }
                     newValue = negative + integerPart;
 
-                    if (settings.precision > 0) {
-                        decimalPart = onlyNumbers.slice(onlyNumbers.length - settings.precision);
-                        leadingZeros = new Array((settings.precision + 1) - decimalPart.length).join(0);
+                    if (precision > 0) {
+                        decimalPart = onlyNumbers.slice(onlyNumbers.length - precision);
+                        leadingZeros = new Array((precision + 1) - decimalPart.length).join(0);
                         newValue += settings.decimal + leadingZeros + decimalPart;
                     }
                     return setSymbol(newValue);
@@ -243,8 +262,9 @@ var MoneyMask = {
 
                 function mask() {
                     var value = $input.val();
-                    if (settings.precision > 0 && value.indexOf(settings.decimal) < 0) {
-                        value += settings.decimal + new Array(settings.precision+1).join(0);
+                    var precision = methods.getPrecision($input, settings);
+                    if (precision > 0 && value.indexOf(settings.decimal) < 0) {
+                        value += settings.decimal + new Array(precision + 1).join(0);
                     }
                     $input.val(maskValue(value));
                 }
@@ -284,16 +304,16 @@ var MoneyMask = {
                     }
 
                     // any key except the numbers 0-9
-                    if (key < 48 || key > 57) {
+                    if ((key < 48 || key > 57) && settings.precision !== "custom") {
                         // -(minus) key
                         if (key === 45) {
                             $input.val(changeSign());
                             return false;
-                        // +(plus) key
+                            // +(plus) key
                         } else if (key === 43) {
                             $input.val($input.val().replace("-", ""));
                             return false;
-                        // enter key or tab key
+                            // enter key or tab key
                         } else if (key === 13 || key === 9) {
                             return true;
                         } else if ($.browser.mozilla && (key === 37 || key === 39) && e.charCode === 0) {
@@ -353,7 +373,7 @@ var MoneyMask = {
                                     startPos = value.length - lastNumber - 1;
                                     endPos = startPos + 1;
                                 }
-                            //delete
+                                //delete
                             } else {
                                 endPos += 1;
                             }
@@ -375,7 +395,7 @@ var MoneyMask = {
                     mask();
                     var input = $input.get(0),
                         textRange;
-                    if (input.createTextRange) {
+                    if (settings.precision !== "custom" && input.createTextRange) {
                         textRange = input.createTextRange();
                         textRange.collapse(false); // set the cursor at the end of the input
                         textRange.select();
@@ -383,14 +403,15 @@ var MoneyMask = {
                 }
 
                 function cutPasteEvent() {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         mask();
                     }, 0);
                 }
 
                 function getDefaultMask() {
-                    var n = parseFloat("0") / Math.pow(10, settings.precision);
-                    return (n.toFixed(settings.precision)).replace(new RegExp("\\.", "g"), settings.decimal);
+                    var precision = methods.getPrecision($input, settings);
+                    var n = parseFloat("0") / Math.pow(10, precision);
+                    return (n.toFixed(precision)).replace(new RegExp("\\.", "g"), settings.decimal);
                 }
 
                 function blurEvent(e) {
@@ -420,7 +441,7 @@ var MoneyMask = {
                 function clickEvent() {
                     var input = $input.get(0),
                         length;
-                    if (input.setSelectionRange) {
+                    if (settings.precision !== "custom" && input.setSelectionRange) {
                         length = $input.val().length;
                         input.setSelectionRange(length, length);
                     } else {
@@ -444,10 +465,10 @@ var MoneyMask = {
     $.fn.maskMoney = function (method) {
         if (methods[method]) {
             return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-        } else if (typeof method === "object" || ! method) {
+        } else if (typeof method === "object" || !method) {
             return methods.init.apply(this, arguments);
         } else {
-            $.error("Method " +  method + " does not exist on jQuery.maskMoney");
+            $.error("Method " + method + " does not exist on jQuery.maskMoney");
         }
     };
 })(window.jQuery || window.Zepto);
