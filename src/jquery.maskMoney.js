@@ -202,8 +202,7 @@
                     if (settings.allowEmpty && value === "") {
                         return;
                     }
-                    var isNumber = !isNaN(value);
-					var decimalPointIndex = isNumber? value.indexOf("."): value.indexOf(settings.decimal);
+					var decimalPointIndex = value.indexOf(settings.decimal);
                     if (settings.precision > 0) {
 						if(decimalPointIndex < 0){
 							value += settings.decimal + new Array(settings.precision + 1).join(0);
