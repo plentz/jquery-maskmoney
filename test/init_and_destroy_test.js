@@ -22,5 +22,13 @@ test("destroy", function() {
         events;
     input.maskMoney("destroy");
     events = jQuery._data(input.get(0), "events");
-    equal(events, undefined, "destroy method removed all attached events");
+
+    var eventsWithMaskMoneyNamespace = events;
+    if (eventsWithMaskMoneyNamespace !== undefined) {
+        eventsWithMaskMoneyNamespace = Object.values(events).flat().find(function (event) {
+            return event.namespace === "maskMoney";
+        });
+    }
+
+    equal(eventsWithMaskMoneyNamespace, undefined, "destroy method removed all attached events");
 });
