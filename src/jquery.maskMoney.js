@@ -529,7 +529,7 @@
         if (settings.precision > 0) {
             if(!isNaN(value) && value.indexOf(".")){
                 var precision = value.substr(value.indexOf(".") + 1);
-                onlyNumbers += new Array((settings.precision + 1) - precision.length).join(0);
+                onlyNumbers = new Array((settings.precision + 1) - precision.length).join(0) + onlyNumbers;
                 integerPart = onlyNumbers.slice(0, onlyNumbers.length - settings.precision);
                 newValue = buildIntegerPart(integerPart, negative, settings);
             }
