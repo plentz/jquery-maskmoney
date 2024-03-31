@@ -24,8 +24,9 @@
             },
 		methods = {
         destroy: function () {
-            $(this).unbind(".maskMoney");
-
+            $(this).off(".maskMoney");
+            $(this).off('blur');
+            $(this).off('focus');
             if ($.browser.msie) {
                 this.onpaste = null;
             }
@@ -209,6 +210,14 @@
 							value += settings.decimal + new Array(settings.precision + 1).join(0);
 						}
 						else {
+
+                            var chars = Array.from(value.matchAll(/[\.\,]/g));
+                            if (chars.length > 0) {
+                                var lastChar = chars[chars.length - 1];
+                                value = value.substr(0, lastChar.index).replace(/[\.\,]/g, "") + settings.decimal + value.substr(lastChar.index + 1);
+                                decimalPointIndex = value.indexOf(settings.decimal);
+
+                            }
 							// If the following decimal part dosen't have enough length against the precision, it needs to be filled with zeros.
 							var integerPart = value.slice(0, decimalPointIndex),
 								decimalPart = value.slice(decimalPointIndex + 1);
@@ -477,7 +486,7 @@
                 }
 
                 fixMobile();
-                $input.unbind(".maskMoney");
+                $input.off(".maskMoney");
                 $input.bind("keypress.maskMoney", keypressEvent);
                 $input.bind("keydown.maskMoney", keydownEvent);
                 $input.bind("blur.maskMoney", blurEvent);
