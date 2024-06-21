@@ -103,6 +103,12 @@
 		</script>
 		<pre class="brush: js">$("#demo14").maskMoney({ formatOnBlur: true, reverse: true, prefix: '$', selectAllOnFocus: true, precision: 4, allowEmpty: true });</pre>
 
+		<input type="text" id="demo15" value="" />
+		<script type="text/javascript">
+			$("#demo15").maskMoney({prefix:'R$ ', allowNegative: true, thousands:'.', precision: 0, affixesStay: true});
+		</script>
+		<pre class="brush: js">$("#demo15").maskMoney({prefix:'R$ ', allowNegative: true, thousands:'.', precision: 0, affixesStay: true});</pre>
+
 	</body>
 	<script type="text/javascript">
 		SyntaxHighlighter.all()
