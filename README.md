@@ -12,7 +12,7 @@ You can also use [CloudFlare's cdnjs](http://cdnjs.com/). Just choose the versio
 ***
 ### Show Time!
 
-To view a complete demonstration of it's features and usage, access our [examples page](http://plentz.github.com/jquery-maskmoney)!
+To view a complete demonstration of it's features and usage, access our [examples page](https://plentz.github.io/jquery-maskmoney/)!
 
 ***
 ### Usage:
